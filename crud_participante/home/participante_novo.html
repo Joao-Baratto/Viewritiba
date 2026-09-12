@@ -1,0 +1,228 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cadastro de Participante - Viewritiba</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="participante_novo.css">
+</head>
+
+<body>
+
+    <!-- Cabeçalho -->
+    <header class="page-header">
+        <div class="header-content">
+
+            <a href="../index.php" class="logo-link" aria-label="Voltar para a página principal">
+                <h1>Viewritiba</h1>
+            </a>
+
+            <p>Área do Participante</p>
+
+        </div>
+    </header>
+
+
+    <!-- Conteúdo Principal -->
+    <main class="page-main">
+
+        <section class="form-container">
+
+            <div class="form-header">
+
+                <h2>Crie sua conta</h2>
+
+                <p>
+                    Preencha os dados abaixo para se cadastrar como participante.
+                </p>
+
+            </div>
+
+
+            <!-- Formulário -->
+            <form
+                action="#"
+                method="post"
+                id="formParticipante"
+                class="modern-form"
+            >
+
+                <!-- Nome Completo -->
+                <div class="input-group">
+
+                    <label for="nome">Nome Completo</label>
+
+                    <input
+                        type="text"
+                        id="nome"
+                        name="nome"
+                        placeholder="Ex: João da Silva"
+                        autocomplete="name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- CPF -->
+                <div class="input-group">
+
+                    <label for="documento">CPF</label>
+
+                    <input
+                        type="text"
+                        id="documento"
+                        name="documento"
+                        placeholder="000.000.000-00"
+                        autocomplete="off"
+                        maxlength="14"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- E-mail -->
+                <div class="input-group">
+
+                    <label for="email">E-mail</label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="seu@email.com"
+                        autocomplete="email"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Telefone -->
+                <div class="input-group">
+
+                    <label for="telefone">Telefone</label>
+
+                    <input
+                        type="tel"
+                        id="telefone"
+                        name="telefone"
+                        placeholder="(00) 00000-0000"
+                        autocomplete="tel"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Senha -->
+                <div class="input-row">
+
+                    <div class="input-group">
+
+                        <label for="senha">Senha</label>
+
+                        <input
+                            type="password"
+                            id="senha"
+                            name="senha"
+                            placeholder="••••••••"
+                            autocomplete="new-password"
+                            minlength="6"
+                            maxlength="6"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Confirmar Senha -->
+                    <div class="input-group">
+
+                        <label for="confirmar_senha">
+                            Confirmar Senha
+                        </label>
+
+                        <input
+                            type="password"
+                            id="confirmar_senha"
+                            name="confirmar_senha"
+                            placeholder="••••••••"
+                            autocomplete="new-password"
+                            minlength="6"
+                            maxlength="6"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Botão de Cadastro -->
+                <div class="form-actions">
+
+                    <button
+                        type="submit"
+                        id="submit"
+                        class="btn-primary"
+                    >
+
+                        <span>Cadastrar Participante</span>
+
+                        <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                        >
+
+                            <path d="M5 12h14"></path>
+                            <path d="m12 5 7 7-7 7"></path>
+
+                        </svg>
+
+                    </button>
+
+                </div>
+
+
+                <!-- Cancelar -->
+                <div class="form-footer">
+
+                    <a
+                        href="../index.php"
+                        class="cancel-link"
+                    >
+                        Cancelar e Voltar
+                    </a>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+
+    <script src="../js/participante_novo.js" defer></script>
+
+</body>
+
+</html>
+```
