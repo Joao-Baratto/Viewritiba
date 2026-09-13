@@ -1,4 +1,4 @@
-document.getElementById("submit").addEventListener("click", function (e) {
+document.getElementById("formOrganizador").addEventListener("submit", function (e) {
     e.preventDefault();
 
     var senha = document.getElementById("senha").value;
@@ -32,11 +32,12 @@ async function novo() {
     fd.append('telefone', telefone);
     fd.append('senha', senha);
 
-    const retorno = await fetch("php/organizador_novo.php", { method: "POST", body: fd });
+    const retorno = await fetch("../php/organizador_novo.php", { method: "POST", body: fd });
     const resposta = await retorno.json();
 
     if (resposta.status == "sucesso") {
         alert("Sucesso: " + resposta.mensagem);
+        window.location.href = "../login/Login.html";
     } else {
         alert("Erro: " + resposta.mensagem);
         
