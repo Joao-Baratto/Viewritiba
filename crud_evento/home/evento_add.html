@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Evento</title>
+    <button type="button" id="btn_voltar">← Voltar</button>
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+    <main>
+        <div class="content">
+                <form id="formForum" style="position: sticky; top: 20px; align-self: start;">
+                    <h1>Adicionar Evento</h1>
+                    <div><strong>Nome do evento:</strong></div>
+                    <input type="text" id="new_nome" placeholder="Insira um texto..." style="width: 70%;">
+                    <div><strong></strong></div>
+                    <div>Sobre o evento:</div>
+                    <textarea id="new_desc" placeholder=" Insira um texto..." rows="5" style="width: 70%;"></textarea>
+                    <div>Data do evento:</div>
+                    <input type="date" id="new_date">
+                    <div><input type="file" accept="image/*" id="new_img" style="display: none;">
+                        <label for="nova_imagem">
+                            Inserir imagem
+                        </label></div>
+                    <br>
+                    <button type="submit" id="btn_enviar">Enviar</button>
+                </form>
+                <form id="forum_post"></form>
+            </div>
+        </div>
+        </div>
+    </main>
+<script src="js/evento_add.js"></script>
+</body>
+</html>

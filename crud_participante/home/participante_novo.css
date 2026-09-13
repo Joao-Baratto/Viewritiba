@@ -1,0 +1,234 @@
+/* ==========================================================================
+   Variáveis e Paleta de Cores (Viewritiba)
+   ========================================================================== */
+:root {
+   
+    --bg-fundo: #F7F5F2; 
+    --bg-header: #2B2B2B; 
+    --bg-form: #FFFFFF; 
+    --cor-texto: #2B2B2B; 
+    --cor-texto-mutado: #6B7280; 
+    --cor-destaque: #FF7A59; 
+    --cor-destaque-hover: #E86A4C; 
+    
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-focus: 0 0 0 4px rgba(255, 122, 89, 0.2); 
+    
+    --radius-md: 8px;
+    --radius-lg: 16px;
+    
+    --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* ==========================================================================
+   Reset e Base
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-fundo);
+    color: var(--cor-texto);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased; 
+    min-height: 100vh; 
+    display: flex;
+    flex-direction: column; 
+}
+
+/* ==========================================================================
+   Cabeçalho (Header)
+   ========================================================================== */
+.page-header {
+    background-color: var(--bg-header);
+    color: #FFFFFF;
+    padding: 1rem 2rem;
+    box-shadow: var(--shadow-md);
+    position: sticky; 
+    top: 0;
+    z-index: 10; 
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto; 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+}
+
+.page-header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(to right, #FFFFFF, #FF7A59);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ==========================================================================
+   Conteúdo Principal e Layout
+   ========================================================================== */
+.page-main {
+    flex: 1; 
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    padding: 2rem 1rem;
+    
+    background-image: radial-gradient(var(--bg-header) 0.5px, transparent 0.5px), radial-gradient(var(--bg-header) 0.5px, var(--bg-fundo) 0.5px);
+    background-size: 20px 20px;
+    background-position: 0 0, 10px 10px;
+    background-color: var(--bg-fundo);
+    opacity: 0.95;
+}
+
+/* ==========================================================================
+   Caixa do Formulário
+   ========================================================================== */
+.form-container {
+    background-color: var(--bg-form);
+    width: 100%;
+    max-width: 540px; 
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg); 
+    padding: 2.5rem;
+    
+    animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 2rem; 
+}
+
+.form-header h2 {
+    font-size: 1.875rem;
+    color: var(--cor-texto);
+}
+
+/* ==========================================================================
+   Inputs e Grupos
+   ========================================================================== */
+.modern-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem; 
+}
+
+
+.input-row {
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 1rem;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column; 
+    gap: 0.375rem;
+}
+
+.input-group label {
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid #E5E7EB;
+    border-radius: var(--radius-md);
+    background-color: #F9FAFB; 
+    transition: all 0.2s ease-in-out; 
+}
+
+.input-group input:focus {
+    outline: none;
+    background-color: var(--bg-form);
+    border-color: var(--cor-destaque); 
+    box-shadow: var(--shadow-focus); 
+}
+
+/* ==========================================================================
+   Botão Primário
+   ========================================================================== */
+.btn-primary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem; 
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    background-color: var(--cor-destaque);
+    color: var(--cor-texto);
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-primary:hover {
+    background-color: var(--cor-destaque-hover);
+    transform: translateY(-2px); 
+    box-shadow: var(--shadow-md), 0 4px 12px rgba(255, 122, 89, 0.3);
+}
+
+.btn-primary:active {
+    transform: translateY(0); 
+}
+
+/* ==========================================================================
+   Links Secundários
+   ========================================================================== */
+.form-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.cancel-link {
+    color: var(--cor-texto-mutado);
+    text-decoration: none; 
+    font-size: 0.875rem;
+}
+
+.cancel-link:hover {
+    color: var(--cor-texto);
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   Animações Keyframes
+   ========================================================================== */
+
+@keyframes slideUpFade {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==========================================================================
+   Responsividade (Para Celulares)
+   ========================================================================== */
+@media (max-width: 640px) {
+    .input-row {
+        grid-template-columns: 1fr; 
+    }
+    
+    .form-container {
+        padding: 1.5rem; 
+    }
+}

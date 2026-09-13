@@ -1,0 +1,318 @@
+/* ==========================================================================
+   Variáveis e Paleta de Cores (Viewritiba)
+   ========================================================================== */
+:root {
+    /* O :root é como uma "caixa de variáveis" global. 
+       Aqui guardamos as cores para não precisar repetir o código Hex várias vezes. 
+       Se quiser mudar o tom de Coral, basta mudar aqui e o site todo atualiza! */
+    --bg-fundo: #F7F5F2;
+    --bg-header: #2B2B2B;
+    --bg-form: #FFFFFF;
+    --cor-texto: #2B2B2B;
+    --cor-texto-mutado: #6B7280;
+    /* Uma cor mais clara para textos secundários */
+    --cor-destaque: #FF7A59;
+    --cor-destaque-hover: #E86A4C;
+    /* Cor mais escura para quando o mouse passar no botão */
+
+    /* Variáveis de sombra (box-shadow) para dar profundidade aos elementos */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-focus: 0 0 0 4px rgba(255, 122, 89, 0.2);
+    /* Sombra que brilha no foco do input */
+
+    /* Variáveis para bordas arredondadas (border-radius) */
+    --radius-md: 8px;
+    --radius-lg: 16px;
+
+    /* Fonte primária. Se a 'Outfit' falhar, ele tenta usar as próximas da lista */
+    --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* ==========================================================================
+   Reset e Base
+   ========================================================================== */
+* {
+    /* Remove as margens que os navegadores colocam por padrão */
+    margin: 0;
+    padding: 0;
+    /* Faz com que a largura/altura inclua bordas e paddings (evita que a tela quebre) */
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-fundo);
+    color: var(--cor-texto);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+    /* Espaçamento mais agradável entre as linhas */
+    -webkit-font-smoothing: antialiased;
+    /* Deixa as fontes mais nítidas no Mac/iOS */
+    min-height: 100vh;
+    /* Garante que o body ocupe pelo menos 100% da altura da tela */
+    display: flex;
+    flex-direction: column;
+    /* Faz o layout empilhar o header e o main de cima para baixo */
+}
+
+/* ==========================================================================
+   Cabeçalho (Header)
+   ========================================================================== */
+.page-header {
+    background-color: var(--bg-header);
+    color: #FFFFFF;
+    padding: 1rem 2rem;
+    box-shadow: var(--shadow-md);
+    position: sticky;
+    /* Faz o cabeçalho grudar no topo da tela quando você rola a página */
+    top: 0;
+    z-index: 10;
+    /* Garante que o cabeçalho fique por cima dos outros elementos */
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    /* Centraliza o conteúdo dentro do cabeçalho */
+    display: flex;
+    /* Transforma em Flexbox */
+    align-items: center;
+    /* Alinha os itens no centro verticalmente */
+    justify-content: space-between;
+    /* Joga um item para a esquerda e o outro para a direita */
+}
+
+.page-header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+
+    background: linear-gradient(to right, #FFFFFF, #FF7A59);
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+}
+
+/* ==========================================================================
+   Conteúdo Principal e Layout
+   ========================================================================== */
+.page-main {
+    flex: 1;
+    /* Faz o 'main' crescer e ocupar todo o espaço restante da tela (empurrando o rodapé se tivesse um) */
+    display: flex;
+    justify-content: center;
+    /* Centraliza a caixa do formulário horizontalmente */
+    align-items: center;
+    /* Centraliza a caixa do formulário verticalmente */
+    padding: 2rem 1rem;
+
+    /* Aqui criei aquela textura de fundo (pontilhada) usando gradientes radiais minúsculos. É puramente estética! */
+    background-image: radial-gradient(var(--bg-header) 0.5px, transparent 0.5px), radial-gradient(var(--bg-header) 0.5px, var(--bg-fundo) 0.5px);
+    background-size: 20px 20px;
+    background-position: 0 0, 10px 10px;
+    background-color: var(--bg-fundo);
+    opacity: 0.95;
+}
+
+/* ==========================================================================
+   Caixa do Formulário
+   ========================================================================== */
+.form-container {
+    background-color: var(--bg-form);
+    width: 100%;
+    max-width: 540px;
+    /* Impede que o formulário fique gigante em telas grandes */
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    /* Aplica aquela sombra elegante da variável */
+    padding: 2.5rem;
+
+    /* Aplica a animação 'slideUpFade' que definimos lá no final do arquivo */
+    animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    /* Espaço entre o título e os inputs */
+}
+
+.form-header h2 {
+    font-size: 1.875rem;
+    color: var(--cor-texto);
+}
+
+/* ==========================================================================
+   Inputs e Grupos
+   ========================================================================== */
+.modern-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    /* O 'gap' é a melhor forma moderna de substituir os velhos <br>! Ele cria espaçamento automático entre os elementos do formulário. */
+}
+
+/* Essa classe é usada para colocar "Senha" e "Confirmar Senha" lado a lado */
+.input-row {
+    display: grid;
+    /* O CSS Grid é perfeito para dividir a tela em colunas */
+    grid-template-columns: 1fr 1fr;
+    /* Cria duas colunas de tamanho igual (1 fração de espaço cada) */
+    gap: 1rem;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    /* Empilha o label em cima do input */
+    gap: 0.375rem;
+}
+
+.input-group label {
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid #E5E7EB;
+    border-radius: var(--radius-md);
+    background-color: #F9FAFB;
+    /* Fundo cinza bem clarinho no input */
+    transition: all 0.2s ease-in-out;
+    /* Faz as mudanças de cor serem suaves (animadas) */
+}
+
+/* .input-group input:focus é o estilo aplicado quando você clica dentro da caixa para digitar */
+.input-group input:focus {
+    outline: none;
+    /* Tira a borda azul feia padrão do navegador */
+    background-color: var(--bg-form);
+    border-color: var(--cor-destaque);
+    /* A borda fica Coral! */
+    box-shadow: var(--shadow-focus);
+    /* Adiciona o brilho Coral */
+}
+
+/* ==========================================================================
+   Botão Primário
+   ========================================================================== */
+.btn-primary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    /* Espaço entre o texto e o ícone (SVG) */
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    background-color: var(--cor-destaque);
+    color: var(--cor-texto);
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Micro-animação de Hover no Botão (quando passa o mouse) */
+.btn-primary:hover {
+    background-color: var(--cor-destaque-hover);
+    transform: translateY(-2px);
+    /* Faz o botão subir/levitar 2 pixels! */
+    box-shadow: var(--shadow-md), 0 4px 12px rgba(255, 122, 89, 0.3);
+    /* Sombra projetada */
+}
+
+/* Efeito ao clicar */
+.btn-primary:active {
+    transform: translateY(0);
+    /* Volta pro chão ao clicar */
+}
+
+/* ==========================================================================
+   Links Secundários
+   ========================================================================== */
+.form-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.cancel-link {
+    color: var(--cor-texto-mutado);
+    text-decoration: none;
+    /* Tira o sublinhado do link */
+    font-size: 0.875rem;
+}
+
+.cancel-link:hover {
+    color: var(--cor-texto);
+    /* Fica mais escuro ao passar o mouse */
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   Animações Keyframes
+   ========================================================================== */
+/* Uma animação personalizada chamada 'slideUpFade'. 
+   No 0% (início), ela é invisível (opacity 0) e está 20px pra baixo.
+   No 100% (fim), ela está totalmente visível e na posição original (translateY 0). */
+@keyframes slideUpFade {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==========================================================================
+   Responsividade (Para Celulares)
+   ========================================================================== */
+/* Essa regra só é ativada em telas menores que 640px de largura */
+@media (max-width: 640px) {
+    .input-row {
+        grid-template-columns: 1fr;
+        /* Muda as senhas lado a lado para ficarem uma embaixo da outra */
+    }
+
+    .form-container {
+        padding: 1.5rem;
+        /* Diminui as margens internas da caixa para caber na tela do celular */
+    }
+}
+
+/* Botão Buscar */
+#buscar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 110px;
+    height: 48px;
+
+    padding: 0 1.25rem;
+
+    background-color: #2B2B2B;
+    color: #FFFFFF;
+
+    border: none;
+    border-radius: 8px;
+
+    font-size: 1rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    margin-left: 0.5rem;
+}
+
+#buscar:hover {
+    background-color: #FF7A59;
+}

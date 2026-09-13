@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viewritiba</title>
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+    <header class="page-header">
+        <div class="header-content">
+            <h1>Viewritiba</h1>
+
+            <button id="logoff" class="btn-outline">
+                Sair
+            </button>
+        </div>
+    </header>
+    <main class="container">
+        <section class="search-section">
+            <div class="search-header">
+                <h2>Encontre eventos em Curitiba!</h2>
+                <p>
+                    Pesquise eventos, descubra novas experiências
+                    e encontre atividades de acordo com seus interesses.
+                </p>
+            </div>
+            <div class="search-area">
+                <input
+                    type="text"
+                    id="pesquisa"
+                    placeholder="Digite o nome do evento"
+                >
+                <button id="buscar" 
+                    Buscar
+                </button>
+            </div>
+            <div class="actions">
+                <button id="novo" class="btn-primary">
+                    + Cadastrar Evento
+                </button>
+            </div>
+        </section>
+        <section class="events-section">
+            <div class="section-header">
+                <div>
+                    <h2>Eventos cadastrados</h2>
+                </div>
+            </div>
+            <div id="lista"></div>
+        </section>
+    </main>
+    <script src="../js/index.js"></script>
+    <script src="../js/valida_sessao.js"></script>
+</body>
+</html>

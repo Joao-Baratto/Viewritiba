@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Evento</title>
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body style="margin: 0; min-height: 100vh; display: flex; flex-direction: column;">
+    <main style="flex: 1;">
+        <button type="button" id="btn_voltar">← Voltar</button>
+        <br>
+        <div id="elementos_tela" style="text-align: center;"></div>
+    </main>
+    <footer style="padding: 20px;">
+        <div style="text-align: center;">
+            <input type="file" accept="image/*" id="new_img">
+            <input 
+                type="text" 
+                id="new_comentario" 
+                placeholder="Insira um texto..."
+                style="width: 70%;"
+                >
+            <button
+              type="button" id="btn_comentario"> Enviar
+            </button>
+        </div>
+    </footer>
+    <script src="js/visualizar_evento.js"></script>
+    <script src="js/comentario.js"></script>
+</body>
+</html>
