@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const urlAPI = 'favorito_get.php';
+    const urlAPI = 'favoritos_get.php';
 
    function getStatusEvento(dataEvento) {
     const hoje = new Date();
@@ -94,7 +94,7 @@ function mostrarConfirmacao(mensagem) {
                 const id_evento = this.getAttribute('data-id');
                 const card = this.closest('.card-favorito');
 
-                fetch('favorito_remover.php', {
+                fetch('favoritos_remover.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: `evento_id=${id_evento}`
