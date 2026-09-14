@@ -18,7 +18,6 @@ $stmt->bind_param(
     "s",
     $email
 );
-);
 
 $stmt->execute();
 

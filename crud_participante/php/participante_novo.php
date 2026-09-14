@@ -12,17 +12,6 @@ $retorno = [
     $email = trim($_POST['email'] ?? '');
     $senha = $_POST['senha'] ?? '';
 
-    if ($nome == '' || $email == '' || $senha == '') {
-        $retorno = [
-            'status' => 'erro',
-            'mensagem' => 'Nome, e-mail e senha são obrigatórios.',
-            'data' => []
-        ];
-        header("Content-Type: application/json; charset=utf-8");
-        echo json_encode($retorno);
-        exit;
-    }
-
     if (strlen($senha) !== 6) {
         $retorno = [
             'status' => 'erro',

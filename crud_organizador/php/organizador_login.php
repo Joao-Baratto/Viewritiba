@@ -26,8 +26,7 @@ $stmt->execute();
 $resultado = $stmt->get_result();
 $organizador = $resultado->fetch_assoc();
 
-if ($organizador && $organizador['status_usuario'] == 'ativo' && password_verify($senha, $organizador['senha'])) {
-    session_regenerate_id(true);
+if ($organizador && password_verify($senha, $organizador['senha'])) {
     $_SESSION['usuario'] = [$organizador];
     $_SESSION['usuario_id'] = (int) $organizador['id_usuario'];
     $_SESSION['usuario_tipo'] = $organizador['tipo_usuario'];
