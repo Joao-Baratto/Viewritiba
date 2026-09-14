@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!id_evento) {
         alert("Evento inválido.");
-        window.location.href = "eventos.html";
+        window.location.href = "../../crud_evento/home/index.html";
         return;
     }
 
@@ -115,5 +115,5 @@ async function excluir_comentario(id_comentario) {
 }
 
 function voltar() {
-    window.location.href = "eventos.html";
+    window.location.href = "../../crud_evento/home/index.html";
 }

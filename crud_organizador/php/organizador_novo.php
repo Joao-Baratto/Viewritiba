@@ -8,16 +8,17 @@ $retorno = [
     'data' => []
 ];
 
-    $nome = $_POST['nome'];
-    $documento = $_POST['documento'];
-    $email = $_POST['email'];
-    $telefone = $_POST['telefone'];
-    $senha = $_POST['senha'];
+    $nome = trim($_POST['nome'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $senha = $_POST['senha'] ?? '';
 
     $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
 
-    $stmt = $conexao->prepare("INSERT INTO organizador (nome, documento, email, telefone, senha) VALUES (?, ?, ?, ?, ?)");
-    $stmt ->bind_param("sssss", $nome, $documento, $email, $telefone, $senha_hash);
+    $stmt = $conexao->prepare(
+        "INSERT INTO usuario (nome, email, tipo_usuario, senha, status_usuario)
+         VALUES (?, ?, 'organizador', ?, 'ativo')"
+    );
+    $stmt->bind_param("sss", $nome, $email, $senha_hash);
 
     $stmt->execute();
 

@@ -8,11 +8,20 @@ $retorno = [
     'data' => []
 ];
 
-    $nome = $_POST['nome'];
-    $documento = $_POST['documento'];
-    $email = $_POST['email'];
-    $telefone = $_POST['telefone'];
-    $senha = $_POST['senha'];
+    $nome = trim($_POST['nome'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $senha = $_POST['senha'] ?? '';
+
+    if ($nome == '' || $email == '' || $senha == '') {
+        $retorno = [
+            'status' => 'erro',
+            'mensagem' => 'Nome, e-mail e senha são obrigatórios.',
+            'data' => []
+        ];
+        header("Content-Type: application/json; charset=utf-8");
+        echo json_encode($retorno);
+        exit;
+    }
 
     if (strlen($senha) !== 6) {
         $retorno = [
@@ -28,8 +37,11 @@ $retorno = [
 
     $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
 
-    $stmt = $conexao->prepare("INSERT INTO participante (nome, documento, email, telefone, senha) VALUES (?, ?, ?, ?, ?)");
-    $stmt ->bind_param("sssss", $nome, $documento, $email, $telefone, $senha_hash);
+    $stmt = $conexao->prepare(
+        "INSERT INTO usuario (nome, email, tipo_usuario, senha, status_usuario)
+         VALUES (?, ?, 'participante', ?, 'ativo')"
+    );
+    $stmt->bind_param("sss", $nome, $email, $senha_hash);
 
     $stmt->execute();
 
