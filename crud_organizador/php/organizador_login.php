@@ -16,14 +16,21 @@ if ($email === '' || $senha === '') {
     exit;
 }
 
-$stmt = $conexao->prepare("SELECT id, nome, email, senha FROM organizador WHERE email = ?");
+$stmt = $conexao->prepare(
+    "SELECT id_usuario, nome, email, tipo_usuario, senha, status_usuario
+     FROM usuario
+     WHERE email = ? AND tipo_usuario = 'organizador'"
+);
 $stmt->bind_param("s", $email);
 $stmt->execute();
 $resultado = $stmt->get_result();
 $organizador = $resultado->fetch_assoc();
 
 if ($organizador && password_verify($senha, $organizador['senha'])) {
-    $_SESSION['organizador_id'] = $organizador['id'];
+    $_SESSION['usuario'] = [$organizador];
+    $_SESSION['usuario_id'] = (int) $organizador['id_usuario'];
+    $_SESSION['usuario_tipo'] = $organizador['tipo_usuario'];
+    $_SESSION['organizador_id'] = (int) $organizador['id_usuario'];
     $_SESSION['organizador_nome'] = $organizador['nome'];
     $_SESSION['organizador_email'] = $organizador['email'];
 

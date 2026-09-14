@@ -78,6 +78,6 @@ async function alterar() {
 function voltar() {
     const destino = id_evento
         ? `../../crud_evento/home/visualizar_evento.html?id=${id_evento}`
-        : "../../crud_evento/home/eventos.html";
+        : "../../crud_evento/home/index.html";
     window.location.href = destino;
 }

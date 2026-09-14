@@ -37,6 +37,7 @@ function renderizar() {
                 <button type="button" onclick="visitar_evento(${evento.id_evento})">Visualizar</button>
                 <button type="button" onclick="alterar_evento(${evento.id_evento})">Alterar</button>
                 <button type="button" onclick="excluir_evento(${evento.id_evento})">Excluir</button>
+                <button type="button" onclick="favoritar_evento(${evento.id_evento})">Favoritar</button>
             </div>
         </div><hr>`;
     });
