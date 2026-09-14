@@ -57,7 +57,8 @@ async function enviar() {
             document.getElementById("new_nota").value = "";
             carregar_comentarios();
         } else {
-            alert("Erro ao inserir comentário: " + retorno.mensagem_retorno);
+            const mensagem = retorno.mensagem_retorno || retorno.mensagem || "Erro desconhecido do servidor.";
+            alert("Erro ao inserir comentário: " + mensagem);
         }
     } catch (erro) {
         alert("Não foi possível enviar o comentário.");
@@ -78,14 +79,22 @@ async function carregar_comentarios() {
 function renderizar_comentarios() {
     elementos_tela.innerHTML = "";
     comentarios.forEach(comentario => {
-        elementos_tela.innerHTML += `<div>
-            <small>${comentario.data_criacao}</small>
-            <h2>${comentario.nome_usuario}</h2>
-            <p>${comentario.texto}</p>
-            <p>Nota: ${comentario.nota}/5</p>
-            <button type="button" onclick="alterar_comentario(${comentario.id})">Alterar</button>
-            <button type="button" onclick="excluir_comentario(${comentario.id})">Excluir</button>
-        </div><hr>`;
+        elementos_tela.innerHTML += `
+            <div class="comentario-card">
+                <div class="comentario-meta">
+                    <span class="comentario-user">${comentario.nome_usuario}</span>
+                    <span class="comentario-data">${comentario.data_criacao}</span>
+                </div>
+
+                <p class="comentario-texto">${comentario.texto}</p>
+                <span class="comentario-nota">★ Nota: ${comentario.nota}/5</span>
+
+                <div class="comentario-acoes">
+                    <button type="button" onclick="alterar_comentario(${comentario.id})">Alterar</button>
+                    <button type="button" class="btn-delete" onclick="excluir_comentario(${comentario.id})">Excluir</button>
+                </div>
+            </div>
+        `;
     });
 }
 
