@@ -1,5 +1,4 @@
 <?php
-
 include_once('conexao.php');
 
 $retorno = [
@@ -8,14 +7,17 @@ $retorno = [
     'data' => []
 ];
 
+$email = trim($_POST['usuario'] ?? '');
+$senha = $_POST['senha'] ?? '';
+
 $stmt = $conexao->prepare(
-    "SELECT * FROM cliente WHERE usuario = ? AND senha = ?"
+    "SELECT * FROM usuario WHERE email = ? AND senha = ?"
 );
 
 $stmt->bind_param(
     "ss",
-    $_POST['usuario'],
-    $_POST['senha']
+    $email,
+    $senha
 );
 
 $stmt->execute();
@@ -29,9 +31,7 @@ if ($resultado->num_rows > 0) {
     while ($linha = $resultado->fetch_assoc()) {
         $tabela[] = $linha;
     }
-
     session_start();
-
     $_SESSION['usuario'] = $tabela;
 
     $retorno = [

@@ -11,13 +11,13 @@ document.getElementById("buscar").addEventListener("click", () => {
     pesquisar();
 });
 async function logoff() {
-    const retorno = await fetch("/projeto/php/evento_logoff.php");
+    const retorno = await fetch("../php/evento_logoff.php");
     const resposta = await retorno.json();
 
     console.log(resposta);
 
     if (resposta.status == "ok") {
-        window.location.replace("/projeto/login/index.html");
+        window.location.replace("../login/index.html");
     }
 }
 async function buscar(){
@@ -56,6 +56,14 @@ async function excluir(id){
         alert(resposta.mensagem);
     }
 }
+
+function alterar_evento(id_evento){
+    if (!id_evento) {
+        alert("ID do evento não encontrado.");
+        return;
+    }
+    window.location.href = "evento_alterar.html?id=" + id_evento;
+}
 function preencherTabela(tabela){
     var html = `
         <table>
@@ -76,8 +84,9 @@ function preencherTabela(tabela){
                 <td>${tabela[i].local}</td>
                  <td>${tabela[i].id_organizador}</td>
                 <td>
-                    <a href='evento_alterar.html?id=${tabela[i].id}'>Alterar</a>
-                    <a href='#' onclick='excluir(${tabela[i].id})'>Excluir</a>
+                    <a href='visualizar_evento.html?id=${tabela[i].id_evento}'>Visualizar Evento</a>
+                    <a href='evento_alterar.html?id=${tabela[i].id_evento}'>Alterar</a>
+                    <a href='#' onclick='excluir(${tabela[i].id_evento})'>Excluir</a>
                </td>
             </tr>
         `;

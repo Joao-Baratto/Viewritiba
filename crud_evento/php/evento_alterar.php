@@ -13,7 +13,7 @@
         $id_organizador  = (int) $_POST['id_organizador'];
         $id = (int) $_GET['id'];
         $stmt = $conexao->prepare("UPDATE evento SET titulo = ?, descricao = ?, data_hora = ?, 
-local = ?, id_organizador = ?  WHERE id = ?");
+    local = ?, id_organizador = ?  WHERE id_evento = ?");
         $stmt->bind_param("ssssii",$titulo, $descricao, $data_hora, $local, $id_organizador, $id);
         $stmt->execute();
         if($stmt->affected_rows > 0){
