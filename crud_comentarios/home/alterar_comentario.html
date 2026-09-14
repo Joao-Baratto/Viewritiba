@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alterar comentário - Viewritiba</title>
+    <link rel="stylesheet" href="../../crud_organizador/home/organizador_novo.css">
+</head>
+<body>
+    <header class="page-header">
+        <div class="header-content">
+            <h1>Viewritiba</h1>
+            <p>Alterar comentário</p>
+        </div>
+    </header>
+
+    <main class="page-main">
+        <section class="form-container">
+            <div class="form-header">
+                <h2>Editar comentário</h2>
+                <p>Atualize o texto do seu comentário.</p>
+            </div>
+
+            <form id="formComentario" class="modern-form">
+                <div class="input-group">
+                    <label for="novo_comentario">Comentário</label>
+                    <textarea id="novo_comentario" rows="6" required></textarea>
+                </div>
+
+                <div class="input-group">
+                    <label for="nova_nota">Nota</label>
+                    <select id="nova_nota" required>
+                        <option value="">Selecione</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" id="botao_alterar_comentario" class="btn-primary">
+                        Salvar alteração
+                    </button>
+                </div>
+
+                <div class="form-footer">
+                    <button type="button" id="btn_voltar" class="cancel-link">Cancelar e voltar</button>
+                </div>
+            </form>
+        </section>
+    </main>
+    <script src="../js/comentario_alterar.js"></script>
+</body>
+</html>

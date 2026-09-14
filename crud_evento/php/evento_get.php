@@ -8,7 +8,7 @@ $retorno = [
 if (isset($_GET['id'])) {
     $id = (int) $_GET['id'];
     $stmt = $conexao->prepare(
-        "SELECT * FROM evento WHERE id = ?"
+        "SELECT * FROM evento WHERE id_evento = ?"
     );
     $stmt->bind_param("i", $id);
 } elseif (isset($_GET['titulo'])) {

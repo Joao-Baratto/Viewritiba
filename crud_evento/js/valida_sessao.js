@@ -1,7 +1,15 @@
 async function valida_sessao(){
-    const retorno = await fetch("../php/valida_sessao.php");
-    const resposta = await retorno.json();
-    if(resposta.status == "nok"){
+    try {
+        const retorno = await fetch("../php/valida_sessao.php", {
+            credentials: "same-origin"
+        });
+        const resposta = await retorno.json();
+        if(resposta.status == "nok"){
+            window.location.href = '../login/';
+        }
+    } catch (erro) {
         window.location.href = '../login/';
     }
 }
+
+valida_sessao();

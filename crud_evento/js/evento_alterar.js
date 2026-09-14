@@ -4,6 +4,11 @@ document.addEventListener("DOMContentLoaded", () => {
     buscar(id);
 });
 async function buscar(id){
+    if (!id) {
+        alert("ID do evento inválido.");
+        window.location.href = "../home/eventos.html";
+        return;
+    }
     const retorno = await fetch("../php/evento_get.php?id="+id);
     const resposta = await retorno.json();
     if(resposta.status == "ok"){
