@@ -7,37 +7,50 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../crud_comentarios/home/comentarios.css">
 </head>
-<body style="margin: 0; min-height: 100vh; display: flex; flex-direction: column;">
-    <main style="flex: 1;">
-        <button type="button" id="btn_voltar">← Voltar</button>
-        <br>
-        <div id="elementos_tela" style="text-align: center;"></div>
-    </main>
-    <footer style="padding: 20px;">
-        <div style="text-align: center;">
-            <input type="file" accept="image/*" id="new_img">
-            <input 
-                type="text" 
-                id="new_comentario" 
-                placeholder="Insira um texto..."
-                style="width: 70%;"
-                >
-            <label for="new_nota">Nota:</label>
-            <select id="new_nota" required>
-                <option value="">Selecione</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-            <button
-              type="button" id="btn_comentario"> Enviar
-            </button>
+<body>
+    <header class="page-header">
+        <div class="header-content">
+            <h1>Viewritiba</h1>
+            <p>Comentários do evento</p>
         </div>
-    </footer>
+    </header>
+    <main class="page-main">
+        <section class="comments-shell">
+            <div class="comments-header">
+                <button type="button" id="btn_voltar" class="btn-secondary">← Voltar</button>
+                <div>
+                    <h2>Comentários</h2>
+                </div>
+            </div>
+            <div id="elementos_tela" class="comentarios-lista" aria-live="polite"></div>
+
+            <div class="composer">
+                <div class="composer-header">
+                    <h3>Deixe seu comentário</h3>
+                </div>
+
+                <div class="composer-row">
+                    <textarea id="new_comentario" rows="4" placeholder="Insira um comentário..."></textarea>
+                </div>
+                <div class="composer-actions">
+                    <div class="input-group select-group">
+                        <label for="new_nota">Nota</label>
+                        <select id="new_nota" required>
+                            <option value="">Selecione</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    <button type="button" id="btn_comentario" class="btn-primary">Enviar</button>
+                </div>
+            </div>
+        </section>
+    </main>
     <script src="../../crud_comentarios/js/comentarios.js?v=2"></script>
     <script src="../js/valida_sessao.js"></script>
 </body>
