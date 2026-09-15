@@ -6,10 +6,10 @@ $id_comentario = filter_input(INPUT_GET, 'id_comentario', FILTER_VALIDATE_INT);
 $texto = trim($_POST['texto'] ?? '');
 $nota = filter_input(INPUT_POST, 'nota', FILTER_VALIDATE_INT);
 
-if(!$id_comentario || $texto === '' || $nota === false || $nota < 1 || $nota > 5){
+if(!$texto || !$nota){
     echo json_encode([
         'status' => 'nok',
-        'mensagem_retorno' => 'Informe o comentário e um ID válido.',
+        'mensagem_retorno' => 'Voce deve preencher todos os campos.',
         'data' => []
     ]);
     exit;

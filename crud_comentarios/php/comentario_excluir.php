@@ -6,7 +6,7 @@ $id_comentario = filter_input(INPUT_GET, 'id_comentario', FILTER_VALIDATE_INT);
 if(!$id_comentario){
     echo json_encode([
         'status' => 'nok',
-        'mensagem_retorno' => 'É necessário informar um ID de comentário.',
+        'mensagem_retorno' => 'Comentário inválido.',
         'data' => []
     ]);
     exit;
@@ -34,7 +34,7 @@ if($stmt->affected_rows > 0){
 }else{
     $retorno = [
         'status' => 'nok',
-        'mensagem_retorno' => 'Comentário não encontrado.',
+        'mensagem_retorno' => 'Comentário inválido.',
         'data' => []
     ];
 }
