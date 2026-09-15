@@ -6,16 +6,14 @@ $id_comentario = filter_input(INPUT_GET, 'id_comentario', FILTER_VALIDATE_INT);
 if(!$id_comentario){
     echo json_encode([
         'status' => 'nok',
-        'mensagem_retorno' => 'ID de comentário inválido.',
+        'mensagem_retorno' => 'Comentário inválido.',
         'data' => []
     ]);
     exit;
 }
-
 $stmt = $conexao->prepare(
     "SELECT id_comentario AS id, texto, nota, data_criacao, id_usuario, id_evento
-     FROM avaliacao_comentario
-     WHERE id_comentario = ?"
+     FROM avaliacao_comentario WHERE id_comentario = ?"
 );
 $stmt->bind_param("i", $id_comentario);
 $stmt->execute();

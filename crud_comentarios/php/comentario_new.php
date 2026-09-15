@@ -20,8 +20,11 @@ if(isset($_SESSION['usuario'][0]['email'])){
     $email = $_SESSION['usuario'][0]['email'];
 }
 
-if($texto === '' || !$id_evento || $nota === false || $nota < 1 || $nota > 5 || $email === ''){
-    responder('nok', 'É necessário estar logado e informar texto, id_evento e nota de 1 a 5.');
+if(!$texto || $texto == '' || !$nota ){
+    responder('nok', 'É necessário preencher todos os campos.');
+}
+if(!$id_evento){
+    responder('nok', 'Evento não encontrado.');
 }
 
 $stmt_usuario = $conexao->prepare("SELECT id_usuario FROM usuario WHERE email = ?");
@@ -32,9 +35,9 @@ $stmt_usuario->bind_param("s", $email);
 $stmt_usuario->execute();
 $resultado_usuario = $stmt_usuario->get_result();
 
-if($resultado_usuario->num_rows === 0){
+if($resultado_usuario->num_rows == 0){
     $stmt_usuario->close();
-    responder('nok', 'Usuário não encontrado no sistema.');
+    responder('nok', 'Usuário não encontrado.');
 }
 
 $id_usuario = (int) $resultado_usuario->fetch_assoc()['id_usuario'];

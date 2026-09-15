@@ -2,35 +2,29 @@ let comentarios = [];
 let elementos_tela;
 const parametros = new URLSearchParams(window.location.search);
 const id_evento = parametros.get("id");
-
 document.addEventListener("DOMContentLoaded", () => {
     elementos_tela = document.getElementById("elementos_tela");
     const btn_voltar = document.getElementById("btn_voltar");
     const btn_comentario = document.getElementById("btn_comentario");
-
     if (!id_evento) {
         alert("Evento inválido.");
         window.location.href = "../../crud_evento/home/index.html";
         return;
     }
-
     if (btn_voltar) {
         btn_voltar.addEventListener("click", (e) => {
             e.preventDefault();
             voltar();
         });
     }
-
     if (btn_comentario) {
         btn_comentario.addEventListener("click", (e) =>{
             e.preventDefault();
             enviar();
         });
     }
-
     carregar_comentarios();
 });
-
 async function enviar() {
     const campoComentario = document.getElementById("new_comentario");
     const conteudo = campoComentario.value.trim();
@@ -46,12 +40,11 @@ async function enviar() {
     fd.append("nota", nota);
 
     try {
-        const resposta = await fetch("../../crud_comentarios/php/comentario_nova.php", {
+        const resposta = await fetch("../../crud_comentarios/php/comentario_new.php", {
             method: "POST",
             body: fd
         });
         const retorno = await resposta.json();
-
         if (retorno.status === "ok") {
             campoComentario.value = "";
             document.getElementById("new_nota").value = "";
@@ -64,7 +57,6 @@ async function enviar() {
         alert("Não foi possível enviar o comentário.");
     }
 }
-
 async function carregar_comentarios() {
     try {
         const resposta = await fetch(`../../crud_comentarios/php/comentario_get.php?id_evento=${id_evento}`);
@@ -82,13 +74,10 @@ function renderizar_comentarios() {
         elementos_tela.innerHTML += `
             <div class="comentario-card">
                 <div class="comentario-meta">
-                    <span class="comentario-user">${comentario.nome_usuario}</span>
+                    <span class="comentario-user">${comentario.nome_usuario}</span><span >★Nota: ${comentario.nota}/5</span>
                     <span class="comentario-data">${comentario.data_criacao}</span>
                 </div>
-
                 <p class="comentario-texto">${comentario.texto}</p>
-                <span class="comentario-nota">★ Nota: ${comentario.nota}/5</span>
-
                 <div class="comentario-acoes">
                     <button type="button" onclick="alterar_comentario(${comentario.id})">Alterar</button>
                     <button type="button" class="btn-delete" onclick="excluir_comentario(${comentario.id})">Excluir</button>
@@ -97,16 +86,13 @@ function renderizar_comentarios() {
         `;
     });
 }
-
 function alterar_comentario(id_comentario) {
-    window.location.href = `../../crud_comentarios/home/alterar_comentario.html?id=${id_comentario}`;
+    window.location.href = `../../crud_comentarios/home/alterar_comentario.html?id_evento=${id_evento}&id=${id_comentario}`;
 }
-
 async function excluir_comentario(id_comentario) {
     if (!confirm("Deseja excluir este comentário?")) {
         return;
     }
-
     try {
         const resposta = await fetch(`../../crud_comentarios/php/comentario_excluir.php?id_comentario=${id_comentario}`, {
             method: "DELETE"
@@ -122,7 +108,7 @@ async function excluir_comentario(id_comentario) {
         alert("Não foi possível excluir o comentário.");
     }
 }
-
 function voltar() {
-    window.location.href = "../../crud_evento/home/index.html";
+    window.location.href = `../../crud_evento/home/index.html`;
+    alert("Voltando para a página de eventos...");
 }
