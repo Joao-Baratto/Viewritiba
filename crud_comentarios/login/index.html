@@ -4,24 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seja bem vindo!</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Domine:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../crud_comentarios/login/login.css">
 </head>
 <body>
-    <div>
-        <h1>Seja bem vindo!</h1>
-        <hr>
-    </div>
-    <div>
-        <label for="usuario">Usuário</label>
-        <input type="text" id="usuario">
-    </div>
-    <div>
-        <label for="senha">Senha</label>
-        <input type="text" id="senha">
-    </div>
-    <div>
-        <button id="enviar">Enviar</button>
-    </div>
+    <header class="page-header">
+        <div class="header-content">
+            <h1>Viewritiba</h1>
+            <a href="#">Home</a>
+            <a href="#">Eventos</a>
+            <a href="#">Favoritos</a>
+            <p>Fazer login</p>
+            <a href="#">Sair</a>
+        </div>
+    </header>
+    <main class="page-main">
+        <section class="login-shell">
+            <div class="login-header">
+                <div>
+                    <h2>Seja bem vindo!</h2>
+                </div>
+                <div class="composer-actions">
+                    <div class="input-group select-group">
+                        <div>
+                            <label for = "usuario">E-mail: </label>
+                            <input type="text" id="usuario" placeholder="viewritiba@email.com">
+                        </div><div>
+                            <label for = "senha">Senha:</label>
+                            <input type="password" id="senha" placeholder="••••••">
+                        </div>
+                        <br>
+                        
+                    </div>
+                    <button type="button" id="enviar" class="btn-primary">Enviar</button>
+                </div>
+            </div>
+        </section>
+    </main>
     <script src="../js/valida_login.js"></script>
 </body>
 </html>
