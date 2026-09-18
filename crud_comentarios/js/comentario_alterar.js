@@ -64,6 +64,6 @@ async function alterar() {
     }
 }
 function voltar() {
-    window.location.href = `../../crud_evento/home/visualizar_evento.html?id=${id_evento}`;
+    window.location.href = `comentarios.html?id=${id_evento}`;
     alert("Voltando para os comentários do evento...");
 }
