@@ -106,7 +106,7 @@ function preencherTabela(tabela){
                 <td>${tabela[i].local}</td>
                  <td>${tabela[i].id_organizador}</td>
                 <td>
-                    <a href='visualizar_evento.html?id=${tabela[i].id_evento}'>Visualizar Evento</a>
+                    <a href='../../crud_comentarios/home/comentarios.html?id=${tabela[i].id_evento}'>Comentários</a>
                     <a href='evento_alterar.html?id=${tabela[i].id_evento}'>Alterar</a>
                     <a href='#' onclick='favoritar_evento(${tabela[i].id_evento}); return false;'>Favoritar</a>
                     <a href='#' onclick='excluir(${tabela[i].id_evento})'>Excluir</a>
