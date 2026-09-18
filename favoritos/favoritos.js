@@ -1,39 +1,26 @@
 document.addEventListener("DOMContentLoaded", function() {
     const urlAPI = 'favoritos_get.php';
 
-   function getStatusEvento(dataEvento) {
-    const hoje = new Date();
-    hoje.setHours(0, 0, 0, 0);
+    function getStatusEvento(dataEvento) {
+        const hoje = new Date();
+        hoje.setHours(0, 0, 0, 0);
 
-    const dataDoEvento = new Date(dataEvento);
-    dataDoEvento.setHours(0, 0, 0, 0);
+        const dataDoEvento = new Date(dataEvento);
+        dataDoEvento.setHours(0, 0, 0, 0);
 
-    if (dataDoEvento < hoje) {
-        return { texto: "Encerrado", cor: "#9ca3af" };
-    } else if (dataDoEvento.getTime() === hoje.getTime()) {
-        return { texto: "Hoje", cor: "#d97706" };
-    } else {
-        return { texto: "Confirmado", cor: "#16a34a" };
+        if (dataDoEvento < hoje) {
+            return { texto: "Encerrado", cor: "#9ca3af" };
+        } else if (dataDoEvento.getTime() === hoje.getTime()) {
+            return { texto: "Hoje", cor: "#d97706" };
+        } else {
+            return { texto: "Confirmado", cor: "#16a34a" };
+        }
     }
-}
 
-function mostrarConfirmacao(mensagem) {
+    function mostrarConfirmacao(mensagem, isErro = false) {
         const aviso = document.createElement('div');
         aviso.textContent = mensagem;
-        aviso.style.cssText = `
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #16a34a;
-            color: #fff;
-            padding: 12px 24px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            font-weight: bold;
-            z-index: 1000;
-            transition: opacity 0.3s;
-        `;
+        aviso.className = isErro ? 'aviso-confirmacao erro' : 'aviso-confirmacao';
         document.body.appendChild(aviso);
 
         setTimeout(() => {
@@ -42,14 +29,19 @@ function mostrarConfirmacao(mensagem) {
         }, 2000);
     }
 
-
     fetch(urlAPI)
         .then(response => response.json())
         .then(resultado => {
             const container = document.getElementById('lista-favoritos-container');
+            const contador = document.getElementById('contador-favoritos');
             container.innerHTML = '';
 
             if (resultado.status === 'ok' && resultado.data.length > 0) {
+                const qtd = resultado.data.length;
+                if (contador) {
+                    contador.textContent = qtd === 1 ? '1 evento encontrado' : `${qtd} eventos encontrados`;
+                }
+
                 resultado.data.forEach(evento => {
 
                     const dataObj = new Date(evento.data_hora);
@@ -57,19 +49,29 @@ function mostrarConfirmacao(mensagem) {
                     const meses = ["JAN","FEV","MAR","ABR","MAI","JUN","JUL","AGO","SET","OUT","NOV","DEZ"];
                     const mes = meses[dataObj.getMonth()];
                     const ano = dataObj.getFullYear();
-                    const status = getStatusEvento(evento.data_hora)
+                    const status = getStatusEvento(evento.data_hora);
 
                     const cardHTML = `
-                        <div class="card-favorito" style="display: flex; background: #fff; border-radius: 8px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); overflow: hidden;">
-                            <div class="bloco-data" style="background: #111e2f; color: #fff; padding: 20px; text-align: center; min-width: 90px; display: flex; flex-direction: column; justify-content: center;">
-                                <span class="dia" style="font-size: 28px; font-weight: bold; line-height: 1;">${dia}</span>
-                                <span class="mes" style="font-size: 14px; margin-top: 5px; color: #8da4c4;">${mes}<br>${ano}</span>
+                        <div class="card-favorito" data-id="${evento.id_evento}">
+                            <div class="bloco-data">
+                                <span class="dia">${dia}</span>
+                                <span class="mes">${mes}<br>${ano}</span>
                             </div>
-                            <div class="info-evento" style="padding: 20px; display: flex; flex-direction: column; justify-content: center; flex-grow: 1;">
-                                <h3 style="margin: 0 0 5px 0; font-size: 20px; color: #111;">${evento.titulo}</h3>
-                                <p class="local-evento" style="margin: 0 0 15px 0; color: #666; font-size: 14px;">${evento.local}</p>
-                                <div>
-                                    <button class="btn-remover" data-id="${evento.id || evento.id_evento}" style="background: transparent; border: 1px solid #d9822b; color: #d9822b; padding: 6px 15px; border-radius: 20px; cursor: pointer; font-weight: bold;">Remover</button>
+                            <div class="info-evento">
+                                <h3>${evento.titulo}</h3>
+                                <p class="local-evento">${evento.local}</p>
+
+                                <span class="status-badge" style="background:${status.cor};">
+                                    ${status.texto}
+                                </span>
+
+                                <div class="linha-obs">
+                                    <input type="text" class="input-obs" data-id="${evento.id_evento}" value="${evento.observacao || ''}" placeholder="Adicionar observação...">
+                                    <button class="btn-salvar-obs" data-id="${evento.id_evento}">Salvar</button>
+                                </div>
+
+                                <div class="linha-remover">
+                                    <button class="btn-remover" data-id="${evento.id_evento}">Remover</button>
                                 </div>
                             </div>
                         </div>
@@ -79,8 +81,10 @@ function mostrarConfirmacao(mensagem) {
                 });
 
                 ativarBotoesRemover();
+                ativarBotoesSalvarObs();
             } else {
-                container.innerHTML = '<p style="padding: 20px; color: #665;">Nenhum evento encontrado.</p>';
+                if (contador) contador.textContent = '0 eventos encontrados';
+                container.innerHTML = '<p class="lista-vazia">Nenhum evento encontrado.</p>';
             }
         })
         .catch(error => {
@@ -104,14 +108,21 @@ function mostrarConfirmacao(mensagem) {
                     if (resultado.status === 'ok') {
                         card.remove();
                         mostrarConfirmacao("Evento removido dos favoritos");
+
+                        const contador = document.getElementById('contador-favoritos');
+                        const restantes = document.querySelectorAll('.card-favorito').length;
+                        if (contador) {
+                            contador.textContent = restantes === 1 ? '1 evento encontrado' : `${restantes} eventos encontrados`;
+                        }
                     } else {
-                        mostrarConfirmacao("Erro ao remover evento");
+                        mostrarConfirmacao("Erro ao remover evento", true);
                     }
                 })
                 .catch(err => console.error('Erro ao remover:', err));
             });
         });
-    }});
+    }
+
     function ativarBotoesSalvarObs() {
         const botoes = document.querySelectorAll('.btn-salvar-obs');
         botoes.forEach(botao => {
@@ -127,10 +138,11 @@ function mostrarConfirmacao(mensagem) {
                 })
                 .then(res => res.json())
                 .then(resultado => {
-                    mostrarConfirmacao(resultado.status === 'ok' ? "Observação salva" : "Erro ao salvar observação");
+                    const sucesso = resultado.status === 'ok';
+                    mostrarConfirmacao(sucesso ? "Observação salva" : "Erro ao salvar observação", !sucesso);
                 })
                 .catch(err => console.error('Erro ao salvar observação:', err));
             });
         });
     }
-
+});

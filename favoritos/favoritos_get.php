@@ -5,22 +5,26 @@ header("Content-type:application/json;charset=utf-8");
 
 $retorno = ['status' => '', 'mensagem' => '', 'data' => []];
 
-if (!isset($_SESSION['usuario'][0]['id'])) {
-    $retorno = ['status' => 'nok', 'mensagem' => 'Usuário não logado'];
+if (!isset($_SESSION['usuario'][0]['id_usuario'])) {
+    $retorno = ['status' => 'nok', 'mensagem' => 'Usuário não logado', 'data' => []];
     echo json_encode($retorno);
     exit;
 }
 
-$usuario_id = $_SESSION['usuario'][0]['id'];
+$id_usuario = $_SESSION['usuario'][0]['id_usuario'];
 
 $stmt = $conexao->prepare(
-    "SELECT evento.*,favorito.observacao FROM evento
-     INNER JOIN favorito ON favorito.evento_id = evento.id
-     WHERE favorito.usuario_id = ?"
+    "SELECT evento.*, favorito.observacao FROM evento
+     INNER JOIN favorito ON favorito.id_evento = evento.id_evento
+     WHERE favorito.id_usuario = ?"
 );
-$stmt->bind_param("i", $usuario_id);
+
+if (!$stmt) {
+    die("Erro no prepare: " . $conexao->error);
+}
+$stmt->bind_param("i", $id_usuario);
 $stmt->execute();
-$resultado-> = $stmt->get_result();
+$resultado = $stmt->get_result();
 
 $tabela = [];
 while ($linha = $resultado->fetch_assoc()) {
@@ -28,8 +32,8 @@ while ($linha = $resultado->fetch_assoc()) {
 }
 
 $retorno = $tabela
-? ['status' => 'ok','mensagem' => 'nenhum favorito encontrado', 'data' => $tabela]
-: ['status' => 'nok', 'mensagem' => 'nenhum favorito encontrado', 'data' => []];
+    ? ['status' => 'ok', 'mensagem' => 'Sucesso', 'data' => $tabela]
+    : ['status' => 'nok', 'mensagem' => 'Nenhum favorito encontrado', 'data' => []];
 
 $stmt->close();
 $conexao->close();

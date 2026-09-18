@@ -3,21 +3,26 @@ session_start();
 include_once('../crud_evento/php/conexao.php');
 header("Content-type:application/json;charset=utf-8");
 
-if (!isset($_SESSION['usuario'][0]['id'])) {
-    $retorno = ['status' => 'nok', 'mensagem' => 'Usuário não logado'];
+$retorno = ['status' => '', 'mensagem' => '', 'data' => []];
+
+if (!isset($_SESSION['usuario'][0]['id_usuario'])) {
+    $retorno = ['status' => 'nok', 'mensagem' => 'Usuário não logado', 'data' => []];
     echo json_encode($retorno);
     exit;
 }
-$usuario_ $_SESSION['usuario'][0]['id'];
-$evento_id = (int) ($_POST['evento_id'] ?? 0);
+
+$id_usuario = $_SESSION['usuario'][0]['id_usuario'];
+$id_evento = (int) ($_POST['evento_id'] ?? 0);
 $observacao = $_POST['observacao'] ?? '';
 
-$stmt = $conexao->prepare("UPDATE favorito SET observacao = ? WHERE usuario_id = ? AND evento_id = ?");
-$stmt->bind_param("sii", $observacao, $usuario_id, $evento_id);
+$stmt = $conexao->prepare("UPDATE favorito SET observacao = ? WHERE id_usuario = ? AND id_evento = ?");
+$stmt->bind_param("sii", $observacao, $id_usuario, $id_evento);
 
-$retorno = $stmt->execute()
-    ? ['status' => 'ok', 'mensagem' => 'Observação salva com sucesso!']
-    : ['status' => 'nok', 'mensagem' => 'Erro ao atualizar observação'];
+if ($stmt->execute()) {
+    $retorno = ['status' => 'ok', 'mensagem' => 'Observação salva com sucesso!', 'data' => []];
+} else {
+    $retorno = ['status' => 'nok', 'mensagem' => 'Erro ao atualizar observação', 'data' => []];
+}
 
 $stmt->close();
 $conexao->close();
