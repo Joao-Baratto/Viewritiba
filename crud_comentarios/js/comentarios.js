@@ -5,6 +5,7 @@ const id_evento = parametros.get("id");
 document.addEventListener("DOMContentLoaded", () => {
     elementos_tela = document.getElementById("elementos_tela");
     const btn_voltar = document.getElementById("btn_voltar");
+    const btn_topo = document.getElementById("btn_topo");
     const btn_comentario = document.getElementById("btn_comentario");
     if (!id_evento) {
         alert("Evento inválido.");
@@ -15,6 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
         btn_voltar.addEventListener("click", (e) => {
             e.preventDefault();
             voltar();
+        });
+    }
+    if (btn_topo) {
+        btn_topo.addEventListener("click", () => {
+            window.location.href = "#";
         });
     }
     if (btn_comentario) {
@@ -45,7 +51,7 @@ async function enviar() {
             body: fd
         });
         const retorno = await resposta.json();
-        if (retorno.status === "ok") {
+        if (retorno.status == "ok") {
             campoComentario.value = "";
             document.getElementById("new_nota").value = "";
             carregar_comentarios();
@@ -61,7 +67,7 @@ async function carregar_comentarios() {
     try {
         const resposta = await fetch(`../../crud_comentarios/php/comentario_get.php?id_evento=${id_evento}`);
         const retorno = await resposta.json();
-        comentarios = retorno.status === "ok" ? (retorno.data || []) : [];
+        comentarios = retorno.status == "ok" ? (retorno.data || []) : [];
         renderizar_comentarios();
     } catch (erro) {
         elementos_tela.innerHTML = "<p>Não foi possível carregar os comentários.</p>";
@@ -74,12 +80,13 @@ function renderizar_comentarios() {
         elementos_tela.innerHTML += `
             <div class="comentario-card">
                 <div class="comentario-meta">
-                    <span class="comentario-user">${comentario.nome_usuario}</span><span >★Nota: ${comentario.nota}/5</span>
+                    <span class="comentario-user">${comentario.nome_usuario}</span>
                     <span class="comentario-data">${comentario.data_criacao}</span>
                 </div>
                 <p class="comentario-texto">${comentario.texto}</p>
+                <span >★Nota: ${comentario.nota}/5</span>
                 <div class="comentario-acoes">
-                    <button type="button" onclick="alterar_comentario(${comentario.id})">Alterar</button>
+                    <button type="button" class="btn-alterar" onclick="alterar_comentario(${comentario.id})">Alterar</button>
                     <button type="button" class="btn-delete" onclick="excluir_comentario(${comentario.id})">Excluir</button>
                 </div>
             </div>
@@ -87,7 +94,7 @@ function renderizar_comentarios() {
     });
 }
 function alterar_comentario(id_comentario) {
-    window.location.href = `../../crud_comentarios/home/alterar_comentario.html?id_evento=${id_evento}&id=${id_comentario}`;
+    window.location.href = `alterar_comentario.html?id=${id_comentario}&id_evento=${id_evento}`;
 }
 async function excluir_comentario(id_comentario) {
     if (!confirm("Deseja excluir este comentário?")) {
@@ -99,7 +106,7 @@ async function excluir_comentario(id_comentario) {
         });
         const retorno = await resposta.json();
 
-        if (retorno.status === "ok") {
+        if (retorno.status == "ok") {
             carregar_comentarios();
         } else {
             alert("Erro ao excluir comentário: " + retorno.mensagem_retorno);
@@ -112,3 +119,13 @@ function voltar() {
     window.location.href = `../../crud_evento/home/index.html`;
     alert("Voltando para a página de eventos...");
 }
+async function deslogar() {
+    const retorno = await fetch("../php/deslogar.php");
+    const resposta = await retorno.json();
+
+    console.log(resposta);
+
+    if (resposta.status == "ok") {
+        window.location.replace("../login/index.html");
+    }
+};

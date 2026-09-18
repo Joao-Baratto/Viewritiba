@@ -14,13 +14,17 @@
         <div class="header-content">
             
             <h1>Viewritiba</h1>
+            <a href="#">Home</a>
+            <a href="../../crud_evento/home/index.html">Eventos</a>
+            <a href="../../favoritos/favoritos.html">Favoritos</a>
             <p>Alterar comentário</p>
+            <a href="#" onclick="deslogar()">Sair</a>
         </div>
     </header>
     <main class="page-main">
         <section class="comments-shell">
             <div class="comments-header">
-                <button type="button" id="btn_voltar" class="btn-secondary">← Voltar</button>
+                <button type="button" id="btn_voltar" class="btn-primary">← Voltar</button>
                 <h2>Comentário</h2>
             </div>
             <form id="formComentario" class="composer">
@@ -34,7 +38,7 @@
                     <div class="input-group select-group">
                         <label for="nova_nota">Nota</label>
                         <select id="nova_nota" required>
-                            <option value="">Selecione</option>
+                            <option value="">-</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
