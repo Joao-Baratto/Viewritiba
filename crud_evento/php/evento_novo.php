@@ -5,11 +5,24 @@
         'mensagem'  => '',
         'data'      => []
     ];
-    $titulo       = $_POST['titulo']; 
-    $descricao      = $_POST['descricao'];
-    $data_hora    = $_POST['data_hora'];
-    $local      = $_POST['local'];
-    $id_organizador   =(int) $_POST['id_organizador'];
+    $titulo       = trim ($_POST['titulo'] ?? ''); 
+    $descricao      = trim ($_POST['descricao'] ?? '');
+    $data_hora    = $_POST['data_hora'] ?? '';
+    $local      = trim ($_POST['local'] ?? '');
+    $id_organizador   =(int) ($_POST['id_organizador'] ?? 0);
+    if (
+    $titulo === '' ||
+    $descricao === '' ||
+    $data_hora === '' ||
+    $local === '' ||
+    $id_organizador <= 0
+) {
+    $retorno = [
+        'status' => 'nok',
+        'mensagem' => 'Preencha corretamente todos os campos obrigatórios.',
+        'data' => []
+    ];
+    } else {
     $stmt = $conexao->prepare("
     INSERT INTO evento(titulo, descricao, data_hora, local, id_organizador) 
 VALUES(?,?,?,?,?)");
@@ -29,6 +42,7 @@ VALUES(?,?,?,?,?)");
         ];
     }
     $stmt->close();
+    }
     $conexao->close();
      header("Content-type:application/json;charset:utf-8");
     echo json_encode($retorno);
