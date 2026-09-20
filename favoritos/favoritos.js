@@ -95,6 +95,10 @@ document.addEventListener("DOMContentLoaded", function() {
         const botoes = document.querySelectorAll('.btn-remover');
         botoes.forEach(botao => {
             botao.addEventListener('click', function () {
+                const confirmou = confirm("Tem certeza que quer remover este evento dos favoritos?");
+                 if (!confirmou) {
+                return;
+            }
                 const id_evento = this.getAttribute('data-id');
                 const card = this.closest('.card-favorito');
 
