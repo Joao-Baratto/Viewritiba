@@ -2,11 +2,11 @@
 include_once('conexao.php');
 header("Content-type:application/json;charset:utf-8");
 
-$id_comentario = filter_input(INPUT_GET, 'id_comentario', FILTER_VALIDATE_INT);
-$texto = trim($_POST['texto'] ?? '');
-$nota = filter_input(INPUT_POST, 'nota', FILTER_VALIDATE_INT);
+$id_comentario = (int)($_POST['id_comentario'] ?? $_GET['id_comentario'] ?? '');
+$texto = trim(($_POST['texto'] ?? ''));
+$nota = (int)($_POST['nota'] ??'');
 
-if(!$texto || !$nota){
+if(!$id_comentario || !$texto || !$nota){
     echo json_encode([
         'status' => 'nok',
         'mensagem_retorno' => 'Voce deve preencher todos os campos.',

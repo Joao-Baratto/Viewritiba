@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         voltar();
     });
-    document.getElementById("formComentario").addEventListener("submit", (e) => {
+    document.getElementById("form_alterar_comentario").addEventListener("submit", (e) => {
         e.preventDefault();
         alterar();
     });
@@ -45,6 +45,7 @@ async function alterar() {
         return;
     }
     const fd = new FormData();
+    fd.append("id_comentario", id_comentario);
     fd.append("texto", comentario);
     fd.append("nota", nota);
     try {

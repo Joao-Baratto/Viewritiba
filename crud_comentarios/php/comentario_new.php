@@ -14,7 +14,7 @@ function responder($status, $mensagem, $data = []) {
 
 $texto = trim($_POST['texto'] ?? '');
 $id_evento = filter_input(INPUT_POST, 'id_evento', FILTER_VALIDATE_INT);
-$nota = filter_input(INPUT_POST, 'nota', FILTER_VALIDATE_INT);
+$nota = (int)($_POST['nota'] ?? '');
 $email = '';
 if(isset($_SESSION['usuario'][0]['email'])){
     $email = $_SESSION['usuario'][0]['email'];

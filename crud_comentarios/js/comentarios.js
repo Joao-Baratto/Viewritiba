@@ -32,8 +32,8 @@ document.addEventListener("DOMContentLoaded", () => {
     carregar_comentarios();
 });
 async function enviar() {
-    const campoComentario = document.getElementById("new_comentario");
-    const conteudo = campoComentario.value.trim();
+    const comentario = document.getElementById("new_comentario");
+    const conteudo = comentario.value.trim();
     const nota = document.getElementById("new_nota").value;
 
     if (!conteudo) {
@@ -52,7 +52,7 @@ async function enviar() {
         });
         const retorno = await resposta.json();
         if (retorno.status == "ok") {
-            campoComentario.value = "";
+            comentario.value = "";
             document.getElementById("new_nota").value = "";
             carregar_comentarios();
         } else {

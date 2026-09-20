@@ -2,7 +2,7 @@
 include_once('conexao.php');
 header("Content-type:application/json;charset:utf-8");
 
-$id_evento = filter_input(INPUT_GET, 'id_evento', FILTER_VALIDATE_INT);
+$id_evento = (int)($_GET['id_evento'] ?? '');
 if(!$id_evento){
     echo json_encode([
         'status' => 'nok',
