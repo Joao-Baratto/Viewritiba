@@ -13,10 +13,13 @@ if (isset($_GET['id'])) {
     $stmt->bind_param("i", $id);
 } elseif (isset($_GET['titulo'])) {
     $titulo = "%" . $_GET['titulo'] . "%";
-    $stmt = $conexao->prepare(
-        "SELECT * FROM evento WHERE titulo LIKE ?"
+     $stmt = $conexao->prepare(
+        "SELECT * FROM evento
+         WHERE titulo LIKE ?
+         OR descricao LIKE ?
+         OR local LIKE ?"
     );
-    $stmt->bind_param("s", $titulo);
+    $stmt->bind_param("sss", $titulo, $titulo, $titulo);
 } else {
     $stmt = $conexao->prepare(
         "SELECT * FROM evento"
@@ -37,7 +40,7 @@ if ($resultado->num_rows > 0) {
 } else {
     $retorno = [
         'status' => 'nok',
-        'mensagem' => 'Não há registros',
+        'mensagem' => 'Nenhum evento encontrado.',
         'data' => []
     ];
 }

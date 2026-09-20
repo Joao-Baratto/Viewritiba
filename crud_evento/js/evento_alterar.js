@@ -19,7 +19,8 @@ async function buscar(id){
         document.getElementById("data_hora").value =
                 registro.data_hora.replace(" ", "T").substring(0, 16);
         document.getElementById("local").value = registro.local;
-        document.getElementById("id_organizador").value = registro.id_organizador;        document.getElementById("id").value = id;
+        document.getElementById("id_organizador").value = registro.id_organizador;    
+         document.getElementById("id").value = id;
     }else{
         alert("ERRO:" + resposta.mensagem);
         window.location.href = "../home/";
