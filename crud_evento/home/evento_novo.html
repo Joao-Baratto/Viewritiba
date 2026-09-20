@@ -3,53 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evento NOVO</title>
+    <title>Novo Evento</title>
     <link rel="stylesheet" href="../../css/style.css">
 </head>
-<main class="page-main">
-<div class="form-container">
-<div class="form-header">
+<body>
+    <main class="page-main">
+    <div class="form-container">  
+     <div class="form-header">
         <h2>Cadastrar Evento</h2>
         <p>Preencha os dados do evento.</p>
     </div>
-
     <div class="modern-form">
-
         <div class="input-group">
             <label for="titulo">Título:</label>
             <input type="text" id="titulo" required>
         </div>
-    </div>
-    <div>
-        <div>
+        <div class="input-group">
             <label for="descricao">Descrição:</label>
             <input type="text" id="descricao" required>
         </div>
-    </div>
-    <div>
-        <div>
+        <div class="input-group">
             <label for="data_hora">Data e Hora:</label>
             <input type="datetime-local" id="data_hora" required>
         </div>
-    </div>
-    <div>
-        <div>
+        <div class="input-group">
             <label for="local">Local:</label>
             <input type="text" id="local" required>
         </div>
-    </div>
-    <div>
-        <div>
+        <div class="input-group">
             <label for="id_organizador">ID Organizador:</label>
             <input type="number" id="id_organizador" required>
         </div>
-    </div>
-    <div>
         <div>
-            <button id="enviar">Enviar</button> 
+            <button type="button" id="enviar">Enviar</button> 
         </div>
+      </div>
     </div>
-    <script src="../js/evento_novo.js"></script>
-    <script src="../js/valida_sessao.js"></script>
+   </main>
+   <script src="../js/evento_novo.js"></script>
+   <script src="../js/valida_sessao.js"></script>
 </body>
 </html>

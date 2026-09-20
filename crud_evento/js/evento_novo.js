@@ -4,10 +4,10 @@ document.getElementById("enviar").addEventListener("click", () => {
     novo();
 });
 async function novo(){
-    var titulo    = document.getElementById("titulo").value.trim;
-    var descricao = document.getElementById("descricao").value.trim;
+    var titulo    = document.getElementById("titulo").value.trim();
+    var descricao = document.getElementById("descricao").value.trim();
     var data_hora   = document.getElementById("data_hora").value;
-    var local   = document.getElementById("local").value.trim;
+    var local   = document.getElementById("local").value.trim();
     var id_organizador   = document.getElementById("id_organizador").value;
     if (
     titulo === "" ||
