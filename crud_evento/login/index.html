@@ -1,48 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seja bem vindo!</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Domine:wght@400;700&display=swap" rel="stylesheet">
+    <title>Login</title>
+
     <link rel="stylesheet" href="login.css">
 </head>
+
 <body>
-    <header class="page-header">
-        <div class="header-content">
-            <h1>Viewritiba</h1>
-            <a href="#">Home</a>
-            <a href="#">Eventos</a>
-            <a href="#">Favoritos</a>
-            <p>Fazer login</p>
-            <a href="#">Sair</a>
-        </div>
-    </header>
-    <main class="page-main">
-        <section class="login-shell">
-            <div class="login-header">
-                <div>
-                    <h2>Seja bem vindo!</h2>
-                </div>
-                <div class="composer-actions">
-                    <div class="input-group select-group">
-                        <div>
-                            <label for = "usuario">E-mail: </label>
-                            <input type="text" id="usuario" placeholder="viewritiba@email.com">
-                        </div><div>
-                            <label for = "senha">Senha:</label>
-                            <input type="password" id="senha" placeholder="••••••">
-                        </div>
-                        <br>
-                        
-                    </div>
-                    <button type="button" id="enviar" class="btn-primary">Enviar</button>
-                </div>
-            </div>
-        </section>
-    </main>
+
+    <h1>Login</h1>
+
+    <form id="formLogin">
+
+        <label for="usuario">E-mail:</label>
+        <input
+            type="email"
+            id="usuario"
+            name="email"
+            required
+        >
+
+        <br><br>
+
+        <label for="senha">Senha:</label>
+        <input
+            type="password"
+            id="senha"
+            name="senha"
+            required
+        >
+
+        <br><br>
+
+        <button type="button" id="enviar">
+            Login
+        </button>
+
+    </form>
+
     <script src="../js/valida_login.js"></script>
+
 </body>
 </html>

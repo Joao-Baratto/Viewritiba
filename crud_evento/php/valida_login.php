@@ -1,77 +1,62 @@
 <?php
-include_once('conexao.php');
 
-$retorno = [
-    'status' => '',
-    'mensagem' => '',
-    'data' => []
-];
+session_start();
+header("Content-Type: application/json; charset=utf-8");
+
+include_once("conexao.php");
 
 $email = trim($_POST['email'] ?? '');
 $senha = $_POST['senha'] ?? '';
 
+if ($email === '' || $senha === '') {
+    echo json_encode([
+        'status' => 'nok',
+        'mensagem' => 'Informe o e-mail e a senha.'
+    ]);
+    exit;
+}
+
 $stmt = $conexao->prepare(
-    "SELECT * FROM usuario WHERE email = ? AND status_usuario = 'ativo'"
+    "SELECT id_usuario, nome, email, tipo_usuario, senha, status_usuario
+     FROM usuario
+     WHERE email = ?
+     AND tipo_usuario = 'organizador'
+     AND status_usuario = 'ativo'"
 );
 
-$stmt->bind_param(
-    "s",
-    $email
-);
-
+$stmt->bind_param("s", $email);
 $stmt->execute();
 
 $resultado = $stmt->get_result();
+$organizador = $resultado->fetch_assoc();
 
-$tabela = [];
+if ($organizador && password_verify($senha, $organizador['senha'])) {
 
-if ($resultado->num_rows > 0) {
+    unset($organizador['senha']);
 
-    $linha = $resultado->fetch_assoc();
-    if (!password_verify($senha, $linha['senha'])) {
-        $linha = null;
-    }
+    session_regenerate_id(true);
 
-    if ($linha !== null) {
-        unset($linha['senha']);
-        $tabela[] = $linha;
-    }
+    $_SESSION['usuario'] = [$organizador];
+    $_SESSION['usuario_id'] = (int) $organizador['id_usuario'];
+    $_SESSION['usuario_tipo'] = $organizador['tipo_usuario'];
 
-    session_start();
-    if (count($tabela) > 0) {
-        session_regenerate_id(true);
-        $_SESSION['usuario'] = $tabela;
-        $_SESSION['usuario_id'] = (int) $linha['id_usuario'];
-        $_SESSION['usuario_tipo'] = $linha['tipo_usuario'];
-    }
+    $_SESSION['organizador_id'] = (int) $organizador['id_usuario'];
+    $_SESSION['organizador_nome'] = $organizador['nome'];
+    $_SESSION['organizador_email'] = $organizador['email'];
 
-    if (count($tabela) > 0) {
-        $retorno = [
-            'status' => 'ok',
-            'mensagem' => 'Login realizado com sucesso.',
-            'data' => $tabela
-        ];
-    } else {
-        $retorno = [
-            'status' => 'nok',
-            'mensagem' => 'Usuário ou senha incorretos.',
-            'data' => []
-        ];
-    }
+    echo json_encode([
+        'status' => 'ok',
+        'mensagem' => 'Login realizado com sucesso.'
+    ]);
 
 } else {
 
-    $retorno = [
+    echo json_encode([
         'status' => 'nok',
-        'mensagem' => 'Usuário ou senha incorretos.',
-        'data' => []
-    ];
+        'mensagem' => 'E-mail ou senha incorretos.'
+    ]);
 }
 
 $stmt->close();
 $conexao->close();
-
-header("Content-type:application/json;charset:utf-8");
-
-echo json_encode($retorno);
 ?>
