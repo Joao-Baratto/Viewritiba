@@ -37,7 +37,7 @@ if(isset($_GET['id'])){
         }else{
             $retorno = [
                 'status'    => 'nok',
-                'mensagem'  => 'Não posso alterar um registro.'.json_encode($_GET),
+                'mensagem'  => 'Não foi possível alterar o registro.'.json_encode($_GET),
                 'data'      => []
             ];
         }
@@ -46,7 +46,7 @@ if(isset($_GET['id'])){
     }else{
         $retorno = [
             'status'    => 'nok',
-            'mensagem'  => 'Não posso alterar um registro sem um ID informado.',
+            'mensagem'  => 'Não foi possível alterar o registro sem um ID informado.',
             'data'      => []
         ];
     }

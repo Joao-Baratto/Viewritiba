@@ -35,7 +35,7 @@ async function alterar(){
     var local   = document.getElementById("local").value.trim();
     var id_organizador  = document.getElementById("id_organizador").value;
     var id  = document.getElementById("id").value;
-    if (
+    if (                           //não permitir local vazio
         titulo === "" ||
         descricao === "" ||
         data_hora === "" ||
