@@ -9,7 +9,7 @@ async function novo(){
     var data_hora   = document.getElementById("data_hora").value;
     var local   = document.getElementById("local").value.trim();
     var id_organizador   = document.getElementById("id_organizador").value;
-    if (   //não permitir local vazio
+    if (   
     titulo === "" ||
     descricao === "" ||
     data_hora === "" ||
