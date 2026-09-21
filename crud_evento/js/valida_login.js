@@ -1,25 +1,20 @@
-document.getElementById("enviar").addEventListener("click", () => {
-    login();
-});
+document.getElementById("enviar").addEventListener("click", () => login());
+    alert("clicou");
 async function login(){
-    var email = document.getElementById("usuario").value.trim();
+    var email = document.getElementById("usuario").value;
     var senha = document.getElementById("senha").value;
-    if (email === "" || senha === "") {
-        alert("Informe o e-mail e a senha.");
-        return;
-    }
     const fd = new FormData();
     fd.append("email", email);
     fd.append("senha", senha);
-    const retorno = await fetch("../php/valida_login.php", {
-        method: "POST",
-        body: fd
-        credentials: "same-origin"
-    });
+    const retorno = await fetch("../php/valida_login.php",{
+            method: "POST",
+            body: fd
+        }
+    );
     const resposta = await retorno.json();
     if(resposta.status == "ok"){
         window.location.href = "../home/index.html";
-    } else {
-        alert("ERRO: " + resposta.mensagem);
+    }else{
+        alert("Credenciais invalidas.");
     }
 }
