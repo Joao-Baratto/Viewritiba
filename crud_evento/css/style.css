@@ -1,0 +1,750 @@
+/* =========================================================
+   VIEWRITIBA - HOME DE EVENTOS
+   ========================================================= */
+
+:root {
+    --bg: #f7f4f1;
+    --card: #ffffff;
+    --dark: #232323;
+    --dark-soft: #2b2b2b;
+    --text: #1f2937;
+    --muted: #6b7280;
+
+    --coral: #ff7358;
+    --coral-hover: #e96046;
+    --coral-soft: #fff0eb;
+
+    --blue-soft: #eef5ff;
+    --blue: #2463eb;
+
+    --yellow-soft: #fff7db;
+    --yellow: #a16207;
+
+    --red-soft: #ffeaea;
+    --red: #c62828;
+
+    --border: #e8e3df;
+
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.10);
+
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+
+    --font: "Segoe UI", Arial, sans-serif;
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.page-header {
+    background: var(--dark);
+    color: white;
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    min-height: 72px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.page-header h1 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+}
+
+.page-header h1::first-letter {
+    color: white;
+}
+
+.page-header h1 {
+    color: var(--coral);
+}
+
+
+/* =========================================================
+   BOTÃO SAIR
+   ========================================================= */
+
+.btn-outline {
+    background: transparent;
+    color: white;
+
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 10px;
+
+    padding: 10px 16px;
+
+    font-size: 0.95rem;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.btn-outline:hover {
+    background: var(--coral);
+    border-color: var(--coral);
+}
+
+
+/* =========================================================
+   CONTAINER
+   ========================================================= */
+
+.container {
+    width: min(1200px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 42px 0 60px;
+}
+
+
+/* =========================================================
+   SEÇÃO DE BUSCA
+   ========================================================= */
+
+.search-section {
+    background: var(--card);
+    border-radius: var(--radius-lg);
+
+    padding: 34px;
+
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-md);
+
+    margin-bottom: 34px;
+}
+
+
+/* =========================================================
+   TÍTULO DA BUSCA
+   ========================================================= */
+
+.search-header {
+    margin-bottom: 24px;
+}
+
+.search-header::before {
+    content: "DESCUBRA EXPERIÊNCIAS";
+
+    display: block;
+
+    color: var(--coral);
+
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+
+    margin-bottom: 8px;
+}
+
+.search-header h2 {
+    font-size: clamp(2rem, 4vw, 3.2rem);
+
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+
+    color: var(--dark);
+
+    margin-bottom: 12px;
+}
+
+.search-header h2::after {
+    content: "";
+}
+
+.search-header p {
+    color: var(--muted);
+    font-size: 1.05rem;
+    line-height: 1.6;
+
+    max-width: 700px;
+}
+
+
+/* =========================================================
+   ÁREA DE BUSCA
+   ========================================================= */
+
+.search-area {
+    display: grid;
+
+    grid-template-columns:
+        minmax(240px, 2fr)
+        minmax(170px, 1fr)
+        auto
+        auto;
+
+    gap: 12px;
+
+    align-items: center;
+}
+
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+#pesquisa,
+#filtro_data {
+    width: 100%;
+    height: 54px;
+
+    padding: 0 16px;
+
+    background: #fafafa;
+
+    border: 1.5px solid #e0e0e0;
+    border-radius: 12px;
+
+    font-size: 1rem;
+    color: var(--text);
+
+    transition: 0.2s ease;
+}
+
+#pesquisa::placeholder {
+    color: #9ca3af;
+}
+
+#pesquisa:focus,
+#filtro_data:focus {
+    outline: none;
+
+    background: white;
+
+    border-color: var(--coral);
+
+    box-shadow:
+        0 0 0 4px rgba(255, 115, 88, 0.15);
+}
+
+
+/* =========================================================
+   BOTÃO BUSCAR
+   ========================================================= */
+
+#buscar {
+    height: 54px;
+
+    padding: 0 28px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: var(--coral);
+    color: white;
+
+    font-size: 1rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+
+    box-shadow:
+        0 6px 14px rgba(255, 115, 88, 0.24);
+}
+
+#buscar:hover {
+    background: var(--coral-hover);
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 18px rgba(255, 115, 88, 0.30);
+}
+
+
+/* =========================================================
+   LIMPAR FILTROS
+   ========================================================= */
+
+#filtro_apagar {
+    height: 54px;
+
+    padding: 0 22px;
+
+    background: white;
+
+    color: #374151;
+
+    border: 1.5px solid #d1d5db;
+    border-radius: 12px;
+
+    font-size: 0.95rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+#filtro_apagar:hover {
+    color: var(--coral);
+    border-color: var(--coral);
+
+    background: var(--coral-soft);
+}
+
+
+/* =========================================================
+   ÁREA DO BOTÃO NOVO EVENTO
+   ========================================================= */
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+
+    margin-top: 20px;
+}
+
+#novo {
+    min-width: 210px;
+
+    padding: 14px 22px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: var(--coral);
+    color: white;
+
+    font-size: 1rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 6px 14px rgba(255, 115, 88, 0.24);
+
+    transition: 0.2s ease;
+}
+
+#novo:hover {
+    background: var(--coral-hover);
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   SEÇÃO EVENTOS
+   ========================================================= */
+
+.events-section {
+    margin-top: 10px;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 18px;
+}
+
+.section-header h2 {
+    font-size: 2rem;
+    color: var(--dark);
+
+    letter-spacing: -0.03em;
+}
+
+
+/* =========================================================
+   LISTA
+   ========================================================= */
+
+#lista {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+
+/* =========================================================
+   TABELA VIRANDO VISUAL DE CARD
+   ========================================================= */
+
+#lista table {
+    width: 100%;
+
+    border-collapse: separate;
+    border-spacing: 0 14px;
+}
+
+#lista thead,
+#lista tr:first-child {
+    color: var(--muted);
+}
+
+#lista th {
+    text-align: left;
+
+    font-size: 0.8rem;
+    font-weight: 800;
+
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+
+    padding: 0 18px 4px;
+}
+
+
+/* =========================================================
+   LINHAS
+   ========================================================= */
+
+#lista td {
+    background: white;
+
+    padding: 18px;
+
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+
+    vertical-align: middle;
+
+    transition: 0.2s ease;
+}
+
+#lista td:first-child {
+    border-left: 1px solid var(--border);
+
+    border-radius:
+        14px 0 0 14px;
+
+    font-weight: 800;
+}
+
+#lista td:last-child {
+    border-right: 1px solid var(--border);
+
+    border-radius:
+        0 14px 14px 0;
+}
+
+#lista tr:hover td {
+    background: #fff9f6;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   AÇÕES
+   ========================================================= */
+
+#lista a {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 9px 12px;
+
+    margin: 3px;
+
+    border-radius: 9px;
+
+    text-decoration: none;
+
+    font-size: 0.85rem;
+    font-weight: 700;
+
+    transition: 0.2s ease;
+}
+
+
+/* Comentários */
+
+#lista a[href*="comentarios"] {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+#lista a[href*="comentarios"]:hover {
+    background: #e5e7eb;
+}
+
+
+/* Alterar */
+
+#lista a[href*="evento_alterar"] {
+    background: var(--blue-soft);
+    color: var(--blue);
+}
+
+#lista a[href*="evento_alterar"]:hover {
+    background: #dceaff;
+}
+
+
+/* Favoritar */
+
+#lista a[onclick*="favoritar"] {
+    background: var(--coral-soft);
+    color: var(--coral-hover);
+}
+
+#lista a[onclick*="favoritar"]:hover {
+    background: #ffe3da;
+}
+
+
+/* Excluir */
+
+#lista a[onclick*="excluir"] {
+    background: var(--red-soft);
+    color: var(--red);
+}
+
+#lista a[onclick*="excluir"]:hover {
+    background: #ffd6d6;
+}
+
+
+/* =========================================================
+   MENSAGENS SEM RESULTADO
+   ========================================================= */
+
+#lista p {
+    background: white;
+
+    border: 1px dashed #d1d5db;
+
+    border-radius: 14px;
+
+    padding: 34px;
+
+    text-align: center;
+
+    color: var(--muted);
+
+    font-size: 1rem;
+}
+
+
+/* =========================================================
+   EFEITO DE DESTAQUE EM PESQUISA
+   ========================================================= */
+
+#lista td[style*="background-color"] {
+    transition: 0.25s ease;
+}
+
+
+/* =========================================================
+   FORMULÁRIOS DE CADASTRO / ALTERAÇÃO
+   ========================================================= */
+
+.page-main {
+    min-height: calc(100vh - 72px);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 40px 20px;
+
+    background:
+        linear-gradient(
+            rgba(247, 244, 241, 0.92),
+            rgba(247, 244, 241, 0.92)
+        );
+}
+
+.form-container {
+    width: min(560px, 100%);
+
+    background: white;
+
+    border-radius: var(--radius-lg);
+
+    padding: 38px;
+
+    border: 1px solid var(--border);
+
+    box-shadow: var(--shadow-md);
+}
+
+.form-header {
+    text-align: center;
+
+    margin-bottom: 28px;
+}
+
+.form-header h2 {
+    font-size: 2rem;
+
+    margin-bottom: 6px;
+
+    color: var(--dark);
+}
+
+.form-header p {
+    color: var(--muted);
+}
+
+.modern-form {
+    display: flex;
+    flex-direction: column;
+
+    gap: 18px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+.input-group label {
+    font-size: 0.9rem;
+    font-weight: 700;
+
+    color: #374151;
+}
+
+.input-group input {
+    width: 100%;
+
+    padding: 13px 14px;
+
+    border: 1.5px solid #e5e7eb;
+
+    border-radius: 10px;
+
+    background: #fafafa;
+
+    font-size: 1rem;
+
+    transition: 0.2s ease;
+}
+
+.input-group input:focus {
+    outline: none;
+
+    background: white;
+
+    border-color: var(--coral);
+
+    box-shadow:
+        0 0 0 4px rgba(255, 115, 88, 0.14);
+}
+
+.modern-form button {
+    width: 100%;
+
+    border: none;
+
+    border-radius: 10px;
+
+    padding: 14px;
+
+    background: var(--coral);
+
+    color: white;
+
+    font-size: 1rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.modern-form button:hover {
+    background: var(--coral-hover);
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .search-area {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    #lista table {
+        min-width: 900px;
+    }
+
+    #lista {
+        overflow-x: auto;
+    }
+}
+
+
+@media (max-width: 640px) {
+
+    .container {
+        width: min(100% - 24px, 1200px);
+
+        padding-top: 24px;
+    }
+
+    .search-section {
+        padding: 22px;
+    }
+
+    .search-area {
+        grid-template-columns: 1fr;
+    }
+
+    #buscar,
+    #filtro_apagar,
+    #novo {
+        width: 100%;
+    }
+
+    .actions {
+        justify-content: stretch;
+    }
+
+    .search-header h2 {
+        font-size: 2rem;
+    }
+
+    .form-container {
+        padding: 24px;
+    }
+}
