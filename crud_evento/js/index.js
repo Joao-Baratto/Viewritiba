@@ -15,6 +15,13 @@ document.getElementById("buscar").addEventListener("click", () => {
     pesquisar();
 });
 
+document.getElementById("pesquisa").addEventListener("keydown", (evento) => {
+    if (evento.key === "Enter") {
+        evento.preventDefault();
+        pesquisar();
+    }
+});
+
 document.getElementById("filtro_apagar").addEventListener("click", () => {
     document.getElementById("pesquisa").value = "";
     document.getElementById("filtro_data").value = "";
