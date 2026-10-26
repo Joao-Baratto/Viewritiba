@@ -1,30 +1,35 @@
 document.addEventListener("DOMContentLoaded", () => {
+    valida_sessao();
 });
 document.getElementById("enviar").addEventListener("click", () => {
     novo();
 });
 async function novo(){
-    var titulo    = document.getElementById("titulo").value.trim();
-    var descricao = document.getElementById("descricao").value.trim();
+    var titulo    = document.getElementById("titulo").value;
+    var descricao = document.getElementById("descricao").value;
     var data_hora   = document.getElementById("data_hora").value;
-    var local   = document.getElementById("local").value.trim();
-    var id_organizador   = document.getElementById("id_organizador").value;
-    if (   
-    titulo === "" ||
-    descricao === "" ||
-    data_hora === "" ||
-    local === "" ||
-    id_organizador === ""
-) {
-    alert("Preencha todos os campos obrigatórios.");
-    return;
-}
+    var local   = document.getElementById("local").value;
+
+    if (
+        titulo === "" ||
+        descricao === "" ||
+        data_hora === "" ||
+        local === ""
+    ) {
+        alert("Preencha todos os campos obrigatórios.");
+        return;
+    }
+
+    if (new Date(data_hora) <= new Date()) {
+        alert("A data e a hora do evento devem ser futuras.");
+        return;
+    }
+
     const fd = new FormData();
     fd.append("titulo", titulo);
     fd.append("descricao", descricao);
     fd.append("data_hora", data_hora);
     fd.append("local", local);
-    fd.append("id_organizador", id_organizador);
     const retorno = await fetch("../php/evento_novo.php",
         {
           method: 'POST',
