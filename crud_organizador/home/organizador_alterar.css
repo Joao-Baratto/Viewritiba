@@ -1,0 +1,732 @@
+/* ==========================================================================
+   Variáveis e Paleta de Cores (Viewritiba)
+   ========================================================================== */
+:root {
+    --bg-fundo: #F7F5F2; 
+    --bg-header: #2B2B2B; 
+    --bg-form: #FFFFFF; 
+    --cor-texto: #2B2B2B; 
+    --cor-texto-mutado: #6B7280; 
+    --cor-destaque: #FF7A59; 
+    --cor-destaque-hover: #E86A4C; 
+    
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-focus: 0 0 0 4px rgba(255, 122, 89, 0.2); 
+    
+    --radius-md: 8px;
+    --radius-lg: 16px;
+    
+    --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* ==========================================================================
+   Reset e Base
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-fundo);
+    color: var(--cor-texto);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased; 
+    min-height: 100vh; 
+    display: flex;
+    flex-direction: column; 
+}
+
+/* ==========================================================================
+   Cabeçalho (Header)
+   ========================================================================== */
+.page-header {
+    background-color: var(--bg-header);
+    color: #FFFFFF;
+    padding: 1rem 2rem;
+    box-shadow: var(--shadow-md);
+    position: sticky; 
+    top: 0;
+    z-index: 10; 
+}
+
+.header-content {
+    max-width: 1000px;
+    margin: 0 auto; 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+}
+
+.page-header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(to right, #FFFFFF, #FF7A59);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.nav-link {
+    color: #FFF;
+    text-decoration: none;
+    margin-left: 1.5rem;
+    font-weight: 400;
+    font-size: 0.95rem;
+    transition: color 0.2s;
+}
+
+.nav-link:hover {
+    color: var(--cor-destaque);
+}
+
+.nav-logout {
+    color: #E86A4C;
+}
+
+/* ==========================================================================
+   Conteúdo Principal
+   ========================================================================== */
+.page-main {
+    flex: 1; 
+    display: flex;
+    justify-content: center; 
+    padding: 2rem 1rem;
+    background-image: radial-gradient(var(--bg-header) 0.5px, transparent 0.5px), radial-gradient(var(--bg-header) 0.5px, var(--bg-fundo) 0.5px);
+    background-size: 20px 20px;
+    background-position: 0 0, 10px 10px;
+    background-color: var(--bg-fundo);
+    opacity: 0.95;
+}
+
+.profile-container {
+    background-color: var(--bg-form);
+    width: 100%;
+    max-width: 760px; 
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg); 
+    overflow: hidden;
+    animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ==========================================================================
+   Cabeçalho do Perfil (Capa e Avatar)
+   ========================================================================== */
+.profile-header {
+    position: relative;
+    margin-bottom: 4rem; /* espaço para o avatar que fica sobreposto */
+}
+
+.profile-cover {
+    height: 180px;
+    background: linear-gradient(135deg, var(--bg-header), var(--cor-destaque));
+    width: 100%;
+}
+
+.profile-avatar-section {
+    position: absolute;
+    bottom: -50px;
+    left: 2rem;
+    display: flex;
+    align-items: flex-end;
+}
+
+.avatar-wrapper {
+    position: relative;
+    border-radius: 50%;
+    border: 4px solid var(--bg-form);
+    background-color: var(--bg-form);
+}
+
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+}
+
+.btn-edit-avatar {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    background-color: var(--bg-form);
+    border: 1px solid #E5E7EB;
+    color: var(--cor-texto);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s;
+}
+
+.btn-edit-avatar:hover {
+    background-color: #F9FAFB;
+    color: var(--cor-destaque);
+}
+
+/* ==========================================================================
+   Corpo do Perfil (Info, Abas)
+   ========================================================================== */
+.profile-body {
+    padding: 0 2rem 2.5rem 2rem;
+}
+
+.profile-info-display {
+    margin-bottom: 1.5rem;
+}
+
+.profile-info-display h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--cor-texto);
+}
+
+.profile-bio {
+    color: var(--cor-texto-mutado);
+    font-size: 0.95rem;
+    margin-top: 0.25rem;
+}
+
+/* Abas */
+.profile-tabs {
+    display: flex;
+    border-bottom: 1px solid #E5E7EB;
+    margin-bottom: 2rem;
+    gap: 1rem;
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    padding: 0.75rem 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--cor-texto-mutado);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    font-family: var(--font-sans);
+}
+
+.tab-btn:hover {
+    color: var(--cor-texto);
+}
+
+.tab-btn.active {
+    color: var(--cor-destaque);
+    border-bottom-color: var(--cor-destaque);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.4s ease forwards;
+}
+
+/* ==========================================================================
+   Formulários
+   ========================================================================== */
+.modern-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem; 
+}
+
+.input-row {
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 1rem;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column; 
+    gap: 0.375rem;
+}
+
+.input-group label {
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.tooltip-icon {
+    display: inline-block;
+    margin-left: 4px;
+    color: var(--cor-texto-mutado);
+    cursor: help;
+    font-size: 0.8rem;
+}
+
+.input-group input, .input-group textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid #E5E7EB;
+    border-radius: var(--radius-md);
+    background-color: #F9FAFB; 
+    transition: all 0.2s ease-in-out; 
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+}
+
+.input-group input:focus, .input-group textarea:focus {
+    outline: none;
+    background-color: var(--bg-form);
+    border-color: var(--cor-destaque); 
+    box-shadow: var(--shadow-focus); 
+}
+
+.input-readonly {
+    background-color: #EFEFEF !important;
+    color: #6B7280;
+    cursor: not-allowed;
+    border-color: #E5E7EB !important;
+    box-shadow: none !important;
+}
+
+.input-with-action {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.badge {
+    position: absolute;
+    right: 12px;
+    font-size: 0.7rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.badge-verified {
+    background-color: #DEF7EC;
+    color: #03543F;
+}
+
+.badge-unverified {
+    background-color: #FDF6B2;
+    color: #723B13;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.mt-2 { margin-top: 0.5rem; }
+.mt-3 { margin-top: 1rem; }
+.mt-4 { margin-top: 1.5rem; }
+
+/* ==========================================================================
+   Botões e Ações
+   ========================================================================== */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-primary, .btn-secondary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem; 
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: var(--font-sans);
+}
+
+.btn-primary {
+    background-color: var(--cor-destaque);
+    color: var(--bg-form);
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: var(--cor-destaque-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-secondary {
+    background-color: #F9FAFB;
+    color: var(--cor-texto);
+    border: 1px solid #D1D5DB;
+}
+
+.btn-secondary:hover {
+    background-color: #F3F4F6;
+    border-color: #9CA3AF;
+}
+
+/* ==========================================================================
+   Alertas e Segurança
+   ========================================================================== */
+.text-muted {
+    color: var(--cor-texto-mutado);
+    font-size: 0.9rem;
+}
+
+.alert {
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.alert-info {
+    background-color: #E1EFFE;
+    color: #1E429F;
+    border: 1px solid #C3DDFD;
+}
+
+.alert-success {
+    background-color: #DEF7EC;
+    color: #03543F;
+    border: 1px solid #BCF0DA;
+}
+
+.alert-danger {
+    background-color: #FDE8E8;
+    color: #9B1C1C;
+    border: 1px solid #F8B4B4;
+}
+
+.divider {
+    border: 0;
+    height: 1px;
+    background-color: #E5E7EB;
+}
+
+.mb-4 { margin-bottom: 1.5rem; }
+
+.danger-zone {
+    border: 1px solid #F8B4B4;
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    background-color: #FFF5F5;
+}
+
+.danger-title {
+    color: #C81E1E;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.btn-danger {
+    background-color: #E02424;
+    color: #FFFFFF;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: var(--font-sans);
+}
+
+.btn-danger:hover {
+    background-color: #C81E1E;
+    box-shadow: var(--shadow-sm);
+}
+
+/* ==========================================================================
+   Modal
+   ========================================================================== */
+.modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-backdrop {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1001;
+}
+
+.modal-content {
+    position: relative;
+    z-index: 1002;
+    background-color: var(--bg-form);
+    width: 100%;
+    max-width: 400px;
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-lg);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.modal-header h3 {
+    font-size: 1.25rem;
+    color: var(--cor-texto);
+}
+
+.btn-close-modal {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--cor-texto-mutado);
+    cursor: pointer;
+}
+
+.modal-body p {
+    font-size: 0.95rem;
+    color: var(--cor-texto-mutado);
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+/* ==========================================================================
+   Danger Zone e Exclusão de Conta
+   ========================================================================== */
+.danger-zone {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background-color: #FEF2F2;
+    border: 1px solid #FECACA;
+    border-radius: var(--radius-md);
+}
+
+.danger-zone-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.danger-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #DC2626;
+    margin-bottom: 0.25rem;
+}
+
+.btn-danger {
+    background-color: #DC2626;
+    color: #FFFFFF;
+    border: none;
+    padding: 0.75rem 1.25rem;
+    border-radius: var(--radius-md);
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: var(--font-sans);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-sm);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+.btn-danger:hover {
+    background-color: #B91C1C;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(220, 38, 38, 0.25);
+}
+
+.modal-header-danger h3 {
+    color: #DC2626;
+}
+
+.modal-alert-text {
+    font-size: 1.05rem;
+    color: var(--cor-texto);
+}
+
+.modal-subtext {
+    font-size: 0.9rem;
+    color: var(--cor-texto-mutado);
+    line-height: 1.5;
+}
+
+.input-readonly {
+    background-color: #F3F4F6 !important;
+    border-color: #E5E7EB !important;
+    color: #6B7280 !important;
+    cursor: not-allowed !important;
+}
+
+.password-change-section {
+    background: #FDFBF9;
+    border: 1px solid #EFEAE6;
+    padding: 1.25rem;
+    border-radius: var(--radius-md);
+}
+
+.section-subtitle {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--cor-texto);
+}
+
+.text-small {
+    font-size: 0.85rem;
+}
+
+/* ==========================================================================
+   Toast Notification
+   ========================================================================== */
+.toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background-color: var(--bg-header);
+    color: #FFF;
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    z-index: 2000;
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.toast.hidden {
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+}
+
+/* ==========================================================================
+   Animações e Utilitários
+   ========================================================================== */
+.hidden { display: none !important; }
+
+@keyframes slideUpFade {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.fade-in {
+    animation: fadeIn 0.4s ease forwards;
+}
+
+/* ==========================================================================
+   Responsividade (Para Celulares)
+   ========================================================================== */
+@media (max-width: 640px) {
+    .input-row {
+        grid-template-columns: 1fr; 
+    }
+    
+    .profile-body {
+        padding: 0 1.5rem 2rem 1.5rem; 
+    }
+
+    .profile-header {
+        margin-bottom: 3.5rem;
+    }
+
+    .profile-avatar-section {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .profile-info-display {
+        text-align: center;
+    }
+}
+
+.avatar-initial-box {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FF7A59 0%, #FFA27B 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    font-size: 2.2rem;
+    font-weight: 700;
+    box-shadow: 0 4px 10px rgba(255, 122, 89, 0.2);
+}
+
+/* Ações e Validação de Senha */
+.input-inline-action {
+    display: flex;
+    gap: 0.6rem;
+    align-items: stretch;
+}
+
+.input-inline-action input {
+    flex: 1;
+}
+
+.btn-secondary-action {
+    background-color: #2B2B2B;
+    color: #FFFFFF;
+    border: none;
+    padding: 0.65rem 1.1rem;
+    border-radius: var(--radius-md, 8px);
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.btn-secondary-action:hover {
+    background-color: #404040;
+}
+
+.input-locked {
+    background-color: #F3F4F6 !important;
+    border-color: #E5E7EB !important;
+    cursor: not-allowed;
+    opacity: 0.65;
+}
+
+.helper-text-status {
+    display: block;
+    margin-top: 0.4rem;
+    font-size: 0.83rem;
+    font-weight: 500;
+}
+
+.helper-text-status.success {
+    color: #059669;
+}
+
+.helper-text-status.error {
+    color: #DC2626;
+}

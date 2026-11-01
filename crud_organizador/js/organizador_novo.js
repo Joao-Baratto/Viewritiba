@@ -1,29 +1,28 @@
-document.getElementById("formOrganizador").addEventListener("submit", function (e) {
+document.getElementById("formOrganizador").addEventListener("submit", async function (e) {
     e.preventDefault();
 
-    var senha = document.getElementById("senha").value;
-    var confirmaSenha = document.getElementById("confirmar_senha").value;
+    const nome = document.getElementById("nome").value.trim();
+    const documento = document.getElementById("documento").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const telefone = document.getElementById("telefone").value.trim();
+    const senha = document.getElementById("senha").value;
+    const confirmaSenha = document.getElementById("confirmar_senha").value;
+
+    // Validação de campos obrigatórios
+    if (!nome || !documento || !email || !telefone || !senha || !confirmaSenha) {
+        alert("Por favor, preencha todos os campos obrigatórios.");
+        return;
+    }
 
     if (senha !== confirmaSenha) {
         alert("As senhas não conferem!");
-        return false;
+        return;
     }
 
     if (senha.length < 6) {
         alert("A senha deve ter pelo menos 6 caracteres!");
-        return false;
+        return;
     }
-
-    novo();
-});
-
-async function novo() {
-
-    var nome = document.getElementById("nome").value;
-    var documento = document.getElementById("documento").value;
-    var email = document.getElementById("email").value;
-    var telefone = document.getElementById("telefone").value;
-    var senha = document.getElementById("senha").value;
 
     const fd = new FormData();
     fd.append('nome', nome);
@@ -32,14 +31,20 @@ async function novo() {
     fd.append('telefone', telefone);
     fd.append('senha', senha);
 
-    const retorno = await fetch("../php/organizador_novo.php", { method: "POST", body: fd });
-    const resposta = await retorno.json();
+    try {
+        const retorno = await fetch("../php/organizador_novo.php", { 
+            method: "POST", 
+            body: fd 
+        });
+        const resposta = await retorno.json();
 
-    if (resposta.status == "sucesso") {
-        alert("Sucesso: " + resposta.mensagem);
-        window.location.href = "../login/Login.html";
-    } else {
-        alert("Erro: " + resposta.mensagem);
-        
+        if (resposta.status === "sucesso") {
+            alert("Cadastro realizado com sucesso! Faça seu login.");
+            window.location.href = "../login/Login.html";
+        } else {
+            alert("Erro: " + resposta.mensagem);
+        }
+    } catch (erro) {
+        alert(erro.message || "Não foi possível conectar ao servidor. Tente novamente mais tarde.");
     }
-}
+});

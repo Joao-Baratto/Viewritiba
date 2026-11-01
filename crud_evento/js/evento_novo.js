@@ -40,6 +40,14 @@ async function novo(){
           body: fd  
         });
     const resposta = await retorno.json();
+    if (resposta.status == "banido") {
+        window.location.replace(resposta.redirect);
+        return;
+    }
+    if (retorno.status == 401) {
+        window.location.href = "../../crud_organizador/login/Login.html";
+        return;
+    }
     if(resposta.status == "ok"){
         alert("SUCESSO: " + resposta.mensagem);
         window.location.href = "../home/";

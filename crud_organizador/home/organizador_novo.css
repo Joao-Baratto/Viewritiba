@@ -191,6 +191,27 @@ body {
 .form-footer {
     text-align: center;
     margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.login-prompt {
+    font-size: 0.9rem;
+    color: var(--cor-texto-mutado);
+}
+
+.login-link {
+    color: var(--cor-destaque);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.login-link:hover {
+    color: var(--cor-destaque-hover);
+    text-decoration: underline;
 }
 
 .cancel-link {

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrar como participante | Viewritiba</title>
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+    <header class="page-header">
+        <div class="header-content">
+            <a href="../../crud_organizador/home/MainMenu.html" class="brand-link">
+                <h1>Viewritiba</h1>
+            </a>
+            <p>Área do participante</p>
+        </div>
+    </header>
+    <main class="page-main">
+        <section class="form-container">
+            <div class="form-header">
+                <h2>Acesse sua conta</h2>
+                <p>Entre para participar da comunidade e acompanhar eventos.</p>
+            </div>
+            <form id="formLogin" class="modern-form">
+                <div class="input-group">
+                    <label for="email">E-mail ou CPF</label>
+                    <input type="text" id="email" name="email" autocomplete="username" required>
+                </div>
+                <div class="input-group">
+                    <label for="senha">Senha</label>
+                    <input type="password" id="senha" name="senha" autocomplete="current-password" required>
+                </div>
+                <button type="submit" class="btn-primary">Entrar</button>
+                <p id="mensagem" role="status" aria-live="polite"></p>
+                <div class="form-footer">
+                    <p>Ainda não tem conta?</p>
+                    <a href="../home/participante_novo.html">Cadastre-se</a>
+                </div>
+            </form>
+        </section>
+    </main>
+    <script src="../js/participante_login.js?v=3" defer></script>
+</body>
+</html>

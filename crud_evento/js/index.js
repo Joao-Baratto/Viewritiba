@@ -34,7 +34,7 @@ async function logoff() {
     const resposta = await retorno.json();
 
     if (resposta.status == "ok") {
-        window.location.href = "../login/";
+        window.location.href = "../../crud_organizador/login/Login.html";
     }
 }
 
@@ -54,6 +54,14 @@ async function buscar() {
 
     const retorno = await fetch("../php/evento_get.php");
     const resposta = await retorno.json();
+    if (resposta.status == "banido") {
+        window.location.replace(resposta.redirect);
+        return;
+    }
+    if (retorno.status == 401) {
+        window.location.href = "../../crud_organizador/login/Login.html";
+        return;
+    }
 
     if (resposta.status == "ok") {
         preencherTabela(resposta.data);
@@ -82,6 +90,14 @@ async function pesquisar() {
 
     const retorno = await fetch(url);
     const resposta = await retorno.json();
+    if (resposta.status == "banido") {
+        window.location.replace(resposta.redirect);
+        return;
+    }
+    if (retorno.status == 401) {
+        window.location.href = "../../crud_organizador/login/Login.html";
+        return;
+    }
 
     if (resposta.status == "ok") {
         var eventos = resposta.data;
@@ -136,7 +152,6 @@ function preencherTabela(tabela) {
                 <th>Data e Hora</th>
                 <th>Local</th>
                 <th>Categorias</th>
-                <th>Organizador</th>
                 <th>Ações</th>
             </tr>
     `;
@@ -149,24 +164,23 @@ function preencherTabela(tabela) {
                 <td>${tabela[i].data_hora}</td>
                 <td>${tabela[i].local}</td>
                 <td>${tabela[i].categorias}</td>
-                <td>${tabela[i].nome_organizador}</td>
 
                 <td>
-                    <a href="../../crud_comentarios/home/comentarios.html?id=${tabela[i].id_evento}">
+                    <a href="../../crud_comentarios/home/comentarios.html?id=${tabela[i].id}">
                         Comentários
                     </a>
 
-                    <a href="evento_alterar.html?id=${tabela[i].id_evento}">
+                    <a href="evento_alterar.html?id=${tabela[i].id}">
                         Alterar
                     </a>
 
                     <a href="#"
-                        onclick="favoritar_evento(${tabela[i].id_evento}); return false;">
+                        onclick="favoritar_evento(${tabela[i].id}); return false;">
                         Favoritar
                     </a>
 
                     <a href="#"
-                        onclick="excluir(${tabela[i].id_evento}); return false;">
+                        onclick="excluir(${tabela[i].id}); return false;">
                         Excluir
                     </a>
                 </td>

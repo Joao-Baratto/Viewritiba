@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comentários do evento | Viewritiba</title>
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body style="margin: 0; min-height: 100vh; display: flex; flex-direction: column;">
+    <main style="flex: 1;">
+        <button type="button" id="btn_voltar">← Voltar</button>
+        <br>
+        <div id="elementos_tela" style="text-align: center;"></div>
+    </main>
+    <footer style="padding: 20px;">
+        <div style="text-align: center;">
+            <p id="comentario_acesso" role="status"></p>
+            <input type="file" accept="image/*" id="new_img">
+            <input
+                type="text"
+                id="new_comentario"
+                maxlength="1000"
+                placeholder="Insira um comentário..."
+                style="width: 70%;"
+            >
+            <button
+              type="button" id="btn_comentario" disabled> Enviar
+            </button>
+        </div>
+    </footer>
+    <script src="../js/comentarios.js"></script>
+</body>
+</html>
