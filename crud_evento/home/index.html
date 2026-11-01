@@ -1,52 +1,49 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meus eventos | Viewritiba</title>
-    <link rel="stylesheet" href="../../css/style.css">
+    <title>Viewritiba</title>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
     <header class="page-header">
         <div class="header-content">
-            <a href="../../crud_organizador/home/painel.html" class="brand-link">
-                <h1>Viewritiba</h1>
-            </a>
-            <nav class="header-nav" aria-label="Navegação principal">
-                <a href="../../crud_organizador/home/painel.html" class="nav-link">Início</a>
-                <a href="catalogo.html" class="nav-link">Catálogo público</a>
-                <a href="../../crud_organizador/home/perfil_organizador.html" class="nav-link">Meu perfil</a>
-            </nav>
+            <h1>Viewritiba</h1>
+            <button id="logoff" class="btn-outline">
+                Sair
+            </button>
         </div>
     </header>
     <main class="container">
         <section class="search-section">
             <div class="search-header">
-                <h2>Seus eventos</h2>
-                <p>Consulte, pesquise e gerencie os eventos cadastrados na sua conta.</p>
+                <h2>Encontre eventos em Curitiba!</h2>
+                <p>
+                    Pesquise eventos, descubra novas experiências
+                    e encontre atividades de acordo com seus interesses.
+                </p>
             </div>
-            <div class="search-area">
+            <div class="search-area">  
                 <input
                     type="text"
                     id="pesquisa"
-                    aria-label="Pesquisar evento pelo título"
-                    placeholder="Pesquisar pelo título"
+                    placeholder="Digite o nome do evento"
                 >
-
-                <button id="buscar" type="button" class="btn-primary">Buscar</button>
-=======
                 <button id="buscar">
                     Buscar
                 </button>
-                <input type="date" id="filtro_data">
+                <input type="date" id="filtro_data">   
+                <select id="filtro_categoria">
+                    <option value=""> - </option>
+                </select>
                 <button id="filtro_apagar" type="button">
                     Limpar filtros
                 </button>
-
             </div>
-            <div class="actions">
-                <button id="novo" type="button" class="btn-primary">
-                    + Novo evento
+            <div class="actions">    
+                <button id="novo" class="btn-primary">
+                    + Cadastrar Evento
                 </button>
             </div>
         </section>
@@ -59,7 +56,7 @@
             <div id="lista"></div>
         </section>
     </main>
-    <script src="../js/index.js?v=3"></script>
-    <script src="../js/valida_sessao.js?v=2"></script>
+    <script src="../js/index.js"></script>
+    <script src="../js/valida_sessao.js"></script>
 </body>
 </html>

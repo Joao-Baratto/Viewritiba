@@ -24,29 +24,30 @@ $retorno = [
 if (isset($_GET['id'])) {
     $id = (int) $_GET['id'];
     $stmt = $conexao->prepare(
-
         "SELECT * FROM evento WHERE id = ? AND id_organizador = ?"
-=======
-        "SELECT * FROM evento WHERE id_evento = ?"
-
     );
     $stmt->bind_param("ii", $id, $id_organizador);
+} elseif (isset($_GET['titulo']) && isset($_GET['categoria'])) {
+    $titulo = "%" . $_GET['titulo'] . "%";
+    $categoria = (int) $_GET['categoria'];
+    $stmt = $conexao->prepare(
+        "SELECT * FROM evento WHERE id_organizador = ? AND titulo LIKE ?
+         AND id IN (SELECT id_evento FROM evento_categoria WHERE id_categoria = ?)"
+    );
+    $stmt->bind_param("isi", $id_organizador, $titulo, $categoria);
 } elseif (isset($_GET['titulo'])) {
     $titulo = "%" . $_GET['titulo'] . "%";
-
     $stmt = $conexao->prepare(
         "SELECT * FROM evento WHERE id_organizador = ? AND titulo LIKE ?"
     );
     $stmt->bind_param("is", $id_organizador, $titulo);
-=======
-     $stmt = $conexao->prepare(
-        "SELECT * FROM evento
-         WHERE titulo LIKE ?
-         OR descricao LIKE ?
-         OR local LIKE ?"
+} elseif (isset($_GET['categoria'])) {
+    $categoria = (int) $_GET['categoria'];
+    $stmt = $conexao->prepare(
+        "SELECT * FROM evento WHERE id_organizador = ?
+         AND id IN (SELECT id_evento FROM evento_categoria WHERE id_categoria = ?)"
     );
-    $stmt->bind_param("sss", $titulo, $titulo, $titulo);
-
+    $stmt->bind_param("ii", $id_organizador, $categoria);
 } else {
     $stmt = $conexao->prepare(
         "SELECT * FROM evento WHERE id_organizador = ?"
@@ -57,9 +58,29 @@ $stmt->execute();
 $resultado = $stmt->get_result();
 $tabela = [];
 if ($resultado->num_rows > 0) {
+    // busca as categorias de cada evento
+    $stmt_categoria = $conexao->prepare(
+        "SELECT categoria.id_categoria, categoria.nome_categoria
+         FROM evento_categoria
+         INNER JOIN categoria ON categoria.id_categoria = evento_categoria.id_categoria
+         WHERE evento_categoria.id_evento = ?
+         ORDER BY categoria.nome_categoria"
+    );
     while ($linha = $resultado->fetch_assoc()) {
+        $stmt_categoria->bind_param("i", $linha['id']);
+        $stmt_categoria->execute();
+        $resultado_categoria = $stmt_categoria->get_result();
+        $ids = [];
+        $nomes = [];
+        while ($categoria_linha = $resultado_categoria->fetch_assoc()) {
+            $ids[] = $categoria_linha['id_categoria'];
+            $nomes[] = $categoria_linha['nome_categoria'];
+        }
+        $linha['categorias_ids'] = $ids;
+        $linha['categorias'] = implode(", ", $nomes);
         $tabela[] = $linha;
     }
+    $stmt_categoria->close();
     $retorno = [
         'status' => 'ok',
         'mensagem' => 'Sucesso, consulta efetuada.',
@@ -68,7 +89,7 @@ if ($resultado->num_rows > 0) {
 } else {
     $retorno = [
         'status' => 'nok',
-        'mensagem' => 'Nenhum evento encontrado.',
+        'mensagem' => 'Não há registros',
         'data' => []
     ];
 }
