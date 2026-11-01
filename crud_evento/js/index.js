@@ -16,22 +16,12 @@ document.getElementById("buscar").addEventListener("click", () => {
 });
 
 document.getElementById("pesquisa").addEventListener("keydown", (evento) => {
-    if (evento.key === "Enter") {
+    if (evento.key == "Enter") {
         evento.preventDefault();
         pesquisar();
     }
 });
 
-document.getElementById("pesquisa").addEventListener("keydown", (evento) => {
-    if (evento.key === "Enter") {
-        evento.preventDefault();
-        pesquisar();
-    }
-});
-
-document.getElementById("filtro_data").addEventListener("change", () => {
-    pesquisar();
-});
 
 document.getElementById("filtro_apagar").addEventListener("click", () => {
     document.getElementById("pesquisa").value = "";
@@ -49,6 +39,19 @@ async function logoff() {
 }
 
 async function buscar() {
+    const retornoCategorias = await fetch("../php/categoria_get.php");
+    const categorias = await retornoCategorias.json();
+
+    if (categorias.status == "ok") {
+        var html = `<option value="">Todas as categorias</option>`;
+
+        for (var i = 0; i < categorias.data.length; i++) {
+            html += `<option value="${categorias.data[i].id_categoria}">${categorias.data[i].nome_categoria}</option>`;
+        }
+
+        document.getElementById("filtro_categoria").innerHTML = html;
+    }
+
     const retorno = await fetch("../php/evento_get.php");
     const resposta = await retorno.json();
 
@@ -63,12 +66,19 @@ async function buscar() {
 async function pesquisar() {
     const titulo = document.getElementById("pesquisa").value.trim();
     const data = document.getElementById("filtro_data").value;
+    const categoria = document.getElementById("filtro_categoria").value;
 
-    var url = "../php/evento_get.php";
+    const parametros = new URLSearchParams();
 
     if (titulo != "") {
-        url += "?titulo=" + encodeURIComponent(titulo);
+        parametros.append("titulo", titulo);
     }
+
+    if (categoria != "") {
+        parametros.append("categoria", categoria);
+    }
+
+    var url = "../php/evento_get.php?" + parametros.toString();
 
     const retorno = await fetch(url);
     const resposta = await retorno.json();
@@ -125,7 +135,8 @@ function preencherTabela(tabela) {
                 <th>Descrição</th>
                 <th>Data e Hora</th>
                 <th>Local</th>
-                <th>ID Organizador</th>
+                <th>Categorias</th>
+                <th>Organizador</th>
                 <th>Ações</th>
             </tr>
     `;
@@ -137,7 +148,8 @@ function preencherTabela(tabela) {
                 <td>${tabela[i].descricao}</td>
                 <td>${tabela[i].data_hora}</td>
                 <td>${tabela[i].local}</td>
-                <td>${tabela[i].id_organizador}</td>
+                <td>${tabela[i].categorias}</td>
+                <td>${tabela[i].nome_organizador}</td>
 
                 <td>
                     <a href="../../crud_comentarios/home/comentarios.html?id=${tabela[i].id_evento}">

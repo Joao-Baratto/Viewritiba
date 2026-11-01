@@ -18,7 +18,7 @@ function responder($status, $mensagem)
 }
 
 if (
-    !isset($_SESSION["organizador_id"]) ||
+    !isset($_SESSION["usuario_id"]) ||
     !isset($_SESSION["usuario_tipo"]) ||
     $_SESSION["usuario_tipo"] !== "organizador"
 ) {
@@ -32,8 +32,9 @@ $titulo = trim($_POST["titulo"] ?? "");
 $descricao = trim($_POST["descricao"] ?? "");
 $data_hora = $_POST["data_hora"] ?? "";
 $local = trim($_POST["local"] ?? "");
+$categorias = $_POST["categorias"] ?? [];
 
-$id_organizador = (int) $_SESSION["organizador_id"];
+$id_organizador = (int) $_SESSION["usuario_id"];
 
 if (
     $titulo === "" ||
@@ -44,6 +45,13 @@ if (
     responder(
         "nok",
         "Preencha corretamente todos os campos obrigatórios."
+    );
+}
+
+if (count($categorias) === 0) {
+    responder(
+        "nok",
+        "Selecione pelo menos uma categoria."
     );
 }
 
@@ -81,10 +89,9 @@ $stmt = $conexao->prepare(
         descricao,
         data_hora,
         local,
-        id_organizador,
-        status_evento
+        id_organizador
     )
-    VALUES (?, ?, ?, ?, ?, 'ativo')"
+    VALUES (?, ?, ?, ?, ?)"
 );
 
 if (!$stmt) {
@@ -104,6 +111,19 @@ $stmt->bind_param(
 );
 
 if ($stmt->execute()) {
+    $id_evento = $conexao->insert_id;
+    $stmt->close();
+
+    $stmt = $conexao->prepare(
+        "INSERT INTO evento_categoria (id_evento, id_categoria) VALUES (?, ?)"
+    );
+
+    foreach ($categorias as $id_categoria) {
+        $id_categoria = (int) $id_categoria;
+        $stmt->bind_param("ii", $id_evento, $id_categoria);
+        $stmt->execute();
+    }
+
     $stmt->close();
     $conexao->close();
 

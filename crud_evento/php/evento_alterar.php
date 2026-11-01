@@ -12,12 +12,14 @@ if(isset($_GET['id'])){
     $data_hora = $_POST['data_hora'] ?? '';
     $local = trim($_POST['local'] ?? '');
     $id_organizador = (int) ($_POST['id_organizador'] ?? 0);
+    $categorias = $_POST['categorias'] ?? [];
     if (
         $titulo === '' ||
         $descricao === '' ||
         $data_hora === '' ||
         $local === '' ||
-        $id_organizador <= 0
+        $id_organizador <= 0 ||
+        count($categorias) == 0
     ) {
         $retorno = [
             'status' => 'nok',
@@ -29,6 +31,17 @@ if(isset($_GET['id'])){
     local = ?, id_organizador = ?  WHERE id_evento = ?");
         $stmt->bind_param("ssssii",$titulo, $descricao, $data_hora, $local, $id_organizador, $id);
         if ($stmt->execute()) {
+            $stmt_categoria = $conexao->prepare("DELETE FROM evento_categoria WHERE id_evento = ?");
+            $stmt_categoria->bind_param("i", $id);
+            $stmt_categoria->execute();
+            $stmt_categoria->close();
+            $stmt_categoria = $conexao->prepare("INSERT INTO evento_categoria (id_evento, id_categoria) VALUES (?, ?)");
+            foreach ($categorias as $id_categoria) {
+                $id_categoria = (int) $id_categoria;
+                $stmt_categoria->bind_param("ii", $id, $id_categoria);
+                $stmt_categoria->execute();
+            }
+            $stmt_categoria->close();
             $retorno = [
                 'status'    => 'ok',
                 'mensagem'  => 'Registro alterado com sucesso.',

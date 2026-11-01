@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     valida_sessao();
+    carregar_categorias();
 });
 document.getElementById("enviar").addEventListener("click", () => {
     novo();
@@ -9,19 +10,21 @@ async function novo(){
     var descricao = document.getElementById("descricao").value;
     var data_hora   = document.getElementById("data_hora").value;
     var local   = document.getElementById("local").value;
+    var categorias = categorias_adicionadas;
 
     if (
-        titulo === "" ||
-        descricao === "" ||
-        data_hora === "" ||
-        local === ""
+        titulo == "" ||
+        descricao == "" ||
+        data_hora == "" ||
+        local == "" ||
+        categorias.length == 0
     ) {
         alert("Preencha todos os campos obrigatórios.");
         return;
     }
 
     if (new Date(data_hora) <= new Date()) {
-        alert("A data e a hora do evento devem ser futuras.");
+        alert("Preencha uma data válida.");
         return;
     }
 
@@ -30,6 +33,7 @@ async function novo(){
     fd.append("descricao", descricao);
     fd.append("data_hora", data_hora);
     fd.append("local", local);
+    categorias.forEach((id) => fd.append("categorias[]", id));
     const retorno = await fetch("../php/evento_novo.php",
         {
           method: 'POST',
