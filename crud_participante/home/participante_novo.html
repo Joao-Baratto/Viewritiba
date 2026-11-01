@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="participante_novo.css">
+    <link rel="stylesheet" href="../../css/style.css?v=2">
 </head>
 
 <body>
@@ -20,6 +20,7 @@
     <header class="page-header">
         <div class="header-content">
 
+            <a href="../../crud_organizador/home/MainMenu.html" class="brand-link">
                 <h1>Viewritiba</h1>
             </a>
 
@@ -136,7 +137,6 @@
                             placeholder="••••••••"
                             autocomplete="new-password"
                             minlength="6"
-                            maxlength="6"
                             required
                         >
 
@@ -157,7 +157,6 @@
                             placeholder="••••••••"
                             autocomplete="new-password"
                             minlength="6"
-                            maxlength="6"
                             required
                         >
 
@@ -202,12 +201,8 @@
                 <!-- Cancelar -->
                 <div class="form-footer">
 
-                    <a
-                        href="../login/login.html"
-                        class="cancel-link"
-                    >
-                        Já possui conta? Faça login
-                    </a>
+                    <p class="login-prompt">Já possui uma conta? <a href="../login/login.html" class="login-link">Faça Login</a></p>
+                    <a href="../../crud_organizador/home/MainMenu.html" class="cancel-link">Cancelar e Voltar para a Home</a>
 
                 </div>
 

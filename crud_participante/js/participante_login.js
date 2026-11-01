@@ -1,8 +1,5 @@
-document.getElementById("formLogin").addEventListener("submit", async (event) => {
+document.getElementById("formLogin").addEventListener("submit", async function (event) {
     event.preventDefault();
-
-    const mensagem = document.getElementById("mensagem");
-    mensagem.textContent = "";
 
     try {
         const response = await fetch("../php/participante_login.php", {
@@ -11,17 +8,14 @@ document.getElementById("formLogin").addEventListener("submit", async (event) =>
         });
         const result = await response.json();
 
-        if (result.status === "banido") {
-            window.location.replace(result.redirect);
+        if (response.ok && result.status === "sucesso") {
+            window.location.href = "../home/painel.html";
             return;
         }
 
-        if (!response.ok || result.status !== "sucesso") {
-            throw new Error(result.mensagem || "Não foi possível realizar o login.");
-        }
-
-        window.location.replace("../../crud_evento/home/catalogo.html");
+        alert(result.mensagem);
     } catch (error) {
-        mensagem.textContent = error.message || "Não foi possível conectar ao servidor. Tente novamente.";
+        console.error("Erro ao realizar login do participante:", error);
+        alert("Não foi possível realizar o login. Tente novamente.");
     }
 });

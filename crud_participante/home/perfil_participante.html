@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Perfil - Viewritiba</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css?v=2">
+    <link rel="stylesheet" href="perfil_participante.css?v=3">
+</head>
+
+<body>
+    <header class="page-header">
+        <div class="header-content">
+            <a href="painel.html" class="brand-link"><h1>Viewritiba</h1></a>
+            <nav class="header-nav" aria-label="Navegação principal">
+                <a href="../../crud_evento/home/index.html" class="nav-link">Eventos</a>
+                <a href="painel.html" class="nav-link">Início</a>
+                <a href="../php/participante_logoff.php" class="nav-link">Sair</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="participant-profile">
+        <section class="participant-profile-card">
+            <div class="participant-avatar" id="avatarInicial">P</div>
+            <p class="profile-eyebrow">Área do participante</p>
+            <h2 id="perfilNome">Carregando...</h2>
+            <p id="perfilEmail" class="profile-email"></p>
+
+            <dl class="profile-details">
+                <div><dt>CPF</dt><dd id="perfilDocumento"></dd></div>
+                <div><dt>Telefone</dt><dd id="perfilTelefone"></dd></div>
+            </dl>
+
+            <div class="profile-actions">
+                <a class="btn-primary" href="participante_alterar.html">Editar perfil</a>
+                <a class="cancel-link" href="painel.html">Voltar ao painel</a>
+            </div>
+        </section>
+    </main>
+
+    <script src="../js/perfil_participante.js"></script>
+</body>
+
+</html>

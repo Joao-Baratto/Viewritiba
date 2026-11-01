@@ -1,26 +1,31 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Entrar como participante | Viewritiba</title>
-    <link rel="stylesheet" href="../../css/style.css">
+    <title>Login do Participante - Viewritiba</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css?v=2">
 </head>
+
 <body>
     <header class="page-header">
         <div class="header-content">
-            <a href="../../crud_organizador/home/MainMenu.html" class="brand-link">
-                <h1>Viewritiba</h1>
-            </a>
-            <p>Área do participante</p>
+            <a href="../../index.html" class="brand-link"><h1>Viewritiba</h1></a>
+            <p>Área do Participante</p>
         </div>
     </header>
+
     <main class="page-main">
         <section class="form-container">
             <div class="form-header">
                 <h2>Acesse sua conta</h2>
-                <p>Entre para participar da comunidade e acompanhar eventos.</p>
+                <p>Entre para descobrir e acompanhar eventos pela cidade.</p>
             </div>
+
             <form id="formLogin" class="modern-form">
                 <div class="input-group">
                     <label for="email">E-mail ou CPF</label>
@@ -30,15 +35,23 @@
                     <label for="senha">Senha</label>
                     <input type="password" id="senha" name="senha" autocomplete="current-password" required>
                 </div>
-                <button type="submit" class="btn-primary">Entrar</button>
-                <p id="mensagem" role="status" aria-live="polite"></p>
+                <button type="submit" class="btn-primary">
+                    <span>Entrar</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M5 12h14"></path>
+                        <path d="m12 5 7 7-7 7"></path>
+                    </svg>
+                </button>
                 <div class="form-footer">
-                    <p>Ainda não tem conta?</p>
-                    <a href="../home/participante_novo.html">Cadastre-se</a>
+                    <p>Não tem uma conta? <a href="../home/participante_novo.html">Cadastre-se</a></p>
+                    <a href="../../crud_organizador/home/MainMenu.html" class="cancel-link">Voltar para a Home</a>
                 </div>
             </form>
         </section>
     </main>
-    <script src="../js/participante_login.js?v=3" defer></script>
+
+    <script src="../js/participante_login.js"></script>
 </body>
+
 </html>
