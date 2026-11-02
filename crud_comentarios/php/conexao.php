@@ -1,5 +1,4 @@
 <?php
-// Variáveis de conexão com o Banco de Dados
 $servidor = "localhost";
 $usuario  = "root";
 $senha    = "";
