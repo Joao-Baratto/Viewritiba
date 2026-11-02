@@ -1,6 +1,18 @@
 <?php
+session_start();
 include_once('conexao.php');
+include_once('../../php/usuario_logado.php');
 header("Content-type:application/json;charset:utf-8");
+
+$usuario = usuario_logado();
+if($usuario === null){
+    echo json_encode([
+        'status' => 'nok',
+        'mensagem_retorno' => 'Faça login para continuar.',
+        'data' => []
+    ]);
+    exit;
+}
 
 $id_comentario = (int)($_POST['id_comentario'] ?? $_GET['id_comentario'] ?? '');
 $texto = trim(($_POST['texto'] ?? ''));
@@ -15,7 +27,7 @@ if(!$id_comentario || !$texto || !$nota){
     exit;
 }
 
-$stmt_existe = $conexao->prepare("SELECT id_comentario FROM avaliacao_comentario WHERE id_comentario = ?");
+$stmt_existe = $conexao->prepare("SELECT id_comentario FROM avaliacao_comentario WHERE id_comentario = ? AND tipo_conta = ? AND id_usuario = ?");
 if(!$stmt_existe){
     echo json_encode([
         'status' => 'nok',
@@ -25,13 +37,13 @@ if(!$stmt_existe){
     exit;
 }
 
-$stmt_existe->bind_param("i", $id_comentario);
+$stmt_existe->bind_param("isi", $id_comentario, $usuario['tipo'], $usuario['id']);
 $stmt_existe->execute();
-if($stmt_existe->get_result()->num_rows === 0){
+if($stmt_existe->get_result()->num_rows == 0){
     $stmt_existe->close();
     echo json_encode([
         'status' => 'nok',
-        'mensagem_retorno' => 'Comentário não encontrado.',
+        'mensagem_retorno' => 'Voce não pode alterar este comentário.',
         'data' => []
     ]);
     exit;

@@ -1,6 +1,7 @@
 <?php
     session_start();
-    if(isset($_SESSION['usuario']) || isset($_SESSION['organizador_id'])){
+    include_once('../../php/usuario_logado.php');
+    if(usuario_logado() != null){
         $retorno = [
             'status'    => 'ok', 
             'mensagem'  => '', 

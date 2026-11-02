@@ -80,7 +80,6 @@ function renderizar_comentarios() {
         elementos_tela.innerHTML += `
             <div class="comentario-card">
                 <div class="comentario-meta">
-                    <span class="comentario-user">${comentario.nome_usuario}</span>
                     <span class="comentario-data">${comentario.data_criacao}</span>
                 </div>
                 <p class="comentario-texto">${comentario.texto}</p>
@@ -126,6 +125,6 @@ async function deslogar() {
     console.log(resposta);
 
     if (resposta.status == "ok") {
-        window.location.replace("../login/index.html");
+        window.location.replace("../../crud_organizador/home/MainMenu.html");
     }
 };
