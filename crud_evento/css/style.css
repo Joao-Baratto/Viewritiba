@@ -287,8 +287,9 @@ body {
     display: grid;
 
     grid-template-columns:
-        minmax(320px, 2fr)
-        minmax(180px, 0.9fr)
+        minmax(280px, 2fr)
+        minmax(190px, 1fr)
+        minmax(170px, 0.9fr)
         auto
         auto;
 
@@ -303,7 +304,8 @@ body {
    ========================================================= */
 
 #pesquisa,
-#filtro_data {
+#filtro_data,
+#filtro_categoria {
     width: 100%;
     height: 56px;
 
@@ -336,7 +338,8 @@ body {
 }
 
 #pesquisa:focus,
-#filtro_data:focus {
+#filtro_data:focus,
+#filtro_categoria:focus {
     outline: none;
 
     border-color:
@@ -920,6 +923,177 @@ body {
     box-shadow:
         0 0 0 4px
         rgba(255,112,87,0.14);
+}
+
+.categorias-campo {
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        10px;
+}
+
+.categorias-tags {
+    display:
+        flex;
+
+    flex-wrap:
+        wrap;
+
+    gap:
+        8px;
+}
+
+.categorias-tags:empty {
+    display:
+        none;
+}
+
+.categoria-tag {
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    gap:
+        6px;
+
+    padding:
+        6px 8px 6px 14px;
+
+    background:
+        var(--coral-soft);
+
+    color:
+        var(--coral-hover);
+
+    border:
+        1.5px solid
+        var(--coral);
+
+    border-radius:
+        999px;
+
+    font-size:
+        0.9rem;
+
+    font-weight:
+        700;
+}
+
+.modern-form .categoria-tag button {
+    width:
+        22px;
+
+    height:
+        22px;
+
+    padding:
+        0;
+
+    background:
+        transparent;
+
+    color:
+        var(--coral-hover);
+
+    border-radius:
+        50%;
+
+    font-size:
+        1.1rem;
+
+    line-height:
+        1;
+}
+
+.modern-form .categoria-tag button:hover {
+    background:
+        var(--coral);
+
+    color:
+        white;
+
+    transform:
+        none;
+}
+
+.categorias-autocomplete {
+    position:
+        relative;
+}
+
+.categorias-sugestoes {
+    position:
+        absolute;
+
+    top:
+        calc(100% + 6px);
+
+    left:
+        0;
+
+    right:
+        0;
+
+    z-index:
+        10;
+
+    max-height:
+        220px;
+
+    overflow-y:
+        auto;
+
+    padding:
+        6px;
+
+    background:
+        white;
+
+    border:
+        1.5px solid
+        #e5e7eb;
+
+    border-radius:
+        10px;
+
+    box-shadow:
+        var(--shadow-md);
+
+    list-style:
+        none;
+}
+
+.categorias-sugestoes li {
+    padding:
+        10px 12px;
+
+    border-radius:
+        8px;
+
+    cursor:
+        pointer;
+}
+
+.categorias-sugestoes li[data-id]:hover {
+    background:
+        var(--coral-soft);
+
+    color:
+        var(--coral-hover);
+}
+
+.categorias-sugestoes li.sem-resultado {
+    color:
+        var(--text-muted);
+
+    cursor:
+        default;
 }
 
 .modern-form button {

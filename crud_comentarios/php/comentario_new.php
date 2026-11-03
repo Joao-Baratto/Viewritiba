@@ -1,6 +1,8 @@
 <?php
 session_start();
 include_once('conexao.php');
+include_once('../../php/usuario_logado.php');
+include_once('../../crud_admin/php/banimentos.php');
 header("Content-type:application/json;charset:utf-8");
 
 function responder($status, $mensagem, $data = []) {
@@ -15,10 +17,13 @@ function responder($status, $mensagem, $data = []) {
 $texto = trim($_POST['texto'] ?? '');
 $id_evento = filter_input(INPUT_POST, 'id_evento', FILTER_VALIDATE_INT);
 $nota = (int)($_POST['nota'] ?? '');
-$email = '';
-if(isset($_SESSION['usuario'][0]['email'])){
-    $email = $_SESSION['usuario'][0]['email'];
+$usuario = usuario_logado();
+if($usuario == null){
+    responder('nok', 'Faça login para comentar.');
 }
+exigir_conta_nao_banida($conexao, $usuario['tipo'], $usuario['id']);
+$tipo_conta = $usuario['tipo'];
+$id_usuario = $usuario['id'];
 
 if(!$texto || $texto == '' || !$nota ){
     responder('nok', 'É necessário preencher todos os campos.');
@@ -26,22 +31,6 @@ if(!$texto || $texto == '' || !$nota ){
 if(!$id_evento){
     responder('nok', 'Evento não encontrado.');
 }
-
-$stmt_usuario = $conexao->prepare("SELECT id_usuario FROM usuario WHERE email = ?");
-if(!$stmt_usuario){
-    responder('nok', 'Erro ao consultar usuário: ' . $conexao->error);
-}
-$stmt_usuario->bind_param("s", $email);
-$stmt_usuario->execute();
-$resultado_usuario = $stmt_usuario->get_result();
-
-if($resultado_usuario->num_rows == 0){
-    $stmt_usuario->close();
-    responder('nok', 'Usuário não encontrado.');
-}
-
-$id_usuario = (int) $resultado_usuario->fetch_assoc()['id_usuario'];
-$stmt_usuario->close();
 
 $stmt_evento = $conexao->prepare("SELECT id_evento FROM evento WHERE id_evento = ?");
 if(!$stmt_evento){
@@ -58,14 +47,14 @@ if($resultado_evento->num_rows === 0){
 $stmt_evento->close();
 
 $stmt = $conexao->prepare(
-    "INSERT INTO avaliacao_comentario (texto, nota, data_criacao, id_usuario, id_evento)
-     VALUES (?, ?, NOW(), ?, ?)"
+    "INSERT INTO avaliacao_comentario (texto, nota, data_criacao, tipo_conta, id_usuario, id_evento)
+     VALUES (?, ?, NOW(), ?, ?, ?)"
 );
 if(!$stmt){
     responder('nok', 'Erro ao preparar comentário: ' . $conexao->error);
 }
 
-$stmt->bind_param("siii", $texto, $nota, $id_usuario, $id_evento);
+$stmt->bind_param("sisii", $texto, $nota, $tipo_conta, $id_usuario, $id_evento);
 if(!$stmt->execute()){
     $erro = $stmt->error;
     $stmt->close();

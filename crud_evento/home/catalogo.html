@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos | Viewritiba</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="catalogo.css">
+</head>
+<body>
+    <header class="page-header">
+        <div class="header-content">
+            <a href="../../crud_organizador/home/MainMenu.html" class="brand-link">
+                <h1>Viewritiba</h1>
+            </a>
+            <nav class="header-nav" aria-label="Navegação principal">
+                <a href="../../crud_organizador/home/MainMenu.html" class="nav-link">Início</a>
+                <a href="../../crud_participante/login/login.html" class="nav-link">Entrar</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container catalog-main">
+        <section class="catalog-heading">
+            <h2>Eventos da comunidade</h2>
+            <p>Explore eventos publicados por todos os organizadores.</p>
+            <div class="catalog-search">
+                <label for="pesquisa-eventos">Pesquisar eventos</label>
+                <input type="search" id="pesquisa-eventos" placeholder="Buscar por título, local ou organizador">
+            </div>
+        </section>
+        <p id="mensagem-catalogo" role="status" aria-live="polite"></p>
+        <section id="lista-eventos" class="public-events" aria-label="Eventos disponíveis"></section>
+    </main>
+    <script src="../js/catalogo.js" defer></script>
+</body>
+</html>

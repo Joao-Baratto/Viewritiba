@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do organizador | Viewritiba</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="painel.css?v=2">
+</head>
+
+<body>
+    <header class="page-header">
+        <div class="header-content">
+            <a class="brand-link" href="painel.html">
+                <h1>Viewritiba</h1>
+            </a>
+            <nav class="header-nav" aria-label="Navegação principal">
+                <a href="../../crud_evento/home/index.html" class="nav-link">Eventos</a>
+                <a href="perfil_organizador.html" class="nav-link">Meu perfil</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="panel-main">
+        <section class="panel-welcome">
+            <p class="panel-eyebrow">Sua área Viewritiba</p>
+            <h2>O que vamos fazer hoje?</h2>
+            <p>Descubra eventos pela cidade ou continue cuidando do seu perfil de organizador.</p>
+        </section>
+
+        <section class="panel-options" aria-label="Opções da plataforma">
+            <a class="panel-card panel-card-events" href="../../crud_evento/home/index.html">
+                <span class="panel-card-icon" aria-hidden="true">✳</span>
+                <span class="panel-card-label">Explorar e gerenciar</span>
+                <h3>Eventos</h3>
+                <p>Veja seus eventos cadastrados, pesquise e atualize as informações.</p>
+                <span class="panel-card-link">Ver eventos <span aria-hidden="true">→</span></span>
+            </a>
+
+            <a class="panel-card panel-card-create" href="../../crud_evento/home/evento_novo.html">
+                <span class="panel-card-icon" aria-hidden="true">＋</span>
+                <span class="panel-card-label">Tem algo acontecendo?</span>
+                <h3>Divulgue um evento</h3>
+                <p>Cadastre uma nova experiência presencial em Curitiba e região.</p>
+                <span class="panel-card-link">Criar evento <span aria-hidden="true">→</span></span>
+            </a>
+
+            <a class="panel-card panel-card-profile" href="perfil_organizador.html">
+                <span class="panel-card-icon" aria-hidden="true">◎</span>
+                <span class="panel-card-label">Sua presença na plataforma</span>
+                <h3>Perfil do organizador</h3>
+                <p>Confira sua página pública e atualize os dados do seu perfil.</p>
+                <span class="panel-card-link">Abrir perfil <span aria-hidden="true">→</span></span>
+            </a>
+        </section>
+
+        <aside class="panel-note">
+            <strong>Viewritiba conecta a cidade.</strong>
+            <span>Descubra, participe e ajude a valorizar os eventos locais.</span>
+        </aside>
+    </main>
+
+    <script src="../js/painel.js"></script>
+</body>
+
+</html>

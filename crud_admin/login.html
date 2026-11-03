@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acesso do moderador | Viewritiba</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header class="page-header">
+        <div class="header-content">
+            <h1>Viewritiba</h1>
+            <p>Acesso restrito de moderação</p>
+        </div>
+    </header>
+    <main class="page-main">
+        <section class="form-container">
+            <div class="form-header">
+                <h2>Entrar como moderador</h2>
+                <p>Informe as credenciais privadas de moderação.</p>
+            </div>
+            <form id="formLoginModerador" class="modern-form">
+                <div class="input-group">
+                    <label for="usuario">Usuário</label>
+                    <input type="text" id="usuario" name="usuario" autocomplete="username" required>
+                </div>
+                <div class="input-group">
+                    <label for="senha">Senha</label>
+                    <input type="password" id="senha" name="senha" autocomplete="current-password" required>
+                </div>
+                <button type="submit" class="btn-primary">Entrar</button>
+                <p id="mensagem" class="admin-message" role="status" aria-live="polite"></p>
+            </form>
+        </section>
+    </main>
+    <script src="js/moderador_login.js?v=1" defer></script>
+</body>
+</html>

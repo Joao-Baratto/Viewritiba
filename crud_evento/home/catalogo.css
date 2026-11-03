@@ -1,0 +1,59 @@
+.catalog-main {
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+}
+
+.catalog-heading {
+    margin-bottom: 1.5rem;
+}
+
+.catalog-heading > p {
+    margin-top: 0.25rem;
+    color: var(--cor-texto-mutado);
+}
+
+.catalog-search {
+    display: grid;
+    max-width: 42rem;
+    gap: 0.4rem;
+    margin-top: 1.25rem;
+}
+
+.catalog-search input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: var(--radius-md);
+    font: inherit;
+}
+
+.public-events {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    gap: 1rem;
+}
+
+.public-event-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    padding: 1.25rem;
+    border-radius: var(--radius-lg);
+    background: var(--bg-form);
+    box-shadow: var(--shadow-md);
+}
+
+.public-event-card p {
+    color: var(--cor-texto-mutado);
+    overflow-wrap: anywhere;
+}
+
+.public-event-card .event-description {
+    color: var(--cor-texto);
+    white-space: pre-wrap;
+}
+
+.public-event-card a {
+    align-self: flex-start;
+    margin-top: auto;
+}

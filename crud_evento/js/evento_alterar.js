@@ -11,6 +11,14 @@ async function buscar(id){
     }
     const retorno = await fetch("../php/evento_get.php?id="+id);
     const resposta = await retorno.json();
+    if (resposta.status == "banido") {
+        window.location.replace(resposta.redirect);
+        return;
+    }
+    if (retorno.status == 401) {
+        window.location.href = "../../crud_organizador/login/Login.html";
+        return;
+    }
     if(resposta.status == "ok"){
         var registro = resposta.data[0];
         document.getElementById("titulo").value = registro.titulo;
@@ -18,8 +26,8 @@ async function buscar(id){
         document.getElementById("data_hora").value =
                 registro.data_hora.replace(" ", "T").substring(0, 16);
         document.getElementById("local").value = registro.local;
-        document.getElementById("id_organizador").value = registro.id_organizador;    
          document.getElementById("id").value = id;
+        carregar_categorias(registro.categorias_ids);
     }else{
         alert("ERRO:" + resposta.mensagem);
         window.location.href = "../home/";
@@ -33,16 +41,19 @@ async function alterar(){
     var descricao = document.getElementById("descricao").value.trim();
     var data_hora   = document.getElementById("data_hora").value;
     var local   = document.getElementById("local").value.trim();
-    var id_organizador  = document.getElementById("id_organizador").value;
     var id  = document.getElementById("id").value;
+    var categorias = categorias_adicionadas;
     if (                           
         titulo === "" ||
         descricao === "" ||
         data_hora === "" ||
-        local === "" ||
-        id_organizador === ""
+        local === ""
     ) {
         alert("Preencha todos os campos obrigatórios.");
+        return;
+    }
+    if (categorias.length == 0) {
+        alert("Selecione uma categoria.");
         return;
     }
     const fd = new FormData();
@@ -50,12 +61,20 @@ async function alterar(){
     fd.append("descricao", descricao);
     fd.append("data_hora", data_hora);
     fd.append("local", local);
-    fd.append("id_organizador", id_organizador);
+    categorias.forEach((id_categoria) => fd.append("categorias[]", id_categoria));
     const retorno = await fetch("../php/evento_alterar.php?id="+id, {
           method: 'POST',
           body: fd  
         });
     const resposta = await retorno.json();
+    if (resposta.status == "banido") {
+        window.location.replace(resposta.redirect);
+        return;
+    }
+    if (retorno.status == 401) {
+        window.location.href = "../../crud_organizador/login/Login.html";
+        return;
+    }
     if(resposta.status == "ok"){
         alert("SUCESSO: " + resposta.mensagem);
         window.location.href = '../home/'

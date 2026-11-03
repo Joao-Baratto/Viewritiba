@@ -1,15 +1,18 @@
-async function valida_sessao(){
+async function valida_sessao() {
     try {
-        const retorno = await fetch("../php/valida_sessao.php", {
-            credentials: "same-origin"
-        });
+        const retorno = await fetch("../php/valida_sessao.php");
         const resposta = await retorno.json();
-        if(resposta.status == "nok"){
-            window.location.href = '../login/';
+        if (resposta.status === "banido") {
+            window.location.replace(resposta.redirect);
+            return;
+        }
+        if (resposta.status !== "ok") {
+            window.location.href = "../../crud_organizador/login/Login.html";
         }
     } catch (erro) {
-        window.location.href = '../login/';
+        console.error("Não foi possível validar a sessão do organizador:", erro);
+        alert("Não foi possível validar sua sessão. Tente novamente.");
     }
 }
 
-valida_sessao();
+document.addEventListener("DOMContentLoaded", valida_sessao);

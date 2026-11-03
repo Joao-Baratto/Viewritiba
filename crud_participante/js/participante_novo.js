@@ -1,44 +1,33 @@
-document.getElementById("formParticipante").addEventListener("submit", function (e) {
+document.getElementById("formParticipante").addEventListener("submit", async function (e) {
     e.preventDefault();
 
-    var senha = document.getElementById("senha").value;
-    var confirmaSenha = document.getElementById("confirmar_senha").value;
+    const senha = document.getElementById("senha").value;
+    const confirmaSenha = document.getElementById("confirmar_senha").value;
 
     if (senha !== confirmaSenha) {
         alert("As senhas não conferem!");
-        return false;
+        return;
     }
 
     if (senha.length !== 6) {
         alert("A senha deve ter exatamente 6 caracteres!");
-        return false;
+        return;
     }
 
-    novo();
+    try {
+        const response = await fetch("../php/participante_novo.php", {
+            method: "POST",
+            body: new FormData(e.currentTarget)
+        });
+        const result = await response.json();
+
+        if (!response.ok || result.status !== "sucesso") {
+            throw new Error(result.mensagem || "Não foi possível concluir o cadastro.");
+        }
+
+        alert(result.mensagem + " Faça seu login.");
+        window.location.href = "../login/login.html";
+    } catch (error) {
+        alert(error.message || "Não foi possível conectar ao servidor. Tente novamente.");
+    }
 });
-
-async function novo() {
-
-    var nome = document.getElementById("nome").value;
-    var documento = document.getElementById("documento").value;
-    var email = document.getElementById("email").value;
-    var telefone = document.getElementById("telefone").value;
-    var senha = document.getElementById("senha").value;
-
-    const fd = new FormData();
-    fd.append('nome', nome);
-    fd.append('documento', documento);
-    fd.append('email', email);
-    fd.append('telefone', telefone);
-    fd.append('senha', senha);
-
-    const retorno = await fetch("../php/participante_novo.php", { method: "POST", body: fd });
-    const resposta = await retorno.json();
-
-    if (resposta.status == "sucesso") {
-        alert("Sucesso: " + resposta.mensagem);
-    } else {
-        alert("Erro: " + resposta.mensagem);
-        
-    }
-}
