@@ -52,16 +52,32 @@
         </section>
 
         <div class="tabs-divider">
-            <div class="tab-button active"><span>FAVORITOS</span></div>
-        </div>
+    <button type="button" id="abaFavoritos" class="tab-button active">
+        <span>FAVORITOS</span>
+    </button>
 
-        <section class="events-section">
-            <div id="gridEventos" class="events-grid"></div>
-            <div id="emptyEventos" class="empty-events hidden">
-                <p>Você ainda não favoritou nenhum evento.</p>
-            </div>
-        </section>
-    </main>
+    <button type="button" id="abaCompartilhados" class="tab-button">
+        <span>COMPARTILHADOS</span>
+    </button>
+</div>
+
+<!-- Mantém os favoritos como estão -->
+<section id="secaoFavoritos" class="events-section">
+    <div id="gridEventos" class="events-grid"></div>
+
+    <div id="emptyEventos" class="empty-events hidden">
+        <p>Você ainda não favoritou nenhum evento.</p>
+    </div>
+</section>
+
+<!-- Nova seção de eventos recebidos -->
+<section id="secaoCompartilhados" class="events-section hidden">
+    <div id="gridCompartilhados" class="events-grid"></div>
+
+    <div id="emptyCompartilhados" class="empty-events hidden">
+        <p>Ninguém compartilhou eventos com você ainda.</p>
+    </div>
+</section>
 
     <script src="../js/perfil_participante.js?v=1"></script>
 </body>

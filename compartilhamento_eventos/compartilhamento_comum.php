@@ -28,9 +28,30 @@ function exigir_metodo($metodo) {
 // Descobre quem está logado.
 // IMPORTANTE: se o login do grupo guarda o usuário de outro jeito na sessão,
 // ajuste SOMENTE esta função, e os endpoints continuam funcionando.
-function id_usuario_logado() {
+function usuario_logado() {
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
-    return $_SESSION['usuario'][0]['id_usuario'] ?? null;
+
+    if (
+        ($_SESSION['papel'] ?? '') === 'participante'
+        && isset($_SESSION['participante_id'])
+    ) {
+        return [
+            'id' => (int) $_SESSION['participante_id'],
+            'tipo' => 'participante'
+        ];
+    }
+
+    if (
+        ($_SESSION['papel'] ?? '') === 'organizador'
+        && isset($_SESSION['organizador_id'])
+    ) {
+        return [
+            'id' => (int) $_SESSION['organizador_id'],
+            'tipo' => 'organizador'
+        ];
+    }
+
+    return null;
 }

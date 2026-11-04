@@ -12,6 +12,8 @@
     --preto: #1a1a1a;
     --laranja: #d9822b;
     --fundo-pagina: #fdfbf7;
+    --cinza: #2e2d2d;
+    
 }
 
 * { /* tudo */
@@ -30,7 +32,7 @@ body { /* página inteira*/
 }
 
 header { /* cima */
-    background-color: var(--preto);
+    background-color: var(--cinza);
     color: white;
     padding: 20px 40px;
     display: flex;
@@ -40,12 +42,12 @@ header { /* cima */
 }
 
 header h1 { /* texto Viewritiba*/
-    font-size: 1.5rem;
-    letter-spacing: 0.5px;
+    font-size: 1.3rem;
+    letter-spacing: -0.5px;
 }
 
 header p { /* texto meus favoritos*/
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     color: #e2e8f0;
 }
 
@@ -195,11 +197,15 @@ main {
 }
 
 .logo { /* Logo viewritiba, sóq pega pela classe*/
-    font-size: 25px;
-    font-family: "Caveat", cursive;
-    font-optical-sizing: auto;
-    font-weight: 400;
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-size: 1.3rem;
     font-style: normal;
+    letter-spacing: -0.5px;
+}
+
+.logo span {
+    color: var(--laranja);
 }
 
 .barra-filtros { /* linha onde fica o botão filtrar*/
@@ -254,7 +260,7 @@ main {
 <body>
 
     <header>
-        <h1 class="logo">Viewritiba</h1>
+        <h1 class="logo">Viewriti<span>ba</span></h1>
         <p>Meus Favoritos</p>
     </header>
 

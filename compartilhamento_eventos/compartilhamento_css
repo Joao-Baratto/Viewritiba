@@ -1,0 +1,205 @@
+:root {
+            --preto: #1a1a1a;
+            --laranja: #d9822b;
+            --fundo-pagina: #fdfbf7;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Domine", serif;
+        }
+
+        body {
+            background-color: var(--fundo-pagina);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Barra escura do topo */
+        header {
+            background-color: var(--preto);
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 25px;
+            font-family: "Caveat", cursive;
+            font-weight: 400;
+        }
+
+        /* Links de navegação no header */
+        header nav {
+            display: flex;
+            gap: 24px;
+        }
+
+        header nav a {
+            color: #e2e8f0;
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+
+        header nav a:hover,
+        header nav a[aria-current="page"] {
+            color: var(--laranja);
+        }
+
+        main {
+            max-width: 900px;
+            width: 100%;
+            margin: 40px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        /* Título da página + contador + linha laranja */
+        .titulo-secao {
+            margin-bottom: 24px;
+            border-bottom: 2px solid var(--laranja);
+            padding-bottom: 8px;
+        }
+
+        .titulo-secao h2 {
+            color: var(--preto);
+            font-size: 26px;
+        }
+
+        .titulo-secao p {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-top: 4px;
+        }
+
+        /* Caixa que guarda todos os cards */
+        #lista-compartilhados {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Cada evento recebido */
+        .card-recebido {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .bloco-data {
+            background: var(--preto);
+            color: #fff;
+            padding: 20px;
+            min-width: 90px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .bloco-data .dia {
+            font-size: 28px;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        .bloco-data .mes {
+            font-size: 14px;
+            margin-top: 5px;
+            color: #d1a980;
+        }
+
+        .info-evento {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex-grow: 1;
+            gap: 8px;
+        }
+
+        .info-evento h3 {
+            font-size: 20px;
+            color: var(--preto);
+        }
+
+        .local-evento {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Quem enviou (e a mensagem, se houver) */
+        .remetente {
+            font-size: 14px;
+            color: #444;
+        }
+
+        .mensagem-recebida {
+            font-size: 14px;
+            color: #444;
+            border-left: 3px solid var(--laranja);
+            padding-left: 10px;
+            font-style: italic;
+        }
+
+        .btn-ver-evento {
+            align-self: flex-start;
+            margin-top: 4px;
+            padding: 6px 15px;
+            border: 1px solid var(--laranja);
+            border-radius: 20px;
+            color: var(--laranja);
+            font-weight: bold;
+            font-size: 14px;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .btn-ver-evento:hover {
+            background: var(--laranja);
+            color: #fff;
+        }
+
+        .btn-ver-evento:focus-visible,
+        header nav a:focus-visible {
+            outline: 2px solid var(--laranja);
+            outline-offset: 2px;
+        }
+
+        /* Mensagens de lista vazia e de erro */
+        .lista-vazia {
+            padding: 20px;
+            color: #665;
+        }
+
+        .lista-erro {
+            padding: 20px;
+            color: #b91c1c;
+        }
+
+        @media (max-width: 520px) {
+            header {
+                padding: 16px 20px;
+            }
+
+            .card-recebido {
+                flex-direction: column;
+            }
+
+            .bloco-data {
+                flex-direction: row;
+                gap: 10px;
+                justify-content: center;
+                padding: 12px;
+            }
+        }

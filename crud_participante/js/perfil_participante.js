@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     buscar();
+    configurarAbas();
 });
 
 document.getElementById("logoff").addEventListener("click", (evento) => {
@@ -48,14 +49,23 @@ function mostrarContato(id_item, id_texto, valor) {
     }
 }
 
+
 function preencherFavoritos(favoritos) {
+    const grid = document.getElementById("gridEventos");
+    const vazio = document.getElementById("emptyEventos");
+
     document.getElementById("statTotalFavoritos").textContent = favoritos.length;
 
-    if (favoritos.length == 0) {
-        document.getElementById("gridEventos").classList.add("hidden");
-        document.getElementById("emptyEventos").classList.remove("hidden");
+    if (favoritos.length === 0) {
+        grid.innerHTML = "";
+        grid.classList.add("hidden");
+        vazio.classList.remove("hidden");
         return;
     }
+
+    // Mostra os favoritos e esconde a mensagem de lista vazia
+    grid.classList.remove("hidden");
+    vazio.classList.add("hidden");
 
     var html = "";
 
@@ -73,5 +83,6 @@ function preencherFavoritos(favoritos) {
         `;
     }
 
-    document.getElementById("gridEventos").innerHTML = html;
+    grid.innerHTML = html;
 }
+

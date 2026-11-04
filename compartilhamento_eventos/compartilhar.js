@@ -1,7 +1,11 @@
 // ===== CONFIGURAÇÃO (ajuste aqui se mudar o nome ou a pasta do projeto) =====
-const BASE_PROJETO   = location.origin + '/viewritiba/Viewritiba';
-const URL_DETALHE    = BASE_PROJETO + '/crud_comentarios/home/comentarios.html'; // tela de detalhe do evento
-const URL_API_ENVIAR = BASE_PROJETO + '/favoritos/compartilhar_enviar.php';
+const BASE_PROJETO = location.origin + '/viewritiba/Viewritiba';
+
+const URL_DETALHE =
+    BASE_PROJETO + '/crud_evento/home/visualizar_evento.html';
+
+const URL_API_ENVIAR =
+    BASE_PROJETO + '/compartilhamento_eventos/compartilhar_enviar.php';
  
 // Link que leva à tela do evento
 function montarLink(evento) {
@@ -11,8 +15,15 @@ function montarLink(evento) {
 // Cria um elemento já com classe e texto (textContent evita injeção de HTML)
 function criar(tag, classe, texto) {
     const el = document.createElement(tag);
-    if (classe) el.className = classe;
-    if (texto) el.textContent = texto;
+
+    if (classe) {
+        el.className = classe;
+    }
+
+    if (texto !== undefined && texto !== null) {
+        el.textContent = String(texto);
+    }
+
     return el;
 }
  
