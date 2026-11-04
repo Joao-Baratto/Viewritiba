@@ -1,5 +1,6 @@
 let comentarios = [];
 let elementos_tela;
+let add_comentario = true;
 const parametros = new URLSearchParams(window.location.search);
 const id_evento = parametros.get("id");
 document.addEventListener("DOMContentLoaded", () => {
@@ -29,8 +30,25 @@ document.addEventListener("DOMContentLoaded", () => {
             enviar();
         });
     }
-    carregar_comentarios();
+    vizualizacao_comentario().then(carregar_comentarios);
 });
+async function vizualizacao_comentario() {
+    try {
+        const resposta = await fetch("../php/valida_sessao.php");
+        const retorno = await resposta.json();
+        add_comentario = !(retorno.data && retorno.data.tipo === "organizador");
+    } catch (erro) {
+        add_comentario = true;
+    }
+    const composer = document.getElementById("composer");
+    if (composer) {
+        if (add_comentario) {
+            composer.hidden = false;
+        } else {
+            composer.remove();
+        }
+    }
+}
 async function enviar() {
     const comentario = document.getElementById("new_comentario");
     const conteudo = comentario.value.trim();
@@ -84,10 +102,10 @@ function renderizar_comentarios() {
                 </div>
                 <p class="comentario-texto">${comentario.texto}</p>
                 <span >★Nota: ${comentario.nota}/5</span>
-                <div class="comentario-acoes">
+                ${add_comentario ? `<div class="comentario-acoes">
                     <button type="button" class="btn-alterar" onclick="alterar_comentario(${comentario.id})">Alterar</button>
                     <button type="button" class="btn-delete" onclick="excluir_comentario(${comentario.id})">Excluir</button>
-                </div>
+                </div>` : ""}
             </div>
         `;
     });

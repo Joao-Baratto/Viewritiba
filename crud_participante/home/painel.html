@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do participante | Viewritiba</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../crud_organizador/home/painel.css?v=2">
+    <style>
+        .panel-card-favorites .panel-card-icon {
+            background: #fbefc4;
+            color: #b8860b;
+        }
+        .panel-options { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    </style>
+</head>
+
+<body>
+    <header class="page-header">
+        <div class="header-content">
+            <a class="brand-link" href="painel.html">
+                <h1>Viewritiba</h1>
+            </a>
+            <nav class="header-nav" aria-label="Navegação principal">
+                <a href="painel.html" class="nav-link active" aria-current="page">Home</a>
+                <a href="explorar.html" class="nav-link">Explorar</a>
+                <a href="eventos.html" class="nav-link">Eventos</a>
+                <a href="../../favoritos/favoritos.html" class="nav-link">Favoritos</a>
+                <a href="perfil_participante.html" class="nav-link">Meu perfil</a>
+                <a href="#" id="logoff" class="nav-link">Sair</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="panel-main">
+        <section class="panel-welcome">
+            <p class="panel-eyebrow">Sua área Viewritiba</p>
+            <h2>O que vamos fazer hoje?</h2>
+            <p>Descubra eventos pela cidade e acompanhe os que você mais gostou.</p>
+        </section>
+
+        <section class="panel-options" aria-label="Opções da plataforma">
+            <a class="panel-card panel-card-explorar" href="explorar.html">
+                <span class="panel-card-icon" aria-hidden="true">✦</span>
+                <span class="panel-card-label">Feito para você</span>
+                <h3>Explorar</h3>
+                <p>Veja eventos sugeridos de acordo com o que você gosta.</p>
+                <span class="panel-card-link">Ver recomendações <span aria-hidden="true">→</span></span>
+            </a>
+
+            <a class="panel-card panel-card-events" href="eventos.html">
+                <span class="panel-card-icon" aria-hidden="true">✳</span>
+                <span class="panel-card-label">Explorar</span>
+                <h3>Eventos</h3>
+                <p>Veja os eventos divulgados em Curitiba e região e pesquise o que combina com você.</p>
+                <span class="panel-card-link">Ver eventos <span aria-hidden="true">→</span></span>
+            </a>
+
+            <a class="panel-card panel-card-favorites" href="../../favoritos/favoritos.html">
+                <span class="panel-card-icon" aria-hidden="true">★</span>
+                <span class="panel-card-label">Seus preferidos</span>
+                <h3>Favoritos</h3>
+                <p>Reveja os eventos que você salvou para não perder nenhum.</p>
+                <span class="panel-card-link">Abrir favoritos <span aria-hidden="true">→</span></span>
+            </a>
+
+            <a class="panel-card panel-card-profile" href="perfil_participante.html">
+                <span class="panel-card-icon" aria-hidden="true">◎</span>
+                <span class="panel-card-label">Sua presença na plataforma</span>
+                <h3>Perfil do usuário</h3>
+                <p>Confira seus dados e os eventos que você favoritou.</p>
+                <span class="panel-card-link">Abrir perfil <span aria-hidden="true">→</span></span>
+            </a>
+        </section>
+
+        <aside class="panel-note">
+            <strong>Viewritiba conecta a cidade.</strong>
+            <span>Descubra, participe e ajude a valorizar os eventos locais.</span>
+        </aside>
+    </main>
+
+    <script src="../js/painel.js?v=3"></script>
+</body>
+
+</html>

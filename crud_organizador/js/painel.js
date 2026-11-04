@@ -11,3 +11,16 @@ document.addEventListener("DOMContentLoaded", async () => {
         alert("Não foi possível validar sua sessão. Tente novamente.");
     }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const sair = document.getElementById("logoff");
+    if (!sair) return;
+    sair.addEventListener("click", async (evento) => {
+        evento.preventDefault();
+        try {
+            await fetch("../../crud_evento/php/evento_logoff.php");
+        } finally {
+            window.location.href = "../home/MainMenu.html?v=2";
+        }
+    });
+});

@@ -20,7 +20,7 @@ document.getElementById("formLogin").addEventListener("submit", async (event) =>
             throw new Error(result.mensagem || "Não foi possível realizar o login.");
         }
 
-        window.location.replace("../../crud_evento/home/catalogo.html");
+        window.location.replace("../home/painel.html");
     } catch (error) {
         mensagem.textContent = error.message || "Não foi possível conectar ao servidor. Tente novamente.";
     }

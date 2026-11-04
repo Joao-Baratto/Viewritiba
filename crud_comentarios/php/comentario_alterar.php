@@ -14,6 +14,15 @@ if($usuario === null){
     exit;
 }
 
+if($usuario['tipo'] !== 'participante'){
+    echo json_encode([
+        'status' => 'nok',
+        'mensagem_retorno' => 'Organizadores só podem visualizar os comentários.',
+        'data' => []
+    ]);
+    exit;
+}
+
 $id_comentario = (int)($_POST['id_comentario'] ?? $_GET['id_comentario'] ?? '');
 $texto = trim(($_POST['texto'] ?? ''));
 $nota = (int)($_POST['nota'] ??'');

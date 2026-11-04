@@ -3,57 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novo Evento</title>
     <link rel="stylesheet" href="../css/style.css">
-    <title>Evento Novo</title>
 </head>
 <body>
     <main class="page-main">
-    <div class="form-container">
-        <div class="form-header">
-            <h2>Cadastrar Evento</h2>
-            <p>Preencha os dados do evento.</p>
-        </div>
+    <div class="form-container">  
+     <div class="form-header">
+        <h2>Cadastrar Evento</h2>
+        <p>Preencha os dados do evento.</p>
+    </div>
     <div class="modern-form">
-    <div>
-        <div>
-            <div class="input-group">
-                <label for="titulo">Título</label>
-                <input type="text" id="titulo" required>
-            </div>
+        <div class="input-group">
+            <label for="titulo">Título:</label>
+            <input type="text" id="titulo" required>
+        </div>
+        <div class="input-group">
+            <label for="descricao">Descrição:</label>
+            <input type="text" id="descricao" required>
+        </div>
+        <div class="input-group">
+            <label for="data_hora">Data e Hora:</label>
+            <input type="datetime-local" id="data_hora" required>
+        </div>
+        <div class="input-group">
+            <label for="local">Local:</label>
+            <input type="text" id="local" required>
         </div>
         <div class="input-group">
             <label>Categorias:</label>
             <div id="categorias" class="categorias-campo"></div>
         </div>
         <div>
-            <div class="input-group">
-                <label for="descricao">Descrição</label>
-                <input type="text" id="descricao" required>
-            </div>
+            <button type="button" id="enviar">Enviar</button>  
         </div>
-        <div>
-            <div class="input-group">
-                <label for="data_hora">Data e Hora</label>
-                <input type="datetime-local" id="data_hora" required>
-            </div>
-        </div>
-        <div>
-            <div class="input-group">
-                <label for="local">Local</label>
-                <input type="text" id="local" required>
-            </div>
-        </div>
-        <div>
-            <div>
-                <button id="enviar">Enviar</button>
-            </div>
-        </div>
+      </div>
     </div>
-</main>
-
-<script src="../js/categorias.js"></script>
-<script src="../js/evento_novo.js"></script>
-<script src="../js/valida_sessao.js"></script>
-
+   </main>
+   <script src="../js/categorias.js"></script>
+   <script src="../js/evento_novo.js"></script>
+   <script src="../js/valida_sessao.js"></script>
 </body>
 </html>

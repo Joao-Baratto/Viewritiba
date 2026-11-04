@@ -21,6 +21,9 @@ $usuario = usuario_logado();
 if($usuario == null){
     responder('nok', 'Faça login para comentar.');
 }
+if($usuario['tipo'] !== 'participante'){
+    responder('nok', 'Organizadores só podem visualizar os comentários.');
+}
 exigir_conta_nao_banida($conexao, $usuario['tipo'], $usuario['id']);
 $tipo_conta = $usuario['tipo'];
 $id_usuario = $usuario['id'];

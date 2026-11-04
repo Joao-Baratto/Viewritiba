@@ -43,6 +43,7 @@ async function carregarListas() {
     } catch (error) {
         mostrarMensagem("mensagem-eventos", error.message);
     }
+    carregarCategorias();
 }
 
 function renderizarEventos(eventos) {

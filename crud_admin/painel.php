@@ -57,7 +57,23 @@ if (($_SESSION['papel'] ?? '') !== 'moderador') {
             <p id="mensagem-contas" class="admin-message" role="status"></p>
             <div id="lista-contas" class="moderation-list"></div>
         </section>
+        <section class="moderation-section">
+            <div class="moderation-heading">
+                <div>
+                    <h2>Categorias de eventos</h2>
+                    <p>Crie, renomeie ou exclua as categorias usadas nos eventos. Categorias em uso não podem ser excluídas.</p>
+                </div>
+            </div>
+            <form id="form-categoria" class="moderation-card">
+                <label for="nome-categoria">Nova categoria</label>
+                <input type="text" id="nome-categoria" maxlength="50" placeholder="Insira uma categoria...">
+                <button type="submit" class="btn-secondary">Adicionar</button>
+            </form>
+            <p id="mensagem-categorias" class="admin-message" role="status"></p>
+            <div id="lista-categorias" class="moderation-list"></div>
+        </section>
     </main>
-    <script src="js/painel.js?v=3"></script>
+    <script src="js/painel.js"></script>
+    <script src="js/categorias.js"></script>
 </body>
 </html>
