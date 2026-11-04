@@ -1,11 +1,12 @@
 <?php
     session_start();
     include_once('../../php/usuario_logado.php');
-    if(usuario_logado() != null){
+    $usuario = usuario_logado();
+    if($usuario != null){
         $retorno = [
-            'status'    => 'ok', 
-            'mensagem'  => '', 
-            'data'      => []
+            'status'    => 'ok',
+            'mensagem'  => '',
+            'data'      => ['tipo' => $usuario['tipo']]
         ];
     }else{
         $retorno = [
