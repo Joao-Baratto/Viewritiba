@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-    valida_sessao();
     buscar();
 });
 
@@ -34,7 +33,7 @@ async function logoff() {
     const resposta = await retorno.json();
 
     if (resposta.status == "ok") {
-        window.location.href = "../../crud_organizador/login/Login.html";
+        window.location.href = "../../crud_organizador/home/MainMenu.html?v=2";
     }
 }
 
@@ -175,11 +174,6 @@ function preencherTabela(tabela) {
                     </a>
 
                     <a href="#"
-                        onclick="favoritar_evento(${tabela[i].id}); return false;">
-                        Favoritar
-                    </a>
-
-                    <a href="#"
                         onclick="excluir(${tabela[i].id}); return false;">
                         Excluir
                     </a>
@@ -191,22 +185,4 @@ function preencherTabela(tabela) {
     html += "</table>";
 
     document.getElementById("lista").innerHTML = html;
-}
-
-async function favoritar_evento(id_evento) {
-    const dados = new FormData();
-
-    dados.append("evento_id", id_evento);
-
-    const retorno = await fetch(
-        "../../favoritos/favoritos_add.php",
-        {
-            method: "POST",
-            body: dados
-        }
-    );
-
-    const resposta = await retorno.json();
-
-    alert(resposta.mensagem);
 }

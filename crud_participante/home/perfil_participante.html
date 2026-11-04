@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil do Participante - Viewritiba</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../crud_organizador/home/perfil_organizador.css">
+</head>
+
+<body>
+    <header class="page-header">
+        <div class="header-content">
+            <a href="painel.html" class="brand-link">
+                <h1>Viewritiba</h1>
+            </a>
+            <nav class="header-nav">
+                <a href="eventos.html" class="nav-link">Eventos</a>
+                <a href="../../favoritos/favoritos.html" class="nav-link">Favoritos</a>
+                <a href="painel.html" class="nav-link">Início</a>
+                <a href="#" id="logoff" class="nav-link">Sair</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="profile-page-container">
+        <section class="profile-header">
+            <div class="avatar-column">
+                <div class="avatar-circle">
+                    <span id="avatarInicial" class="avatar-initial"></span>
+                </div>
+            </div>
+            <div class="info-column">
+                <div class="user-row">
+                    <h2 id="perfilNome" class="username"></h2>
+                </div>
+                <div class="stats-row">
+                    <div class="stat-entry">
+                        <span id="statTotalFavoritos" class="stat-bold">0</span> favoritos
+                    </div>
+                </div>
+                <div class="contacts-row">
+                    <div id="itemEmail" class="contact-tag hidden"><span id="perfilEmail"></span></div>
+                    <div id="itemTelefone" class="contact-tag hidden"><span id="perfilTelefone"></span></div>
+                    <div id="itemDocumento" class="contact-tag hidden"><span id="perfilDocumento"></span></div>
+                </div>
+            </div>
+        </section>
+
+        <div class="tabs-divider">
+            <div class="tab-button active"><span>FAVORITOS</span></div>
+        </div>
+
+        <section class="events-section">
+            <div id="gridEventos" class="events-grid"></div>
+            <div id="emptyEventos" class="empty-events hidden">
+                <p>Você ainda não favoritou nenhum evento.</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="../js/perfil_participante.js?v=1"></script>
+</body>
+
+</html>
