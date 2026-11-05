@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="../../crud_organizador/home/painel.css?v=2">
+    <link rel="stylesheet" href="../css/explorar.css?v=6">
 </head>
 
 <body>
@@ -32,12 +33,17 @@
     <main class="panel-main">
         <section class="panel-welcome">
             <p class="panel-eyebrow">Feito para você</p>
-            <h2>Explorar</h2>
-            <p>As recomendações de eventos ainda estão sendo preparadas e ficarão disponíveis em breve.</p>
+            <h2 id="titulo_explorar"></h2>
+            <p id="mensagem_explorar"></p>
+        </section>
+
+        <section class="explorar-eventos">
+            <div id="lista-explorar"></div>
         </section>
     </main>
 
     <script src="../js/painel.js?v=3"></script>
+    <script src="../js/explorar.js?v=11"></script>
 </body>
 
 </html>

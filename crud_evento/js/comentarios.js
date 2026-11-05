@@ -3,7 +3,11 @@ const idEventoComentario = parametrosComentario.get("id");
 
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("btn_voltar").addEventListener("click", () => {
-        window.location.href = "catalogo.html";
+        if (window.history.length > 1) {
+            window.history.back();
+        } else {
+            window.location.href = "../../index.html";
+        }
     });
     document.getElementById("btn_comentario").addEventListener("click", enviarComentario);
     verificarSessaoParticipante();

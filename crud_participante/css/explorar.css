@@ -1,0 +1,118 @@
+.explorar-eventos {
+    margin-top: 1rem;
+}
+
+.explorar-eventos h2 {
+    font-size: 2.1rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+}
+
+#lista-explorar {
+    width: 100%;
+    overflow-x: auto;
+}
+
+#lista-explorar table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 14px;
+}
+
+#lista-explorar th {
+    padding: 0 18px 6px;
+    text-align: left;
+    color: #6b7280;
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+#lista-explorar td {
+    background: #fff;
+    padding: 20px 18px;
+    vertical-align: middle;
+    border-top: 1px solid #e4e4e4;
+    border-bottom: 1px solid #e4e4e4;
+    transition: all 0.2s ease;
+}
+
+#lista-explorar td:first-child {
+    border-left: 1px solid #e4e4e4;
+    border-radius: 14px 0 0 14px;
+    font-weight: 800;
+}
+
+#lista-explorar td:last-child {
+    border-right: 1px solid #e4e4e4;
+    border-radius: 0 14px 14px 0;
+}
+
+#lista-explorar tr:hover td {
+    background: #fff9f6;
+}
+
+#mensagem_explorar {
+    color: #6b7280;
+}
+
+#lista-explorar a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 12px;
+    margin: 3px;
+    border-radius: 9px;
+    text-decoration: none;
+    font-size: 0.84rem;
+    font-weight: 800;
+    transition: all 0.2s ease;
+}
+
+#lista-explorar a[href*="comentarios"] {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+#lista-explorar a[href*="comentarios"]:hover {
+    background: #e5e7eb;
+}
+
+#lista-explorar a[onclick*="favoritar"] {
+    background: #fff0eb;
+    color: #e95f47;
+}
+
+#lista-explorar a[onclick*="favoritar"]:hover {
+    background: #ffe1d7;
+}
+
+#lista-explorar a[href*="visualizar_evento"] {
+    background: #eef4ff;
+    color: #2563eb;
+}
+
+#lista-explorar a[href*="visualizar_evento"]:hover {
+    background: #dfeaff;
+}
+
+/* Eventos já favoritados: card levemente dourado (tema da tela de Favoritos) */
+#lista-explorar tr.favoritado td {
+    background: #fff7e8;
+    border-top-color: #f3dcb2;
+    border-bottom-color: #f3dcb2;
+}
+
+#lista-explorar tr.favoritado td:first-child {
+    border-left-color: #f3dcb2;
+}
+
+#lista-explorar tr.favoritado td:last-child {
+    border-right-color: #f3dcb2;
+}
+
+#lista-explorar tr.favoritado:hover td {
+    background: #fff1d6;
+}

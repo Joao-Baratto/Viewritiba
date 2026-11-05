@@ -1,6 +1,7 @@
 let comentarios = [];
 let elementos_tela;
 let add_comentario = true;
+let tipo_conta = "";
 const parametros = new URLSearchParams(window.location.search);
 const id_evento = parametros.get("id");
 document.addEventListener("DOMContentLoaded", () => {
@@ -10,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const btn_comentario = document.getElementById("btn_comentario");
     if (!id_evento) {
         alert("Evento inválido.");
-        window.location.href = "../../crud_evento/home/index.html";
+        voltar();
         return;
     }
     if (btn_voltar) {
@@ -36,10 +37,12 @@ async function vizualizacao_comentario() {
     try {
         const resposta = await fetch("../php/valida_sessao.php");
         const retorno = await resposta.json();
-        add_comentario = !(retorno.data && retorno.data.tipo === "organizador");
+        tipo_conta = (retorno.data && retorno.data.tipo) || "";
+        add_comentario = tipo_conta !== "organizador";
     } catch (erro) {
         add_comentario = true;
     }
+    ajustar_links_participante();
     const composer = document.getElementById("composer");
     if (composer) {
         if (add_comentario) {
@@ -133,7 +136,18 @@ async function excluir_comentario(id_comentario) {
         alert("Não foi possível excluir o comentário.");
     }
 }
+function ajustar_links_participante() {
+    if (tipo_conta !== "participante") return;
+    const home = document.getElementById("home");
+    const eventos = document.getElementById("eventos");
+    if (home) home.href = "../../crud_participante/home/painel.html";
+    if (eventos) eventos.href = "../../crud_participante/home/eventos.html";
+}
 function voltar() {
+    if (tipo_conta === "participante") {
+        window.location.href = "../../crud_participante/home/eventos.html";
+        return;
+    }
     window.location.href = `../../crud_evento/home/index.html`;
     alert("Voltando para a página de eventos...");
 }

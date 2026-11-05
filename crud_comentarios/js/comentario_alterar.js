@@ -10,8 +10,19 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         alterar();
     });
+    ajustar_links_participante();
     buscar();
 });
+async function ajustar_links_participante() {
+    try {
+        const resposta = await fetch("../php/valida_sessao.php");
+        const retorno = await resposta.json();
+        if (retorno.data && retorno.data.tipo === "participante") {
+            document.getElementById("home").href = "../../crud_participante/home/painel.html";
+            document.getElementById("eventos").href = "../../crud_participante/home/eventos.html";
+        }
+    } catch (erro) {}
+}
 async function buscar() {
     if (!id_comentario) {
         alert("Comentário inválido.");
