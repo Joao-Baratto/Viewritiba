@@ -132,7 +132,11 @@ async function favoritar_evento(id_evento) {
     alert(resposta.mensagem);
 }
 
+let eventosExibidos = [];
+
 function preencherTabela(tabela) {
+    eventosExibidos = tabela;
+
     var html = `
         <table>
             <tr>
@@ -165,6 +169,11 @@ function preencherTabela(tabela) {
                         onclick="favoritar_evento(${tabela[i].id}); return false;">
                         Favoritar
                     </a>
+
+                    <button type="button"
+                        onclick="abrirCompartilhamento(${i})">
+                        Compartilhar
+                    </button>
                 </td>
             </tr>
         `;
@@ -173,4 +182,26 @@ function preencherTabela(tabela) {
     html += "</table>";
 
     document.getElementById("lista").innerHTML = html;
+}
+function abrirCompartilhamento(indice) {
+    const evento = eventosExibidos[indice];
+
+    if (!evento) {
+        alert("Evento não encontrado.");
+        return;
+    }
+
+    if (typeof compartilharEvento !== "function") {
+        console.error("A função compartilharEvento não foi carregada.");
+        alert("O sistema de compartilhamento não foi carregado.");
+        return;
+    }
+
+    compartilharEvento({
+        id_evento: evento.id,
+        titulo: evento.titulo,
+        descricao: evento.descricao,
+        data_hora: evento.data_hora,
+        local: evento.local
+    });
 }
