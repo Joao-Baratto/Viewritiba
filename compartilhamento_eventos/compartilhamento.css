@@ -203,4 +203,13 @@
                 padding: 12px;
             }
         }
+        /* Corrige a cor dos textos dos eventos recebidos */
+.card-recebido {
+    color: #f1f5f9;
+}
+
+.card-recebido p,
+.card-recebido span {
+    color: #e2e8f0;
+}
         

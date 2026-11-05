@@ -170,10 +170,7 @@ function preencherTabela(tabela) {
                         Favoritar
                     </a>
 
-                    <button type="button"
-                        onclick="abrirCompartilhamento(${i})">
-                        Compartilhar
-                    </button>
+                    <button type="button" class="btn-compartilhar" onclick="abrirCompartilhamento(${i})">Compartilhar</button>
                 </td>
             </tr>
         `;

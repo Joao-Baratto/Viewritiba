@@ -1208,3 +1208,28 @@ body {
             2rem;
     }
 }
+
+.btn-compartilhar {
+    background-color: #fff0ec;
+    color: #f4513b;
+    border: none;
+    border-radius: 10px;
+    padding: 11px 13px;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: background-color 0.2s ease,
+                transform 0.2s ease;
+}
+
+.btn-compartilhar:hover {
+    background-color: #ffe0d7;
+    transform: translateY(-2px);
+}
+
+.btn-compartilhar:active {
+    transform: translateY(0);
+}
