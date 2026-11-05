@@ -168,7 +168,7 @@ try {
         'mensagem' => 'Evento compartilhado com sucesso!'
     ]);
 
-} catch (mysqli_sql_exception $erro) {
+ } catch (mysqli_sql_exception $erro) {
     if ((int) $erro->getCode() === 1062) {
         responder(409, [
             'status' => 'nok',
@@ -180,8 +180,8 @@ try {
 
     responder(500, [
         'status' => 'nok',
-        'mensagem' => 'Não foi possível compartilhar o evento.'
-    ]);
+        'mensagem' => 'Erro no banco de dados. Consulte o log do servidor.',
+ ]);
 
 } catch (Throwable $erro) {
     error_log('Erro ao compartilhar: ' . $erro->getMessage());
