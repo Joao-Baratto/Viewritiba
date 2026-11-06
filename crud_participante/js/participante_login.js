@@ -18,7 +18,7 @@ document.getElementById("formLogin").addEventListener("submit", async function (
         console.error("Erro ao realizar login do participante:", error);
         alert("Não foi possível realizar o login. Tente novamente.");
     }
-=======
+
 document.getElementById("formLogin").addEventListener("submit", async (event) => {
     event.preventDefault();
 
