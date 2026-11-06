@@ -79,7 +79,6 @@ document.addEventListener("DOMContentLoaded", async function () {
             alert("Não foi possível excluir sua conta. Tente novamente.");
         }
     });
-=======
 document.addEventListener('DOMContentLoaded', async () => {
     const formPerfil = document.getElementById('formPerfil');
     const nomeInput = document.getElementById('nome');
