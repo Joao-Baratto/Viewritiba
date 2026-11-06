@@ -1,0 +1,58 @@
+/*
+ * Listas de eventos (organizador: crud_evento/home/index.html
+ *                    participante: crud_participante/home/eventos.html)
+ * e cadastro de evento (crud_evento/home/evento_novo.html, usa só o fundo)
+ * Carregado depois do style.css para deixar essas páginas no mesmo padrão
+ * das outras: fundo neutro, cards sem a barrinha e botões transparentes.
+ */
+
+/* Mesmo fundo das outras páginas (Home, Explorar, Perfil) */
+body {
+    background: #F7F5F2;
+}
+
+/* Sem a barrinha coral na primeira coluna */
+#lista td:first-child::before {
+    display: none;
+}
+
+/* Fundos dos botões com transparência: acompanham a cor do card */
+#lista a[href*="comentarios"] { background: rgba(55, 65, 81, 0.07); }
+#lista a[href*="comentarios"]:hover { background: rgba(55, 65, 81, 0.13); }
+
+#lista a[href*="evento_alterar"] { background: rgba(37, 99, 235, 0.08); }
+#lista a[href*="evento_alterar"]:hover { background: rgba(37, 99, 235, 0.15); }
+
+#lista a[onclick*="excluir"] { background: rgba(198, 40, 40, 0.08); }
+#lista a[onclick*="excluir"]:hover { background: rgba(198, 40, 40, 0.15); }
+
+#lista a[onclick*="favoritar"] { background: rgba(233, 95, 71, 0.10); }
+#lista a[onclick*="favoritar"]:hover { background: rgba(233, 95, 71, 0.18); }
+
+#lista .btn-compartilhar {
+    color: #0f8a6c;
+    background-color: rgba(16, 163, 127, 0.10);
+    /* mesmas medidas dos outros botões de ação (#lista a) */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    min-height: 36px;
+    padding: 9px 13px;
+    margin: 3px 2px;
+    border-radius: 9px;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: inherit;
+}
+#lista .btn-compartilhar:hover { background-color: rgba(16, 163, 127, 0.18); }
+
+/* Eventos já favoritados (participante): card pêssego, no tom do card de filtro */
+#lista tr.favoritado td {
+    background: #ffe9e0;
+    border-top-color: #f8cbb9;
+    border-bottom-color: #f8cbb9;
+}
+#lista tr.favoritado td:first-child { border-left-color: #f8cbb9; }
+#lista tr.favoritado td:last-child { border-right-color: #f8cbb9; }
+#lista tbody tr.favoritado:hover td { background: #ffded1; }

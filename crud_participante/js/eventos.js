@@ -130,6 +130,10 @@ async function favoritar_evento(id_evento) {
     const resposta = await retorno.json();
 
     alert(resposta.mensagem);
+
+    if (resposta.status == "ok") {
+        pesquisar();
+    }
 }
 
 let eventosExibidos = [];
@@ -152,7 +156,7 @@ function preencherTabela(tabela) {
 
     for (var i = 0; i < tabela.length; i++) {
         html += `
-            <tr>
+            <tr class="${tabela[i].favoritado ? "favoritado" : ""}">
                 <td>${tabela[i].titulo}</td>
                 <td>${tabela[i].descricao}</td>
                 <td>${tabela[i].data_hora}</td>
@@ -165,10 +169,11 @@ function preencherTabela(tabela) {
                         Comentários
                     </a>
 
+                    ${tabela[i].favoritado ? "" : `
                     <a href="#"
                         onclick="favoritar_evento(${tabela[i].id}); return false;">
                         Favoritar
-                    </a>
+                    </a>`}
 
                     <button type="button" class="btn-compartilhar" onclick="abrirCompartilhamento(${i})">Compartilhar</button>
                 </td>

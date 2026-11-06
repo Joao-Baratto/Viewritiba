@@ -71,48 +71,49 @@
     transition: all 0.2s ease;
 }
 
+/* Fundos dos botões com transparência: acompanham a cor do card (normal ou favoritado) */
 #lista-explorar a[href*="comentarios"] {
-    background: #f3f4f6;
+    background: rgba(55, 65, 81, 0.07);
     color: #374151;
 }
 
 #lista-explorar a[href*="comentarios"]:hover {
-    background: #e5e7eb;
+    background: rgba(55, 65, 81, 0.13);
 }
 
 #lista-explorar a[onclick*="favoritar"] {
-    background: #fff0eb;
+    background: rgba(233, 95, 71, 0.10);
     color: #e95f47;
 }
 
 #lista-explorar a[onclick*="favoritar"]:hover {
-    background: #ffe1d7;
+    background: rgba(233, 95, 71, 0.18);
 }
 
 #lista-explorar a[href*="visualizar_evento"] {
-    background: #eef4ff;
+    background: rgba(37, 99, 235, 0.08);
     color: #2563eb;
 }
 
 #lista-explorar a[href*="visualizar_evento"]:hover {
-    background: #dfeaff;
+    background: rgba(37, 99, 235, 0.15);
 }
 
-/* Eventos já favoritados: card levemente dourado (tema da tela de Favoritos) */
+/* Eventos já favoritados: card pêssego, no tom do card de filtro da tela Eventos */
 #lista-explorar tr.favoritado td {
-    background: #fff7e8;
-    border-top-color: #f3dcb2;
-    border-bottom-color: #f3dcb2;
+    background: #ffe9e0;
+    border-top-color: #f8cbb9;
+    border-bottom-color: #f8cbb9;
 }
 
 #lista-explorar tr.favoritado td:first-child {
-    border-left-color: #f3dcb2;
+    border-left-color: #f8cbb9;
 }
 
 #lista-explorar tr.favoritado td:last-child {
-    border-right-color: #f3dcb2;
+    border-right-color: #f8cbb9;
 }
 
 #lista-explorar tr.favoritado:hover td {
-    background: #fff1d6;
+    background: #ffded1;
 }

@@ -61,10 +61,11 @@ function preencherTabela(tabela) {
                         Comentários
                     </a>
 
+                    ${tabela[i].favoritado ? "" : `
                     <a href="#"
                         onclick="favoritar_evento(${tabela[i].id}); return false;">
                         Favoritar
-                    </a>
+                    </a>`}
                     <a href="../../crud_evento/home/visualizar_evento.html?id=${tabela[i].id}">
                         Visualizar Evento
                     </a>
@@ -95,4 +96,8 @@ async function favoritar_evento(id_evento) {
     const resposta = await retorno.json();
 
     alert(resposta.mensagem);
+
+    if (resposta.status == "ok") {
+        carregarEventos();
+    }
 }
