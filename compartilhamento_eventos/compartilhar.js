@@ -1,11 +1,19 @@
 // ===== CONFIGURAÇÃO (ajuste aqui se mudar o nome ou a pasta do projeto) =====
-const BASE_PROJETO = location.origin + '/viewritiba/Viewritiba';
+const BASES = ['/viewritiba/Viewritiba', '/viewritiba'];
 
-const URL_DETALHE =
-    BASE_PROJETO + '/crud_evento/home/visualizar_evento.html';
+let BASE_PROJETO = location.origin + BASES[BASES.length - 1];
+const pagina = location.pathname.toLowerCase();
 
-const URL_API_ENVIAR =
-    BASE_PROJETO + '/compartilhamento_eventos/compartilhar_enviar.php';
+for (const base of BASES) {
+    if (pagina.startsWith(base.toLowerCase() + '/')) {
+        BASE_PROJETO = location.origin + base;
+        break;
+    }
+}
+
+const URL_DETALHE = BASE_PROJETO + '/crud_evento/home/visualizar_evento.html';
+
+const URL_API_ENVIAR = BASE_PROJETO + '/compartilhamento_eventos/compartilhar_enviar.php';
  
 // Link que leva à tela do evento
 function montarLink(evento) {
@@ -161,4 +169,3 @@ async function enviarParaUsuario(evento, email, mensagem, status, botao) {
         botao.disabled = false;
     }
 }
- 
