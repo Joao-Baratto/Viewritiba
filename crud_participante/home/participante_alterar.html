@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alterar Perfil do Participante - Viewritiba</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../crud_organizador/home/organizador_alterar.css">
+    <link rel="stylesheet" href="../../crud_organizador/home/painel.css?v=2">
+    <link rel="stylesheet" href="../../css/cabecalho.css?v=3">
+</head>
+
+<body>
+    <!-- Cabeçalho -->
+    <header class="page-header">
+        <div class="header-content">
+            <a class="brand-link" href="../../crud_participante/home/painel.html">
+                <h1>Viewritiba</h1>
+            </a>
+            <nav class="header-nav" aria-label="Navegação principal">
+                <a href="../../crud_participante/home/painel.html" class="nav-link">Home</a>
+                <a href="../../crud_participante/home/explorar.html" class="nav-link">Explorar</a>
+                <a href="../../crud_participante/home/eventos.html" class="nav-link">Eventos</a>
+                <a href="../../favoritos/favoritos.html" class="nav-link">Favoritos</a>
+                <a href="../../crud_participante/home/perfil_participante.html" class="nav-link active" aria-current="page">Meu perfil</a>
+                <a href="#" id="logoff" class="nav-link">Sair</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="page-main">
+        <div class="profile-container">
+
+            <!-- Card de Identificação Rápida -->
+            <section class="profile-hero-card">
+                <div class="avatar-wrapper">
+                    <div id="avatarPlaceholder" class="avatar-initial-box">
+                        <span id="avatarLetter">P</span>
+                    </div>
+                </div>
+                <div class="hero-info">
+                    <h2 id="displayName">Carregando...</h2>
+                    <p id="displayBio">Carregando informações do participante...</p>
+                </div>
+            </section>
+
+            <!-- Formulário de Alteração de Dados -->
+            <section class="form-section">
+                <div class="section-title">
+                    <h3>Informações Cadastrais</h3>
+                    <p>Atualize seus dados de contato no Viewritiba.</p>
+                </div>
+
+                <form id="formPerfil" class="profile-form">
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <label for="nome">Nome Completo *</label>
+                            <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="email">E-mail de Contato *</label>
+                            <input type="email" id="email" name="email" placeholder="seuemail@exemplo.com" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="telefone">Telefone / WhatsApp *</label>
+                            <input type="tel" id="telefone" name="telefone" placeholder="(41) 99999-9999" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="documento">Documento (CPF)</label>
+                            <input type="text" id="documento" name="documento" placeholder="000.000.000-00" readonly class="input-readonly">
+                            <small class="helper-text">O documento principal não pode ser alterado por motivos de segurança.</small>
+                        </div>
+
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <!-- Seção de Senha -->
+                    <div class="section-title">
+                        <h3>Segurança e Senha</h3>
+                        <p>Para alterar sua senha, informe primeiro sua senha atual para liberar a criação de uma nova.</p>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="input-group full-width">
+                            <label for="senha_atual">Senha Atual</label>
+                            <div class="input-inline-action">
+                                <input type="password" id="senha_atual" name="senha_atual" placeholder="Digite sua senha atual">
+                                <button type="button" id="btnValidarSenhaAtual" class="btn-secondary-action">
+                                    <span>Confirmar Senha</span>
+                                </button>
+                            </div>
+                            <small id="msgValidacaoSenha" class="helper-text-status"></small>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="nova_senha">Nova Senha</label>
+                            <input type="password" id="nova_senha" name="nova_senha" placeholder="Exatamente 6 caracteres" maxlength="6" disabled class="input-locked">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="confirma_nova_senha">Confirmar Nova Senha</label>
+                            <input type="password" id="confirma_nova_senha" name="confirma_nova_senha" placeholder="Repita a nova senha" maxlength="6" disabled class="input-locked">
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <a href="perfil_participante.html" class="btn-cancelar">Cancelar</a>
+                        <button type="submit" class="btn-salvar">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                                <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                                <polyline points="7 3 7 8 15 8"></polyline>
+                            </svg>
+                            <span>Salvar Alterações</span>
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Zona de Perigo / Excluir Conta -->
+            <section class="danger-zone-section">
+                <div class="danger-info">
+                    <h4>Excluir Conta de Participante</h4>
+                    <p>Esta ação apagará permanentemente seu cadastro, favoritos, comentários e compartilhamentos no Viewritiba. Essa ação não poderá ser desfeita.</p>
+                </div>
+                <button type="button" id="btnAbrirModalExcluir" class="btn-danger">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    </svg>
+                    <span>Excluir Conta</span>
+                </button>
+            </section>
+
+        </div>
+
+        <!-- Modal de Confirmação de Exclusão -->
+        <div id="modalConfirmarExclusao" class="modal-overlay hidden">
+            <div class="modal-backdrop" id="backdropExcluir"></div>
+            <div class="modal-card">
+                <div class="modal-icon-warning">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path>
+                        <line x1="12" y1="9" x2="12" y2="13"></line>
+                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                </div>
+                <h3>Tem certeza que deseja excluir sua conta?</h3>
+                <p>Todos os seus dados cadastrais serão removidos do sistema. Esta ação é irreversível.</p>
+                <div class="modal-actions">
+                    <button type="button" id="btnCancelarExclusao" class="btn-modal-secondary">Cancelar</button>
+                    <button type="button" id="btnConfirmarExclusaoFinal" class="btn-modal-danger">Sim, Excluir Minha Conta</button>
+                </div>
+                <button type="button" id="btnFecharModalExcluir" class="modal-close" aria-label="Fechar modal">&times;</button>
+            </div>
+        </div>
+
+        <!-- Toast de Notificação -->
+        <div id="toastNotification" class="toast hidden">
+            <span id="toastMessage">Operação realizada com sucesso!</span>
+        </div>
+    </main>
+
+    <script src="../js/painel.js"></script>
+    <script src="../js/participante_alterar.js"></script>
+</body>
+
+</html>
