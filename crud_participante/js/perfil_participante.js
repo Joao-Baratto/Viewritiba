@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         alert("Não foi possível carregar seu perfil. Tente novamente.");
     }
 });
-=======
+
 document.addEventListener("DOMContentLoaded", () => {
     buscar();
     configurarAbas();
