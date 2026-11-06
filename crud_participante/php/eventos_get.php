@@ -14,13 +14,18 @@ if (!isset($_SESSION['participante_id'])) {
 
 include_once('conexao.php');
 require_once __DIR__ . '/../../crud_admin/php/banimentos.php';
-exigir_conta_nao_banida($conexao, 'participante', (int) $_SESSION['participante_id']);
+$id_participante = (int) $_SESSION['participante_id'];
+exigir_conta_nao_banida($conexao, 'participante', $id_participante);
 $retorno = [
     'status' => '',
     'mensagem' => '',
     'data' => []
 ];
-$sql = "SELECT evento.*, organizador.nome AS organizador FROM evento
+$sql = "SELECT evento.*, organizador.nome AS organizador,
+               (SELECT COUNT(*) FROM favorito
+                 WHERE id_evento = evento.id_evento AND tipo_conta = 'participante'
+                   AND id_usuario = ?) AS favoritado
+        FROM evento
         LEFT JOIN organizador ON organizador.id = evento.id_organizador";
 if (isset($_GET['titulo']) && isset($_GET['categoria'])) {
     $titulo = "%" . $_GET['titulo'] . "%";
@@ -29,19 +34,20 @@ if (isset($_GET['titulo']) && isset($_GET['categoria'])) {
         "$sql WHERE evento.titulo LIKE ?
          AND evento.id IN (SELECT id_evento FROM evento_categoria WHERE id_categoria = ?)"
     );
-    $stmt->bind_param("si", $titulo, $categoria);
+    $stmt->bind_param("isi", $id_participante, $titulo, $categoria);
 } elseif (isset($_GET['titulo'])) {
     $titulo = "%" . $_GET['titulo'] . "%";
     $stmt = $conexao->prepare("$sql WHERE evento.titulo LIKE ?");
-    $stmt->bind_param("s", $titulo);
+    $stmt->bind_param("is", $id_participante, $titulo);
 } elseif (isset($_GET['categoria'])) {
     $categoria = (int) $_GET['categoria'];
     $stmt = $conexao->prepare(
         "$sql WHERE evento.id IN (SELECT id_evento FROM evento_categoria WHERE id_categoria = ?)"
     );
-    $stmt->bind_param("i", $categoria);
+    $stmt->bind_param("ii", $id_participante, $categoria);
 } else {
     $stmt = $conexao->prepare($sql);
+    $stmt->bind_param("i", $id_participante);
 }
 $stmt->execute();
 $resultado = $stmt->get_result();
@@ -62,6 +68,7 @@ if ($resultado->num_rows > 0) {
             $nomes[] = $categoria_linha['nome_categoria'];
         }
         $linha['categorias'] = implode(", ", $nomes);
+        $linha['favoritado'] = $linha['favoritado'] > 0;
         $tabela[] = $linha;
     }
     $stmt_categoria->close();
