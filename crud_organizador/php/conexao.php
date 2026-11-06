@@ -2,10 +2,10 @@
 
 $servidor = 'localhost';
 $usuario = 'root';
-$senha = '';
+$senha_banco = '';
 $banco = 'viewritiba';
 
-$conexao = new mysqli($servidor, $usuario, $senha, $banco);
+$conexao = new mysqli($servidor, $usuario, $senha_banco, $banco);
 
 // banco de dados MySQL
 if ($conexao->connect_error) {
