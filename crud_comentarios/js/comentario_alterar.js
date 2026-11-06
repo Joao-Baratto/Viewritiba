@@ -1,6 +1,7 @@
 const parametros = new URLSearchParams(window.location.search);
 const id_comentario = parametros.get("id");
 const id_evento = parametros.get("id_evento");
+let tipo_conta = "";
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("btn_voltar").addEventListener("click", (e) => {
         e.preventDefault();
@@ -13,15 +14,29 @@ document.addEventListener("DOMContentLoaded", () => {
     ajustar_links_participante();
     buscar();
 });
+// Mostra o menu de quem está logado (participante ou organizador) e aponta o logo para o painel dele
 async function ajustar_links_participante() {
     try {
         const resposta = await fetch("../php/valida_sessao.php");
         const retorno = await resposta.json();
-        if (retorno.data && retorno.data.tipo === "participante") {
-            document.getElementById("home").href = "../../crud_participante/home/painel.html";
-            document.getElementById("eventos").href = "../../crud_participante/home/eventos.html";
-        }
+        tipo_conta = (retorno.data && retorno.data.tipo) || "";
     } catch (erro) {}
+    const menu = document.getElementById("menu_" + tipo_conta);
+    if (!menu) return;
+    menu.hidden = false;
+    document.getElementById("logo").href = menu.dataset.painel;
+}
+async function deslogar() {
+    const retorno = await fetch("../php/deslogar.php");
+    const resposta = await retorno.json();
+
+    if (resposta.status == "ok") {
+        if (tipo_conta === "participante") {
+            window.location.replace("../../crud_participante/home/MainMenu.html?v=2");
+        } else {
+            window.location.replace("../../crud_organizador/home/MainMenu.html?v=2");
+        }
+    }
 }
 async function buscar() {
     if (!id_comentario) {

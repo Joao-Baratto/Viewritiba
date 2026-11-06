@@ -15,6 +15,11 @@ html {
     box-sizing: border-box;
 }
 
+/* Elementos com o atributo hidden ficam escondidos mesmo com display: flex (ex.: menus das páginas de comentários) */
+.page-header [hidden] {
+    display: none !important;
+}
+
 /* Logo e links sempre com a fonte da barra, mesmo se a página definir outra para h1/a */
 .page-header * {
     font-family: inherit;
@@ -63,6 +68,7 @@ html {
 .page-header h1 {
     margin: 0;
     padding: 0;
+    font-family: inherit;
     line-height: 1.5;
     font-size: 1.5rem;
     font-weight: 700;
