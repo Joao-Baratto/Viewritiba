@@ -136,12 +136,12 @@ async function excluir_comentario(id_comentario) {
         alert("Não foi possível excluir o comentário.");
     }
 }
+// Mostra o menu de quem está logado (participante ou organizador) e aponta o logo para o painel dele
 function ajustar_links_participante() {
-    if (tipo_conta !== "participante") return;
-    const home = document.getElementById("home");
-    const eventos = document.getElementById("eventos");
-    if (home) home.href = "../../crud_participante/home/painel.html";
-    if (eventos) eventos.href = "../../crud_participante/home/eventos.html";
+    const menu = document.getElementById("menu_" + tipo_conta);
+    if (!menu) return;
+    menu.hidden = false;
+    document.getElementById("logo").href = menu.dataset.painel;
 }
 function voltar() {
     if (tipo_conta === "participante") {
@@ -158,6 +158,10 @@ async function deslogar() {
     console.log(resposta);
 
     if (resposta.status == "ok") {
-        window.location.replace("../../crud_organizador/home/MainMenu.html");
+        if (tipo_conta === "participante") {
+            window.location.replace("../../crud_participante/home/MainMenu.html?v=2");
+        } else {
+            window.location.replace("../../crud_organizador/home/MainMenu.html?v=2");
+        }
     }
 };

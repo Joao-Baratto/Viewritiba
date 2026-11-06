@@ -6,8 +6,22 @@
     <title>Novo Evento</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/lista_eventos.css?v=1">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/cabecalho.css?v=3">
 </head>
 <body>
+    <header class="page-header">
+        <div class="header-content">
+            <a class="brand-link" href="../../crud_organizador/home/painel.html">
+                <h1>Viewritiba</h1>
+            </a>
+            <nav class="header-nav" aria-label="Navegação principal">
+                <a href="../../crud_evento/home/index.html" class="nav-link active" aria-current="page">Meus eventos</a>
+                <a href="../../crud_organizador/home/perfil_organizador.html" class="nav-link">Meu perfil</a>
+                <a href="#" id="logoff" class="nav-link">Sair</a>
+            </nav>
+        </div>
+    </header>
     <main class="page-main">
     <div class="form-container">  
      <div class="form-header">
@@ -44,5 +58,16 @@
    <script src="../js/categorias.js"></script>
    <script src="../js/evento_novo.js"></script>
    <script src="../js/valida_sessao.js"></script>
+    <script>
+        // Sair (mesmo comportamento da lista de eventos do organizador)
+        document.getElementById("logoff").addEventListener("click", async (evento) => {
+            evento.preventDefault();
+            try {
+                await fetch("../php/evento_logoff.php");
+            } finally {
+                window.location.href = "../../crud_organizador/home/MainMenu.html?v=2";
+            }
+        });
+    </script>
 </body>
 </html>

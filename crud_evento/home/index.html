@@ -10,19 +10,22 @@
     <title>Viewritiba | Explore Curitiba</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/lista_eventos.css?v=1">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/cabecalho.css?v=3">
 </head>
 
 <body>
 
     <header class="page-header">
         <div class="header-content">
-
-            <h1>Viewritiba</h1>
-
-            <button id="logoff" class="btn-outline">
-                Sair
-            </button>
-
+            <a class="brand-link" href="../../crud_organizador/home/painel.html">
+                <h1>Viewritiba</h1>
+            </a>
+            <nav class="header-nav" aria-label="Navegação principal">
+                <a href="../../crud_evento/home/index.html" class="nav-link active" aria-current="page">Meus eventos</a>
+                <a href="../../crud_organizador/home/perfil_organizador.html" class="nav-link">Meu perfil</a>
+                <a href="#" id="logoff" class="nav-link">Sair</a>
+            </nav>
         </div>
     </header>
 
