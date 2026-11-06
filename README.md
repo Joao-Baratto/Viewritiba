@@ -40,7 +40,7 @@ O **Viewritiba** foi concebido para suprir a carência de um canal centralizado 
 
 ### Módulo de Eventos
 - **Criação de Eventos:** Cadastro com título, descrição detalhada, data/hora e localização física. Associação automática ao organizador logado na sessão ativa, dispensando inputs manuais de chave estrangeira.
-- **Catálogo Público:** Todos os eventos publicados ficam visíveis no catálogo, independentemente do organizador autenticado.
+- **Explorar:** O participante logado vê todos os eventos publicados, independentemente do organizador.
 - **Gestão privada:** O organizador autenticado consulta e gerencia somente os próprios eventos.
 - **Edição e Exclusão:** Atualização e remoção de registros respeitando a integridade relacional.
 
@@ -67,7 +67,7 @@ ViewRitiba/
 │   ├── php/                   # Endpoints de API e controle de sessão
 │   └── sql/                   # DDL da tabela organizador
 ├── crud_evento/               # Módulo de eventos
-│   ├── home/                  # Formulários, catálogo público e gestão de eventos
+│   ├── home/                  # Formulários, visualização e gestão de eventos
 │   ├── js/                    # Lógica de integração assíncrona
 │   ├── php/                   # Endpoints de persistência e consulta
 │   └── sql/                   # DDL da tabela evento
@@ -224,8 +224,6 @@ Comentários que existiam somente no `localStorage` do navegador não são trans
 | `/crud_organizador/home/painel.html` | Dashboard principal (requer sessão ativa). |
 | `/crud_organizador/home/perfil_organizador.html` | Visualização pública e dados do organizador. |
 | `/crud_organizador/home/organizador_alterar.html` | Edição cadastral e alteração de senha. |
-| `/crud_evento/home/eventos.html` | Redirecionamento para o catálogo público de eventos. |
-| `/crud_evento/home/catalogo.html` | Catálogo público de eventos de todos os organizadores. |
 | `/crud_evento/home/evento_novo.html` | Cadastro de novos eventos. |
 | `/crud_evento/home/visualizar_evento.html` | Detalhes de um evento específico. |
 | `/crud_participante/login/login.html` | Login de participante. |

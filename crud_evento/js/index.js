@@ -25,6 +25,7 @@ document.getElementById("pesquisa").addEventListener("keydown", (evento) => {
 document.getElementById("filtro_apagar").addEventListener("click", () => {
     document.getElementById("pesquisa").value = "";
     document.getElementById("filtro_data").value = "";
+    document.getElementById("filtro_categoria").value = "";
     buscar();
 });
 
