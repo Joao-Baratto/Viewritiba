@@ -380,12 +380,24 @@ main {
 }
 
     </style>
+    <link rel="stylesheet" href="../css/cabecalho.css?v=3">
 </head>
 <body>
 
-    <header>
-        <h1 class="logo">Viewriti<span>ba</span></h1>
-        <p>Meus Favoritos</p>
+    <header class="page-header">
+        <div class="header-content">
+            <a class="brand-link" href="../crud_participante/home/painel.html">
+                <h1>Viewritiba</h1>
+            </a>
+            <nav class="header-nav" aria-label="Navegação principal">
+                <a href="../crud_participante/home/painel.html" class="nav-link">Home</a>
+                <a href="../crud_participante/home/explorar.html" class="nav-link">Explorar</a>
+                <a href="../crud_participante/home/eventos.html" class="nav-link">Eventos</a>
+                <a href="../favoritos/favoritos.html" class="nav-link active" aria-current="page">Favoritos</a>
+                <a href="../crud_participante/home/perfil_participante.html" class="nav-link">Meu perfil</a>
+                <a href="#" id="logoff" class="nav-link">Sair</a>
+            </nav>
+        </div>
     </header>
 
     <main>
@@ -405,6 +417,16 @@ main {
     <script src="valida_sessao.js"></script>
     <script>
         valida_sessao();
+
+        // Sair (mesmo comportamento das páginas do participante)
+        document.getElementById("logoff").addEventListener("click", async (evento) => {
+            evento.preventDefault();
+            try {
+                await fetch("../crud_participante/php/participante_logoff.php");
+            } finally {
+                window.location.href = "../crud_participante/home/MainMenu.html?v=2";
+            }
+        });
     </script>
     <script src="favoritos.js"></script>
 

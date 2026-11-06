@@ -11,20 +11,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="perfil_organizador.css">
+    <link rel="stylesheet" href="painel.css?v=2">
+    <link rel="stylesheet" href="../../css/cabecalho.css?v=3">
 </head>
 
 <body>
     <!-- Barra Superior de Navegação -->
     <header class="page-header">
         <div class="header-content">
-            <a href="painel.html" class="brand-link">
+            <a class="brand-link" href="../../crud_organizador/home/painel.html">
                 <h1>Viewritiba</h1>
             </a>
-            <nav class="header-nav">
+            <nav class="header-nav" aria-label="Navegação principal">
                 <a href="../../crud_evento/home/index.html" class="nav-link">Meus eventos</a>
-                <a href="painel.html" class="nav-link">Início</a>
+                <a href="../../crud_organizador/home/perfil_organizador.html" class="nav-link active" aria-current="page">Meu perfil</a>
                 <a href="#" id="logoff" class="nav-link">Sair</a>
-                <a href="../login/Login.html" id="linkLogin" class="nav-link">Login</a>
+                <a href="../../crud_organizador/login/Login.html" id="linkLogin" class="nav-link hidden">Login</a>
             </nav>
         </div>
     </header>
@@ -120,7 +122,7 @@
 
     </main>
 
-    <script src="../js/perfil_organizador.js"></script>
+    <script src="../js/perfil_organizador.js?v=2"></script>
 </body>
 
 </html>
