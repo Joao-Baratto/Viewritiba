@@ -20,7 +20,16 @@ document.getElementById("pesquisa").addEventListener("keydown", (evento) => {
 document.getElementById("filtro_apagar").addEventListener("click", () => {
     document.getElementById("pesquisa").value = "";
     document.getElementById("filtro_data").value = "";
+    document.getElementById("filtro_categoria").value = "";
     buscar();
+});
+
+document.getElementById("fechar-detalhes-evento").addEventListener("click", fecharDetalhesEvento);
+document.getElementById("fechar-detalhes-secundario").addEventListener("click", fecharDetalhesEvento);
+document.getElementById("modal-detalhes-evento").addEventListener("click", (evento) => {
+    if (evento.target === evento.currentTarget) {
+        fecharDetalhesEvento();
+    }
 });
 
 async function logoff() {
@@ -33,7 +42,7 @@ async function logoff() {
 }
 
 async function buscar() {
-    const retornoCategorias = await fetch("../../crud_evento/php/categoria_get.php");
+    const retornoCategorias = await fetch("../php/categoria_get.php");
     const categorias = await retornoCategorias.json();
 
     if (categorias.status == "ok") {
@@ -116,23 +125,24 @@ async function pesquisar() {
 
 async function favoritar_evento(id_evento) {
     const dados = new FormData();
+    dados.set("evento_id", id_evento);
 
-    dados.append("evento_id", id_evento);
-
-    const retorno = await fetch(
-        "../../favoritos/favoritos_add.php",
-        {
+    try {
+        const retorno = await fetch("../../favoritos/favoritos_add.php", {
             method: "POST",
             body: dados
+        });
+        const resposta = await retorno.json();
+
+        if (!retorno.ok || resposta.status !== "ok") {
+            throw new Error(resposta.mensagem || "Não foi possível favoritar este evento.");
         }
-    );
 
-    const resposta = await retorno.json();
-
-    alert(resposta.mensagem);
-
-    if (resposta.status == "ok") {
+        alert(resposta.mensagem);
         pesquisar();
+    } catch (erro) {
+        console.error("Erro ao favoritar evento:", erro);
+        alert(erro.message || "Não foi possível favoritar este evento. Tente novamente.");
     }
 }
 
@@ -155,23 +165,29 @@ function preencherTabela(tabela) {
     `;
 
     for (var i = 0; i < tabela.length; i++) {
+        const evento = tabela[i];
+        const idEvento = Number(evento.id);
         html += `
-            <tr class="${tabela[i].favoritado ? "favoritado" : ""}">
-                <td>${tabela[i].titulo}</td>
-                <td>${tabela[i].descricao}</td>
-                <td>${tabela[i].data_hora}</td>
-                <td>${tabela[i].local}</td>
-                <td>${tabela[i].organizador ?? "Organizador indisponível"}</td>
-                <td>${tabela[i].categorias}</td>
+            <tr class="${evento.favoritado ? "favoritado" : ""}">
+                <td>${escaparHtml(evento.titulo)}</td>
+                <td>${escaparHtml(evento.descricao)}</td>
+                <td>${escaparHtml(evento.data_hora)}</td>
+                <td>${escaparHtml(evento.local)}</td>
+                <td>${escaparHtml(evento.organizador || "Organizador indisponível")}</td>
+                <td>${escaparHtml(evento.categorias)}</td>
 
                 <td>
-                    <a href="../../crud_comentarios/home/comentarios.html?id=${tabela[i].id}">
+                    <a href="../../crud_comentarios/home/comentarios.html?id=${encodeURIComponent(idEvento)}">
                         Comentários
                     </a>
 
-                    ${tabela[i].favoritado ? "" : `
+                    <button type="button" class="btn-detalhes" onclick="abrirDetalhesEvento(${i})">
+                        Detalhes
+                    </button>
+
+                    ${evento.favoritado ? "" : `
                     <a href="#"
-                        onclick="favoritar_evento(${tabela[i].id}); return false;">
+                        onclick="favoritar_evento(${idEvento}); return false;">
                         Favoritar
                     </a>`}
 
@@ -185,6 +201,44 @@ function preencherTabela(tabela) {
 
     document.getElementById("lista").innerHTML = html;
 }
+
+function abrirDetalhesEvento(indice) {
+    const evento = eventosExibidos[indice];
+    if (!evento) {
+        return;
+    }
+
+    const modal = document.getElementById("modal-detalhes-evento");
+    const dataEvento = new Date(String(evento.data_hora || "").replace(" ", "T"));
+    const dataFormatada = Number.isNaN(dataEvento.getTime())
+        ? evento.data_hora
+        : new Intl.DateTimeFormat("pt-BR", {
+            dateStyle: "long",
+            timeStyle: "short"
+        }).format(dataEvento);
+
+    document.getElementById("detalhes-titulo").textContent = evento.titulo || "Evento sem título";
+    document.getElementById("detalhes-descricao").textContent = evento.descricao || "Descrição não informada.";
+    document.getElementById("detalhes-data").textContent = dataFormatada || "Data não informada.";
+    document.getElementById("detalhes-local").textContent = evento.local || "Local não informado.";
+    document.getElementById("detalhes-organizador").textContent = evento.organizador || "Organizador indisponível.";
+    document.getElementById("detalhes-categorias").textContent = evento.categorias || "Não informadas.";
+    document.getElementById("detalhes-comentarios").href =
+        `../../crud_comentarios/home/comentarios.html?id=${encodeURIComponent(evento.id)}`;
+
+    modal.showModal();
+}
+
+function fecharDetalhesEvento() {
+    document.getElementById("modal-detalhes-evento").close();
+}
+
+function escaparHtml(valor) {
+    const elemento = document.createElement("span");
+    elemento.textContent = valor ?? "";
+    return elemento.innerHTML;
+}
+
 function abrirCompartilhamento(indice) {
     const evento = eventosExibidos[indice];
 

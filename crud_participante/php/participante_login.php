@@ -30,6 +30,7 @@ try {
     }
 
     session_regenerate_id(true);
+    $_SESSION = [];
     $_SESSION["participante_id"] = (int) $participante["id"];
     $_SESSION["participante_nome"] = $participante["nome"];
     $_SESSION["participante_email"] = $participante["email"];

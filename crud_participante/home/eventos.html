@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../../crud_evento/css/style.css">
     <link rel="stylesheet" href="../../compartilhamento_eventos/compartilhar-modal.css">
     <link rel="stylesheet" href="../../crud_evento/css/lista_eventos.css?v=1">
+    <link rel="stylesheet" href="../css/eventos.css?v=1">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../css/cabecalho.css?v=3">
 </head>
@@ -52,7 +53,41 @@
             <div id="lista"></div>
         </section>
     </main>
+
+    <dialog id="modal-detalhes-evento" class="event-details-modal" aria-labelledby="detalhes-titulo">
+        <div class="event-details-header">
+            <p class="event-details-eyebrow">Detalhes do evento</p>
+            <button type="button" id="fechar-detalhes-evento" class="event-details-close" aria-label="Fechar detalhes">
+                &times;
+            </button>
+        </div>
+        <h2 id="detalhes-titulo"></h2>
+        <p id="detalhes-descricao" class="event-details-description"></p>
+        <dl class="event-details-info">
+            <div>
+                <dt>Data e hora</dt>
+                <dd id="detalhes-data"></dd>
+            </div>
+            <div>
+                <dt>Local</dt>
+                <dd id="detalhes-local"></dd>
+            </div>
+            <div>
+                <dt>Organizador</dt>
+                <dd id="detalhes-organizador"></dd>
+            </div>
+            <div>
+                <dt>Categoria(s)</dt>
+                <dd id="detalhes-categorias"></dd>
+            </div>
+        </dl>
+        <div class="event-details-actions">
+            <a id="detalhes-comentarios" class="event-details-comments" href="#">Ver comentários</a>
+            <button type="button" id="fechar-detalhes-secundario" class="event-details-dismiss">Fechar</button>
+        </div>
+    </dialog>
+
     <script src="../../compartilhamento_eventos/compartilhar.js?v=2"></script>
-<script src="../js/eventos.js?v=5"></script>
+    <script src="../js/eventos.js?v=6"></script>
 </body>
 </html>

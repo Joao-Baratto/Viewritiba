@@ -17,18 +17,4 @@ if ($conexao->connect_error) {
         "mensagem" => "Não foi possível conectar ao banco de dados. Confirme se o MySQL está ativo e se o banco viewritiba existe."
     ]);
     exit;
-
-<?php
-
-$servidor = 'localhost';
-$usuario = 'root';
-$senha_banco = '';
-$banco = 'viewritiba';
-
-$conexao = new mysqli($servidor, $usuario, $senha_banco, $banco);
-
-// banco de dados MySQL
-if ($conexao->connect_error) {
-    die("Erro de conexão: " . $conexao->connect_error);
-    
 }

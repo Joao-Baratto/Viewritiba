@@ -16,74 +16,71 @@ include_once('conexao.php');
 require_once __DIR__ . '/../../crud_admin/php/banimentos.php';
 $id_participante = (int) $_SESSION['participante_id'];
 exigir_conta_nao_banida($conexao, 'participante', $id_participante);
-$retorno = [
-    'status' => '',
-    'mensagem' => '',
-    'data' => []
-];
-$sql = "SELECT evento.*, organizador.nome AS organizador,
+$sql = "SELECT evento.*, evento.id_evento AS id, organizador.nome AS organizador,
+               (SELECT GROUP_CONCAT(DISTINCT evento_categoria.categoria
+                                    ORDER BY evento_categoria.categoria SEPARATOR ', ')
+                  FROM evento_categoria
+                 WHERE evento_categoria.id_evento = evento.id_evento) AS categorias,
                (SELECT COUNT(*) FROM favorito
-                 WHERE id_evento = evento.id_evento AND tipo_conta = 'participante'
+                 WHERE id_evento = evento.id_evento
                    AND id_usuario = ?) AS favoritado
         FROM evento
         LEFT JOIN organizador ON organizador.id = evento.id_organizador";
-if (isset($_GET['titulo']) && isset($_GET['categoria'])) {
-    $titulo = "%" . $_GET['titulo'] . "%";
-    $categoria = (int) $_GET['categoria'];
-    $stmt = $conexao->prepare(
-        "$sql WHERE evento.titulo LIKE ?
-         AND evento.id IN (SELECT id_evento FROM evento_categoria WHERE id_categoria = ?)"
-    );
-    $stmt->bind_param("isi", $id_participante, $titulo, $categoria);
-} elseif (isset($_GET['titulo'])) {
-    $titulo = "%" . $_GET['titulo'] . "%";
-    $stmt = $conexao->prepare("$sql WHERE evento.titulo LIKE ?");
-    $stmt->bind_param("is", $id_participante, $titulo);
-} elseif (isset($_GET['categoria'])) {
-    $categoria = (int) $_GET['categoria'];
-    $stmt = $conexao->prepare(
-        "$sql WHERE evento.id IN (SELECT id_evento FROM evento_categoria WHERE id_categoria = ?)"
-    );
-    $stmt->bind_param("ii", $id_participante, $categoria);
-} else {
-    $stmt = $conexao->prepare($sql);
-    $stmt->bind_param("i", $id_participante);
+
+$filtros = [];
+$parametros = [$id_participante];
+$tipos = "i";
+
+if (isset($_GET['titulo']) && trim($_GET['titulo']) !== '') {
+    $filtros[] = "evento.titulo LIKE ?";
+    $parametros[] = "%" . trim($_GET['titulo']) . "%";
+    $tipos .= "s";
 }
+
+if (isset($_GET['categoria']) && trim($_GET['categoria']) !== '') {
+    $filtros[] = "EXISTS (
+        SELECT 1 FROM evento_categoria
+         WHERE evento_categoria.id_evento = evento.id_evento
+           AND evento_categoria.categoria = ?
+    )";
+    $parametros[] = trim($_GET['categoria']);
+    $tipos .= "s";
+}
+
+if ($filtros) {
+    $sql .= " WHERE " . implode(" AND ", $filtros);
+}
+
+$stmt = $conexao->prepare($sql);
+if (!$stmt) {
+    error_log("Erro ao preparar consulta de eventos do participante: " . $conexao->error);
+    http_response_code(500);
+    echo json_encode([
+        'status' => 'erro',
+        'mensagem' => 'Não foi possível carregar os eventos.',
+        'data' => []
+    ]);
+    $conexao->close();
+    exit;
+}
+
+$parametrosReferenciados = [];
+foreach ($parametros as $indice => &$parametro) {
+    $parametrosReferenciados[$indice] = &$parametro;
+}
+array_unshift($parametrosReferenciados, $tipos);
+call_user_func_array([$stmt, 'bind_param'], $parametrosReferenciados);
+
 $stmt->execute();
 $resultado = $stmt->get_result();
 $tabela = [];
-if ($resultado->num_rows > 0) {
-
-    $stmt_categoria = $conexao->prepare(
-        "SELECT categoria.nome_categoria FROM evento_categoria
-         INNER JOIN categoria ON categoria.id_categoria = evento_categoria.id_categoria
-         WHERE evento_categoria.id_evento = ? ORDER BY categoria.nome_categoria"
-    );
-    while ($linha = $resultado->fetch_assoc()) {
-        $stmt_categoria->bind_param("i", $linha['id']);
-        $stmt_categoria->execute();
-        $resultado_categoria = $stmt_categoria->get_result();
-        $nomes = [];
-        while ($categoria_linha = $resultado_categoria->fetch_assoc()) {
-            $nomes[] = $categoria_linha['nome_categoria'];
-        }
-        $linha['categorias'] = implode(", ", $nomes);
-        $linha['favoritado'] = $linha['favoritado'] > 0;
-        $tabela[] = $linha;
-    }
-    $stmt_categoria->close();
-    $retorno = [
-        'status' => 'ok',
-        'mensagem' => 'Sucesso, consulta efetuada.',
-        'data' => $tabela
-    ];
-} else {
-    $retorno = [
-        'status' => 'nok',
-        'mensagem' => 'Não há registros',
-        'data' => []
-    ];
+while ($linha = $resultado->fetch_assoc()) {
+    $linha['favoritado'] = $linha['favoritado'] > 0;
+    $tabela[] = $linha;
 }
+
 $stmt->close();
 $conexao->close();
-echo json_encode($retorno);
+echo json_encode($tabela
+    ? ['status' => 'ok', 'mensagem' => 'Sucesso, consulta efetuada.', 'data' => $tabela]
+    : ['status' => 'nok', 'mensagem' => 'Não há registros', 'data' => []]);

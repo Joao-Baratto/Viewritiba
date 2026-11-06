@@ -38,13 +38,13 @@ $total_favoritadas = array_sum($favoritas);
 $stmt = $conexao->prepare(
     "SELECT evento.*, organizador.nome AS organizador,
             (SELECT GROUP_CONCAT(id_categoria) FROM evento_categoria
-              WHERE id_evento = evento.id_evento) AS categorias,
+              WHERE id_evento = evento.id) AS categorias,
             (SELECT AVG(nota) FROM avaliacao_comentario
-              WHERE id_evento = evento.id_evento) AS nota_media,
+              WHERE id_evento = evento.id) AS nota_media,
             (SELECT COUNT(*) FROM avaliacao_comentario
-              WHERE id_evento = evento.id_evento) AS qtd_avaliacoes,
+              WHERE id_evento = evento.id) AS qtd_avaliacoes,
             (SELECT COUNT(*) FROM favorito
-              WHERE id_evento = evento.id_evento AND tipo_conta = 'participante'
+              WHERE id_evento = evento.id AND tipo_conta = 'participante'
                 AND id_usuario = ?) AS favoritado
      FROM evento
      LEFT JOIN organizador ON organizador.id = evento.id_organizador

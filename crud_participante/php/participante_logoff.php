@@ -4,17 +4,12 @@ session_start();
 $_SESSION = [];
 session_destroy();
 
-header("Location: ../login/login.html");
+if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(['status' => 'ok', 'mensagem' => 'Sessão encerrada com sucesso.']);
+    exit;
+}
+
+header('Location: ../login/login.html');
 exit;
-=======
-<?php
-    session_start();
-    session_unset();
-    session_destroy();
-    $retorno = [
-        'status'    => 'ok',
-        'mensagem'  => '',
-        'data'      => []
-    ];
-    header("Content-type:application/json;charset:utf-8");
-    echo json_encode($retorno);
+

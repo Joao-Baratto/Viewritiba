@@ -31,7 +31,7 @@ if ($resultado->num_rows > 0) {
     // busca os eventos favoritados pelo participante
     $stmt_favorito = $conexao->prepare(
         "SELECT evento.* FROM evento
-         INNER JOIN favorito ON favorito.id_evento = evento.id_evento
+         INNER JOIN favorito ON favorito.id_evento = evento.id
          WHERE favorito.tipo_conta = 'participante' AND favorito.id_usuario = ?
          ORDER BY evento.data_hora DESC"
     );
