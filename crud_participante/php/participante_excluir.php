@@ -35,7 +35,6 @@ try {
     echo json_encode(["status" => "erro", "mensagem" => "Não foi possível excluir sua conta."]);
     $conexao->close();
 }
-=======
 <?php
 session_start();
 header("Content-Type: application/json; charset=utf-8");
