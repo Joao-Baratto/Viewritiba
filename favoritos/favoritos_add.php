@@ -1,21 +1,25 @@
 <?php
 session_start();
 include_once('../crud_evento/php/conexao.php');
+include_once('../php/usuario_logado.php');
 header("Content-type:application/json;charset=utf-8");
 
 $retorno = ['status' => '', 'mensagem' => '', 'data' => []];
 
-if (!isset($_SESSION['usuario'][0]['id_usuario'])) {
-    $retorno = ['status' => 'nok', 'mensagem' => 'Usuário não logado', 'data' => []];
+$usuario = usuario_logado();
+if ($usuario == null || $usuario['tipo'] != 'participante') {
+    $retorno = ['status' => 'nok', 'mensagem' => 'Apenas participantes podem favoritar eventos.', 'data' => []];
     echo json_encode($retorno);
     exit;
 }
 
-$id_usuario = $_SESSION['usuario'][0]['id_usuario'];
+$tipo_conta = $usuario['tipo'];
+$id_usuario = $usuario['id'];
 $id_evento = (int) ($_POST['evento_id'] ?? 0);
 
-$stmt = $conexao->prepare("INSERT INTO favorito (id_usuario, id_evento) VALUES (?, ?)");
-$stmt->bind_param("ii", $id_usuario, $id_evento);
+$observacao = '';
+$stmt = $conexao->prepare("INSERT INTO favorito (tipo_conta, id_usuario, id_evento, observacao) VALUES (?, ?, ?, ?)");
+$stmt->bind_param("siis", $tipo_conta, $id_usuario, $id_evento, $observacao);
 
 if ($stmt->execute()) {
     $retorno = ['status' => 'ok', 'mensagem' => 'Evento adicionado aos favoritos com sucesso!', 'data' => []];

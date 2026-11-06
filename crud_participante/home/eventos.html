@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos | Viewritiba</title>
+
+    <link rel="stylesheet" href="../../crud_evento/css/style.css">
+    <link rel="stylesheet" href="../../compartilhamento_eventos/compartilhar-modal.css">
+    <link rel="stylesheet" href="../../crud_evento/css/lista_eventos.css?v=1">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/cabecalho.css?v=3">
+</head>
+</head>
+<body>
+    <header class="page-header">
+        <div class="header-content">
+            <a class="brand-link" href="../../crud_participante/home/painel.html">
+                <h1>Viewritiba</h1>
+            </a>
+            <nav class="header-nav" aria-label="Navegação principal">
+                <a href="../../crud_participante/home/painel.html" class="nav-link">Home</a>
+                <a href="../../crud_participante/home/explorar.html" class="nav-link">Explorar</a>
+                <a href="../../crud_participante/home/eventos.html" class="nav-link active" aria-current="page">Eventos</a>
+                <a href="../../favoritos/favoritos.html" class="nav-link">Favoritos</a>
+                <a href="../../crud_participante/home/perfil_participante.html" class="nav-link">Meu perfil</a>
+                <a href="#" id="logoff" class="nav-link">Sair</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <section class="search-section">
+            <div class="search-header">
+                <h2>Encontre eventos em Curitiba!</h2>
+                <p>Pesquise eventos de todos os organizadores, descubra novas experiências e encontre atividades de acordo com seus interesses.</p>
+            </div>
+            <div class="search-area">
+                <input type="text" id="pesquisa" placeholder="Digite o nome do evento">
+                <select id="filtro_categoria">
+                    <option value=""> - </option>
+                </select>
+                <input type="date" id="filtro_data">
+                <button id="buscar">Buscar</button>
+                <button id="filtro_apagar" type="button">Limpar filtros</button>
+            </div>
+        </section>
+        <section class="events-section">
+            <div class="section-header">
+                <div><h2>Eventos disponíveis</h2></div>
+            </div>
+            <div id="lista"></div>
+        </section>
+    </main>
+    <script src="../../compartilhamento_eventos/compartilhar.js?v=2"></script>
+<script src="../js/eventos.js?v=5"></script>
+</body>
+</html>

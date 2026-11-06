@@ -13,9 +13,12 @@ if(!$id_evento){
 }
 
 $stmt = $conexao->prepare(
-    "SELECT c.id_comentario AS id, c.texto, c.nota, c.data_criacao, c.id_usuario, c.id_evento, u.nome AS nome_usuario
-     FROM avaliacao_comentario c INNER JOIN usuario u ON c.id_usuario = u.id_usuario
-     WHERE c.id_evento = ? ORDER BY c.id_comentario DESC"
+    "SELECT avaliacao_comentario.id_comentario AS id, avaliacao_comentario.texto, avaliacao_comentario.nota,
+            avaliacao_comentario.data_criacao, avaliacao_comentario.id_usuario, avaliacao_comentario.id_evento,
+            participante.nome AS usuario FROM avaliacao_comentario
+     INNER JOIN participante ON participante.id = avaliacao_comentario.id_usuario
+     WHERE avaliacao_comentario.tipo_conta = 'participante' AND avaliacao_comentario.id_evento = ?
+     ORDER BY avaliacao_comentario.id_comentario DESC"
 );
 $stmt->bind_param("i", $id_evento);
 $stmt->execute();

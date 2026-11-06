@@ -1,5 +1,7 @@
 let comentarios = [];
 let elementos_tela;
+let add_comentario = true;
+let tipo_conta = "";
 const parametros = new URLSearchParams(window.location.search);
 const id_evento = parametros.get("id");
 document.addEventListener("DOMContentLoaded", () => {
@@ -9,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const btn_comentario = document.getElementById("btn_comentario");
     if (!id_evento) {
         alert("Evento inválido.");
-        window.location.href = "../../crud_evento/home/index.html";
+        voltar();
         return;
     }
     if (btn_voltar) {
@@ -29,8 +31,27 @@ document.addEventListener("DOMContentLoaded", () => {
             enviar();
         });
     }
-    carregar_comentarios();
+    vizualizacao_comentario().then(carregar_comentarios);
 });
+async function vizualizacao_comentario() {
+    try {
+        const resposta = await fetch("../php/valida_sessao.php");
+        const retorno = await resposta.json();
+        tipo_conta = (retorno.data && retorno.data.tipo) || "";
+        add_comentario = tipo_conta !== "organizador";
+    } catch (erro) {
+        add_comentario = true;
+    }
+    ajustar_links_participante();
+    const composer = document.getElementById("composer");
+    if (composer) {
+        if (add_comentario) {
+            composer.hidden = false;
+        } else {
+            composer.remove();
+        }
+    }
+}
 async function enviar() {
     const comentario = document.getElementById("new_comentario");
     const conteudo = comentario.value.trim();
@@ -80,15 +101,15 @@ function renderizar_comentarios() {
         elementos_tela.innerHTML += `
             <div class="comentario-card">
                 <div class="comentario-meta">
-                    <span class="comentario-user">${comentario.nome_usuario}</span>
+                    <span class="comentario-user">${comentario.usuario}</span>
                     <span class="comentario-data">${comentario.data_criacao}</span>
                 </div>
                 <p class="comentario-texto">${comentario.texto}</p>
                 <span >★Nota: ${comentario.nota}/5</span>
-                <div class="comentario-acoes">
+                ${add_comentario ? `<div class="comentario-acoes">
                     <button type="button" class="btn-alterar" onclick="alterar_comentario(${comentario.id})">Alterar</button>
                     <button type="button" class="btn-delete" onclick="excluir_comentario(${comentario.id})">Excluir</button>
-                </div>
+                </div>` : ""}
             </div>
         `;
     });
@@ -115,7 +136,18 @@ async function excluir_comentario(id_comentario) {
         alert("Não foi possível excluir o comentário.");
     }
 }
+// Mostra o menu de quem está logado (participante ou organizador) e aponta o logo para o painel dele
+function ajustar_links_participante() {
+    const menu = document.getElementById("menu_" + tipo_conta);
+    if (!menu) return;
+    menu.hidden = false;
+    document.getElementById("logo").href = menu.dataset.painel;
+}
 function voltar() {
+    if (tipo_conta === "participante") {
+        window.location.href = "../../crud_participante/home/eventos.html";
+        return;
+    }
     window.location.href = `../../crud_evento/home/index.html`;
     alert("Voltando para a página de eventos...");
 }
@@ -126,6 +158,10 @@ async function deslogar() {
     console.log(resposta);
 
     if (resposta.status == "ok") {
-        window.location.replace("../login/index.html");
+        if (tipo_conta === "participante") {
+            window.location.replace("../../crud_participante/home/MainMenu.html?v=2");
+        } else {
+            window.location.replace("../../crud_organizador/home/MainMenu.html?v=2");
+        }
     }
 };

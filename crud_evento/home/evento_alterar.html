@@ -1,63 +1,75 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evento ALTERAR</title>
-    <link rel="stylesheet" href="../../css/style.css">
+    <title>Alterar Evento</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/cabecalho.css?v=3">
 </head>
+<body>
+    <header class="page-header">
+        <div class="header-content">
+            <a class="brand-link" href="../../crud_organizador/home/painel.html">
+                <h1>Viewritiba</h1>
+            </a>
+            <nav class="header-nav" aria-label="Navegação principal">
+                <a href="../../crud_evento/home/index.html" class="nav-link active" aria-current="page">Meus eventos</a>
+                <a href="../../crud_organizador/home/perfil_organizador.html" class="nav-link">Meu perfil</a>
+                <a href="#" id="logoff" class="nav-link">Sair</a>
+            </nav>
+        </div>
+    </header>
     <main class="page-main">
-    <div class="form-container">
-<div class="form-header">
-        <h2>Evento Alterar</h2>
-        <p>Alterar os dados do evento.</p>
-    </div>
-
-    <div class="modern-form">
-
+        <div class="form-container">
+           <div class="form-header">
+           <h2>Alterar Evento</h2>
+           <p>Alterar os dados do evento.</p>
+        </div>
+        <div class="modern-form">
         <div class="input-group">
             <label for="titulo">Título:</label>
             <input type="text" id="titulo" required>
         </div>
-    </div>
-    <div>
-        <div>
+        <div class="input-group">
             <label for="descricao">Descrição:</label>
             <input type="text" id="descricao" required>
         </div>
-    </div>
-    <div>
-        <div>
+        <div class="input-group">
             <label for="data_hora">Data e Hora:</label>
             <input type="datetime-local" id="data_hora" required>
         </div>
-    </div>
-    <div>
-        <div>
+        <div class="input-group">
             <label for="local">Local:</label>
             <input type="text" id="local" required>
         </div>
-    </div>
-    <div>
-        <div>
-
-=======
-            <label for="id_organizador">ID Organizador:</label>
-            <input type="number" id="id_organizador" required>
+        <div class="input-group">
+            <label>Categorias:</label>
+            <div id="categorias" class="categorias-campo"></div>
         </div>
-    </div>
-    <div>
+        <input type="hidden" id="id"> 
         <div>
-
-            <input type="hidden" id="id">
+            <button type="button" id="enviar">  
+                Enviar
+            </button>
         </div>
+      </div>
     </div>
-    <div>
-        <div>
-            <button id="enviar">Enviar</button>
-        </div>
-    </div>
-    <script src="../js/evento_alterar.js?v=2"></script>
-    <script src="../js/valida_sessao.js?v=2"></script>
+ </main>
+ <script src="../js/categorias.js"></script>
+ <script src="../js/evento_alterar.js"></script>
+ <script src="../js/valida_sessao.js"></script>
+    <script>
+        // Sair (mesmo comportamento da lista de eventos do organizador)
+        document.getElementById("logoff").addEventListener("click", async (evento) => {
+            evento.preventDefault();
+            try {
+                await fetch("../php/evento_logoff.php");
+            } finally {
+                window.location.href = "../../crud_organizador/home/MainMenu.html?v=2";
+            }
+        });
+    </script>
 </body>
 </html>

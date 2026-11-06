@@ -1,11 +1,10 @@
 <?php
-// Variáveis de conexão com o Banco de Dados
 $servidor = "localhost";
 $usuario  = "root";
-$senha    = "";
+$senha_banco    = "";
 $nome_banco = "viewritiba";
 
-$conexao = new mysqli($servidor, $usuario, $senha, $nome_banco);
+$conexao = new mysqli($servidor, $usuario, $senha_banco, $nome_banco);
 if($conexao->connect_error){
     http_response_code(500);
     die(json_encode([

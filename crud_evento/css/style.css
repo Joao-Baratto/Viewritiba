@@ -1,0 +1,1293 @@
+:root {
+    --coral: #ff7057;
+    --coral-hover: #e85a43;
+    --coral-soft: #fff0ea;
+
+    --bg-page: #fff4ed;
+    --bg-card: #ffffff;
+    --bg-dark: #222222;
+
+    --text-main: #242424;
+    --text-muted: #6d6870;
+    --text-light: #ffffff;
+
+    --blue: #2563eb;
+    --blue-soft: #edf3ff;
+
+    --red: #c62828;
+    --red-soft: #ffebeb;
+
+    --gray-border: #e9e0dc;
+
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 26px;
+
+    --shadow-sm:
+        0 4px 15px rgba(70, 35, 25, 0.05);
+
+    --shadow-md:
+        0 16px 45px rgba(95, 45, 30, 0.10);
+
+    --shadow-lg:
+        0 25px 65px rgba(95, 45, 30, 0.15);
+
+    --font: "Segoe UI", Arial, sans-serif;
+}
+
+/* 2. RESET */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            ellipse at 90% 20%,
+            rgba(255, 130, 104, 0.42),
+            transparent 48%
+        ),
+        radial-gradient(
+            ellipse at 5% 85%,
+            rgba(255, 194, 174, 0.55),
+            transparent 50%
+        ),
+        linear-gradient(
+            125deg,
+            #fff5ee 0%,
+            #ffe1d4 45%,
+            #ffbba8 100%
+        );
+
+    background-attachment: fixed;
+
+    color: var(--text-main);
+    font-family: var(--font);
+    line-height: 1.6;
+
+    -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* 3. CABEÇALHO */
+
+.page-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    background: var(--bg-dark);
+    color: var(--text-light);
+
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.10);
+
+    box-shadow:
+        0 7px 25px rgba(0, 0, 0, 0.12);
+}
+
+.header-content {
+    width: min(1240px, calc(100% - 40px));
+    min-height: 74px;
+    margin: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.page-header h1 {
+    color: #ffffff;
+    font-size: 30px;
+    font-weight: 900;
+    letter-spacing: -1.5px;
+}
+
+.page-header h1::first-letter {
+    color: var(--coral);
+}
+
+/* 4. BOTÃO SAIR */
+
+.btn-outline {
+    padding: 10px 22px;
+
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.04);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.30);
+
+    border-radius: 12px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    transition:
+        background 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.btn-outline:hover {
+    background: var(--coral);
+    border-color: var(--coral);
+    transform: translateY(-2px);
+}
+
+/* 5. CONTAINER PRINCIPAL */
+
+.container {
+    width: min(1240px, calc(100% - 40px));
+    margin: auto;
+    padding: 38px 0 90px;
+}
+
+/* 6. CARD PRINCIPAL */
+
+.search-section {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+
+    padding: 48px;
+    margin-bottom: 48px;
+
+    background:
+        linear-gradient(
+            120deg,
+            rgba(255, 255, 255, 0.98),
+            rgba(255, 249, 246, 0.95) 60%,
+            rgba(255, 222, 209, 0.86)
+        );
+
+    border:
+        1px solid rgba(255, 255, 255, 0.90);
+
+    border-radius: 28px;
+
+    box-shadow:
+        0 24px 60px rgba(121, 52, 35, 0.13);
+}
+
+/* Decoração do card */
+
+.search-section::after {
+    content: "";
+
+    position: absolute;
+    z-index: -1;
+
+    top: -190px;
+    right: -150px;
+
+    width: 440px;
+    height: 440px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 112, 87, 0.20),
+            rgba(255, 112, 87, 0.04) 65%,
+            transparent 75%
+        );
+
+    pointer-events: none;
+}
+
+/* 7. TÍTULO PRINCIPAL */
+
+.search-header {
+    max-width: 780px;
+    margin-bottom: 32px;
+}
+
+.search-header::before {
+    content: "✦ DESCUBRA EXPERIÊNCIAS";
+
+    display: inline-block;
+
+    padding: 8px 16px;
+    margin-bottom: 23px;
+
+    background: #ffe8e0;
+    color: #e95c45;
+
+    border: 1px solid #ffd2c5;
+    border-radius: 50px;
+
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+}
+
+.search-header h2 {
+    max-width: 650px;
+
+    color: #222222;
+    font-size: clamp(38px, 4.5vw, 60px);
+    font-weight: 900;
+
+    line-height: 1.08;
+    letter-spacing: -2.5px;
+
+    margin-bottom: 19px;
+}
+
+.search-header p {
+    max-width: 600px;
+
+    color: #66616b;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+/* 8. PESQUISA E FILTROS */
+
+.search-area {
+    display: grid;
+
+    grid-template-columns:
+        minmax(190px, 2fr)
+        minmax(150px, 1.2fr)
+        minmax(145px, 1fr)
+        auto
+        auto;
+
+    gap: 11px;
+    align-items: center;
+}
+
+/* Campos de pesquisa */
+
+#pesquisa,
+#filtro_categoria,
+#filtro_data {
+    width: 100%;
+    min-width: 0;
+    height: 54px;
+
+    padding: 0 16px;
+
+    color: #333333;
+    background: rgba(255, 255, 255, 0.96);
+
+    border: 1px solid #e6dad5;
+    border-radius: 13px;
+
+    font-size: 13px;
+    outline: none;
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.035);
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+#pesquisa::placeholder {
+    color: #98939a;
+}
+
+#pesquisa:hover,
+#filtro_categoria:hover,
+#filtro_data:hover {
+    border-color: #ffaf9c;
+}
+
+#pesquisa:focus,
+#filtro_categoria:focus,
+#filtro_data:focus {
+    background: white;
+    border-color: var(--coral);
+
+    box-shadow:
+        0 0 0 4px rgba(255, 112, 87, 0.13);
+}
+
+/* 9. BOTÃO BUSCAR */
+
+#buscar,
+#novo {
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff856e,
+            #ff6048
+        );
+
+    border: none;
+    border-radius: 13px;
+
+    font-size: 14px;
+    font-weight: 800;
+
+    box-shadow:
+        0 9px 20px rgba(255, 112, 87, 0.25);
+
+    transition:
+        background 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+#buscar {
+    min-width: 120px;
+    height: 54px;
+    padding: 0 23px;
+}
+
+#buscar:hover,
+#novo:hover {
+    background: var(--coral-hover);
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 13px 27px rgba(255, 112, 87, 0.34);
+}
+
+/* 10. LIMPAR FILTROS */
+
+#filtro_apagar {
+    height: 54px;
+    padding: 0 19px;
+
+    color: #464149;
+    background: rgba(255, 255, 255, 0.92);
+
+    border: 1px solid #e1d7d3;
+    border-radius: 13px;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    white-space: nowrap;
+
+    transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        border-color 0.25s ease;
+}
+
+#filtro_apagar:hover {
+    color: var(--coral-hover);
+    background: var(--coral-soft);
+    border-color: var(--coral);
+}
+
+/* 11. CADASTRAR EVENTO */
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 22px;
+}
+
+#novo {
+    min-width: 215px;
+    min-height: 53px;
+    padding: 14px 24px;
+    font-weight: 850;
+}
+
+/* 12. SEÇÃO DE EVENTOS */
+
+.events-section {
+    margin-top: 10px;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.section-header h2 {
+    color: #222222;
+    font-size: 32px;
+    font-weight: 900;
+    letter-spacing: -1.3px;
+}
+
+.section-header h2::after {
+    content: "";
+
+    display: block;
+
+    width: 55px;
+    height: 5px;
+
+    margin-top: 12px;
+
+    background: var(--coral);
+    border-radius: 10px;
+}
+
+/* 13. TABELA DOS EVENTOS */
+
+#lista {
+    width: 100%;
+    overflow-x: auto;
+}
+
+#lista table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 13px;
+}
+
+#lista th {
+    padding: 0 16px 9px;
+
+    color: #6d6565;
+
+    font-size: 11px;
+    font-weight: 900;
+
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    text-align: left;
+    white-space: nowrap;
+}
+
+#lista td {
+    padding: 22px 16px;
+
+    background: rgba(255, 255, 255, 0.94);
+    color: #393939;
+
+    border-top:
+        1px solid rgba(255, 255, 255, 0.90);
+
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.90);
+
+    font-size: 13px;
+    vertical-align: middle;
+
+    transition: background 0.25s ease;
+}
+
+/* Primeira coluna */
+
+#lista td:first-child {
+    position: relative;
+
+    color: #242424;
+    font-size: 14px;
+    font-weight: 850;
+
+    border-left:
+        1px solid rgba(255, 255, 255, 0.90);
+
+    border-radius: 16px 0 0 16px;
+    padding-left: 22px;
+}
+
+/* Detalhe coral lateral */
+
+#lista td:first-child::before {
+    content: "";
+
+    position: absolute;
+    left: 0;
+    top: 20%;
+    bottom: 20%;
+
+    width: 4px;
+
+    background: var(--coral);
+    border-radius: 0 5px 5px 0;
+
+    opacity: 0.55;
+}
+
+/* Última coluna */
+
+#lista td:last-child {
+    min-width: 190px;
+
+    border-right:
+        1px solid rgba(255, 255, 255, 0.90);
+
+    border-radius: 0 16px 16px 0;
+}
+
+#lista tbody tr:hover td {
+    background: #fff8f5;
+}
+
+#lista tbody tr:hover td:first-child::before {
+    opacity: 1;
+}
+
+/* 14. AÇÕES DOS EVENTOS */
+
+#lista a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 36px;
+    padding: 9px 12px;
+    margin: 3px 2px;
+
+    background: #f2f2f4;
+    color: #374151;
+
+    border-radius: 10px;
+
+    font-size: 12px;
+    font-weight: 800;
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+#lista a:hover {
+    transform: translateY(-2px);
+}
+
+/* Comentários */
+
+#lista a[href*="comentarios"] {
+    background: #f1f1f3;
+    color: #444444;
+}
+
+#lista a[href*="comentarios"]:hover {
+    background: #e5e5e9;
+}
+
+/* Alterar */
+
+#lista a[href*="evento_alterar"] {
+    background: var(--blue-soft);
+    color: var(--blue);
+}
+
+#lista a[href*="evento_alterar"]:hover {
+    background: #dce8ff;
+}
+
+/* Excluir */
+
+#lista a[onclick*="excluir"] {
+    background: var(--red-soft);
+    color: var(--red);
+}
+
+#lista a[onclick*="excluir"]:hover {
+    background: #ffd8d8;
+}
+
+/* Favoritar */
+
+#lista a[onclick*="favoritar"] {
+    background: var(--coral-soft);
+    color: var(--coral-hover);
+}
+
+#lista a[onclick*="favoritar"]:hover {
+    background: #ffdfd5;
+}
+
+/* Sem resultados */
+
+#lista p {
+    padding: 40px;
+
+    background: rgba(255, 255, 255, 0.94);
+
+    border: 1px dashed #e4c8bd;
+    border-radius: 16px;
+
+    color: var(--text-muted);
+    text-align: center;
+}
+
+/* 15. PÁGINAS DE FORMULÁRIO */
+
+.page-main {
+    min-height: calc(100vh - 74px);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 48px 20px;
+}
+
+.form-container {
+    width: min(600px, 100%);
+    padding: 42px;
+
+    background: rgba(255, 255, 255, 0.98);
+
+    border: 1px solid rgba(255, 255, 255, 0.90);
+    border-radius: 25px;
+
+    box-shadow: var(--shadow-lg);
+}
+
+/* Cabeçalho */
+
+.form-header {
+    text-align: center;
+    margin-bottom: 31px;
+}
+
+.form-header h2 {
+    color: #222222;
+    font-size: 30px;
+    font-weight: 900;
+
+    letter-spacing: -1px;
+    margin-bottom: 8px;
+}
+
+.form-header p {
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+/* 16. CAMPOS DOS FORMULÁRIOS */
+
+.modern-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-group label {
+    color: #424242;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.input-group input,
+.input-group select,
+.input-group textarea {
+    width: 100%;
+    min-height: 51px;
+
+    padding: 13px 15px;
+
+    background: #fffaf8;
+    color: #292929;
+
+    border: 1px solid #e7ddd8;
+    border-radius: 12px;
+    outline: none;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.input-group textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+.input-group input:focus,
+.input-group select:focus,
+.input-group textarea:focus {
+    background: white;
+    border-color: var(--coral);
+
+    box-shadow:
+        0 0 0 4px rgba(255, 112, 87, 0.13);
+}
+
+/* 17. BOTÃO ENVIAR - CORRIGIDO */
+
+/*
+   Estiliza o botão principal de envio,
+   incluindo botões sem type="submit".
+
+   Não altera os botões das categorias.
+*/
+
+.modern-form > button,
+.modern-form > input[type="submit"],
+.modern-form > input[type="button"],
+.form-container form > button,
+.form-container form > input[type="submit"],
+.form-container form > input[type="button"] {
+    display: block;
+
+    width: 100%;
+    min-height: 55px;
+
+    margin-top: 15px;
+    padding: 15px 25px;
+
+    background: linear-gradient(
+        135deg,
+        #ff8a72 0%,
+        #ff7057 50%,
+        #ed543c 100%
+    );
+
+    color: white;
+
+    border: none;
+    border-radius: 14px;
+
+    font-size: 16px;
+    font-weight: 800;
+
+    box-shadow:
+        0 8px 20px rgba(255, 112, 87, 0.30);
+
+    cursor: pointer;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        filter 0.25s ease;
+}
+
+.modern-form > button:hover,
+.modern-form > input[type="submit"]:hover,
+.modern-form > input[type="button"]:hover,
+.form-container form > button:hover,
+.form-container form > input[type="submit"]:hover,
+.form-container form > input[type="button"]:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 13px 28px rgba(255, 112, 87, 0.38);
+
+    filter: brightness(1.04);
+}
+
+.modern-form > button:active,
+.modern-form > input[type="submit"]:active,
+.form-container form > button:active,
+.form-container form > input[type="submit"]:active {
+    transform: scale(0.98);
+}
+
+/* 18. CATEGORIAS */
+
+.categorias-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.categorias-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.categorias-tags:empty {
+    display: none;
+}
+
+.categoria-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 6px 9px 6px 14px;
+
+    background: var(--coral-soft);
+    color: var(--coral-hover);
+
+    border: 1px solid #ffd0c4;
+    border-radius: 30px;
+
+    font-size: 13px;
+    font-weight: 750;
+}
+
+/* Botão de remover categoria */
+
+.modern-form .categoria-tag button {
+    width: 23px;
+    height: 23px;
+    min-height: 23px;
+
+    margin: 0;
+    padding: 0;
+
+    background: transparent;
+    color: var(--coral-hover);
+
+    border: none;
+    border-radius: 50%;
+
+    font-size: 17px;
+    line-height: 1;
+
+    box-shadow: none;
+}
+
+.modern-form .categoria-tag button:hover {
+    background: var(--coral);
+    color: white;
+    transform: none;
+}
+
+/* 19. AUTOCOMPLETE */
+
+.categorias-autocomplete {
+    position: relative;
+}
+
+.categorias-sugestoes {
+    position: absolute;
+
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+
+    z-index: 20;
+
+    max-height: 220px;
+    overflow-y: auto;
+
+    padding: 6px;
+    background: white;
+
+    border: 1px solid var(--gray-border);
+    border-radius: 12px;
+
+    box-shadow: var(--shadow-md);
+    list-style: none;
+}
+
+.categorias-sugestoes li {
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.categorias-sugestoes li[data-id]:hover {
+    background: var(--coral-soft);
+    color: var(--coral-hover);
+}
+
+.categorias-sugestoes li.sem-resultado {
+    color: var(--text-muted);
+    cursor: default;
+}
+
+/* 20. RESPONSIVIDADE */
+
+@media (max-width: 1100px) {
+
+    .search-area {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    #pesquisa {
+        grid-column: 1 / -1;
+    }
+
+    #buscar,
+    #filtro_apagar {
+        width: 100%;
+    }
+
+    #lista table {
+        min-width: 900px;
+    }
+}
+
+@media (max-width: 640px) {
+
+    .header-content,
+    .container {
+        width: calc(100% - 28px);
+    }
+
+    .header-content {
+        min-height: 66px;
+    }
+
+    .page-header h1 {
+        font-size: 25px;
+    }
+
+    .container {
+        padding-top: 23px;
+    }
+
+    .search-section {
+        padding: 29px 21px;
+        border-radius: 22px;
+        margin-bottom: 36px;
+    }
+
+    .search-header h2 {
+        font-size: 38px;
+        letter-spacing: -1.7px;
+    }
+
+    .search-header p {
+        font-size: 14px;
+    }
+
+    .search-area {
+        grid-template-columns: 1fr;
+    }
+
+    #pesquisa {
+        grid-column: auto;
+    }
+
+    #buscar,
+    #filtro_apagar,
+    #novo {
+        width: 100%;
+    }
+
+    .actions {
+        justify-content: stretch;
+    }
+
+    .section-header h2 {
+        font-size: 26px;
+    }
+
+    #lista table {
+        min-width: 820px;
+    }
+
+    .form-container {
+        padding: 27px 22px;
+    }
+}
+
+/* 21. ACESSIBILIDADE */
+
+:focus-visible {
+    outline: 3px solid rgba(255, 112, 87, 0.5);
+    outline-offset: 3px;
+}
+
+button:disabled,
+input:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+
+/* ========================================
+   BOTÃO ENVIAR — VIEWRITIBA PREMIUM
+   ======================================== */
+
+#enviar {
+    display: block;
+
+    width: 100%;
+    min-height: 56px;
+
+    margin-top: 15px;
+    padding: 15px 25px;
+
+    background: linear-gradient(
+        135deg,
+        #ff8a72 0%,
+        #ff7057 50%,
+        #ed543c 100%
+    );
+
+    color: #ffffff;
+
+    border: none;
+    border-radius: 14px;
+
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+
+    box-shadow:
+        0 8px 22px rgba(255, 112, 87, 0.30);
+
+    cursor: pointer;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        filter 0.25s ease;
+}
+
+/* Efeito ao passar o mouse */
+
+#enviar:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 14px 30px rgba(255, 112, 87, 0.40);
+
+    filter: brightness(1.05);
+}
+
+/* Efeito ao clicar */
+
+#enviar:active {
+    transform: scale(0.98);
+}
+
+/* Acessibilidade */
+
+#enviar:focus-visible {
+    outline: 3px solid #ffb6a5;
+    outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #enviar {
+        transition: none;
+    }
+}
+
+
+/* ======================================
+   JARDIM BOTÂNICO — VIEWRITIBA
+   ====================================== */
+
+.search-section {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+/* Ilustração do Jardim Botânico */
+
+.search-section::after {
+    content: "";
+
+    position: absolute;
+
+    top: 25px;
+    right: 0;
+
+    width: 45%;
+    height: 270px;
+
+    background-image:
+        url("../img/jardimbotanico.jpg");
+
+    background-repeat: no-repeat;
+    background-position: center right;
+    background-size: contain;
+
+    opacity: 0.55;
+
+    pointer-events: none;
+
+    z-index: -1;
+}
+
+/* Ajuste para tablets */
+
+@media (max-width: 900px) {
+    .search-section::after {
+        width: 42%;
+        height: 200px;
+        opacity: 0.25;
+    }
+}
+
+/* Ajuste para celulares */
+
+@media (max-width: 600px) {
+    .search-section::after {
+        top: 20px;
+        right: -30px;
+
+        width: 75%;
+        height: 180px;
+
+        opacity: 0.15;
+    }
+}
+
+
+/* ==========================================
+   VIEWRITIBA — ACABAMENTO FINAL
+   ========================================== */
+
+/* Fundo coral mais equilibrado */
+
+body {
+    background:
+        radial-gradient(
+            ellipse at 95% 18%,
+            rgba(255, 135, 110, 0.36),
+            transparent 52%
+        ),
+        linear-gradient(
+            120deg,
+            #fff6f0 0%,
+            #ffe5da 48%,
+            #ffc8b8 100%
+        );
+
+    background-attachment: fixed;
+}
+
+/* Card principal */
+
+.search-section {
+    box-shadow:
+        0 18px 50px rgba(131, 65, 46, 0.11);
+}
+
+/* Jardim Botânico mais suave */
+
+.search-section::after {
+    opacity: 0.38;
+    filter: saturate(0.85);
+}
+
+/* Título da área de eventos */
+
+.section-header h2 {
+    font-size: 30px;
+    letter-spacing: -1px;
+}
+
+/* Tabela mais legível */
+
+#lista td {
+    font-size: 14px;
+    padding: 23px 17px;
+}
+
+/* Cards mais elegantes */
+
+#lista td {
+    border-top-color: #f3e7e2;
+    border-bottom-color: #f3e7e2;
+}
+
+#lista td:first-child {
+    border-left-color: #f3e7e2;
+}
+
+#lista td:last-child {
+    border-right-color: #f3e7e2;
+}
+
+/* Interação suave */
+
+#lista tbody tr:hover td {
+    background: #fffaf7;
+    border-top-color: #ffd9cc;
+    border-bottom-color: #ffd9cc;
+}
+
+#lista tbody tr:hover td:first-child {
+    border-left-color: #ffd9cc;
+}
+
+#lista tbody tr:hover td:last-child {
+    border-right-color: #ffd9cc;
+}
+
+/* Botões de ação */
+
+#lista a {
+    font-size: 12px;
+    padding: 9px 13px;
+    border-radius: 9px;
+}
+
+/* Campos de pesquisa */
+
+#pesquisa,
+#filtro_categoria,
+#filtro_data {
+    border-color: #eadbd5;
+    box-shadow: 0 3px 12px rgba(80,40,30,0.04);
+}
+
+.btn-compartilhar {
+    background-color: #fff0ec;
+    color: #f4513b;
+    border: none;
+    border-radius: 10px;
+    padding: 11px 13px;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: background-color 0.2s ease,
+                transform 0.2s ease;
+}
+
+.btn-compartilhar:hover {
+    background-color: #ffe0d7;
+    transform: translateY(-2px);
+}
+
+.btn-compartilhar:active {
+    transform: translateY(0);
+}

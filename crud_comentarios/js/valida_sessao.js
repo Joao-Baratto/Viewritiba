@@ -5,10 +5,10 @@ async function valida_sessao(){
         });
         const resposta = await retorno.json();
         if(resposta.status == "nok"){
-            window.location.href = '../login/';
+            window.location.href = '../../crud_organizador/home/MainMenu.html';
         }
     } catch (erro) {
-        window.location.href = '../login/';
+        window.location.href = '../../crud_organizador/home/MainMenu.html';
     }
 }
 

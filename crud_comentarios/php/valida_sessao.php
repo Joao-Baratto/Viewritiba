@@ -1,10 +1,12 @@
 <?php
     session_start();
-    if(isset($_SESSION['usuario']) || isset($_SESSION['organizador_id'])){
+    include_once('../../php/usuario_logado.php');
+    $usuario = usuario_logado();
+    if($usuario != null){
         $retorno = [
-            'status'    => 'ok', 
-            'mensagem'  => '', 
-            'data'      => []
+            'status'    => 'ok',
+            'mensagem'  => '',
+            'data'      => ['tipo' => $usuario['tipo']]
         ];
     }else{
         $retorno = [

@@ -8,17 +8,28 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Domine:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="comentarios.css?v=3">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/cabecalho.css?v=5">
 </head>
 <body>
     <header class="page-header">
         <div class="header-content">
-            
-            <h1>Viewritiba</h1>
-            <a href="#">Home</a>
-            <a href="../../crud_evento/home/index.html">Eventos</a>
-            <a href="../../favoritos/favoritos.html">Favoritos</a>
-            <p>Alterar comentário</p>
-            <a href="#" onclick="deslogar()">Sair</a>
+            <a class="brand-link" id="logo" href="#">
+                <h1>Viewritiba</h1>
+            </a>
+            <nav class="header-nav" id="menu_participante" data-painel="../../crud_participante/home/painel.html" aria-label="Navegação principal" hidden>
+                <a href="../../crud_participante/home/painel.html" class="nav-link">Home</a>
+                <a href="../../crud_participante/home/explorar.html" class="nav-link">Explorar</a>
+                <a href="../../crud_participante/home/eventos.html" class="nav-link">Eventos</a>
+                <a href="../../favoritos/favoritos.html" class="nav-link">Favoritos</a>
+                <a href="../../crud_participante/home/perfil_participante.html" class="nav-link">Meu perfil</a>
+                <a href="#" class="nav-link" onclick="deslogar(); return false;">Sair</a>
+            </nav>
+            <nav class="header-nav" id="menu_organizador" data-painel="../../crud_organizador/home/painel.html" aria-label="Navegação principal" hidden>
+                <a href="../../crud_evento/home/index.html" class="nav-link">Meus eventos</a>
+                <a href="../../crud_organizador/home/perfil_organizador.html" class="nav-link">Meu perfil</a>
+                <a href="#" class="nav-link" onclick="deslogar(); return false;">Sair</a>
+            </nav>
         </div>
     </header>
     <main class="page-main">
@@ -52,6 +63,6 @@
             </form>
         </section>
     </main>
-    <script src="../js/comentario_alterar.js"></script>
+    <script src="../js/comentario_alterar.js?v=3"></script>
 </body>
 </html>

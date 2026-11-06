@@ -1,65 +1,113 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meus eventos | Viewritiba</title>
-    <link rel="stylesheet" href="../../css/style.css">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+    <title>Viewritiba | Explore Curitiba</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/lista_eventos.css?v=1">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/cabecalho.css?v=3">
 </head>
+
 <body>
+
     <header class="page-header">
         <div class="header-content">
-            <a href="../../crud_organizador/home/painel.html" class="brand-link">
+            <a class="brand-link" href="../../crud_organizador/home/painel.html">
                 <h1>Viewritiba</h1>
             </a>
             <nav class="header-nav" aria-label="Navegação principal">
-                <a href="../../crud_organizador/home/painel.html" class="nav-link">Início</a>
-                <a href="catalogo.html" class="nav-link">Catálogo público</a>
+                <a href="../../crud_evento/home/index.html" class="nav-link active" aria-current="page">Meus eventos</a>
                 <a href="../../crud_organizador/home/perfil_organizador.html" class="nav-link">Meu perfil</a>
+                <a href="#" id="logoff" class="nav-link">Sair</a>
             </nav>
         </div>
     </header>
+
     <main class="container">
+
         <section class="search-section">
+
             <div class="search-header">
-                <h2>Seus eventos</h2>
-                <p>Consulte, pesquise e gerencie os eventos cadastrados na sua conta.</p>
+
+                <h2>Explore o melhor de Curitiba!</h2>
+
+                <p>
+                    Descubra experiências únicas, explore novos
+                    lugares e aproveite tudo o que Curitiba
+                    tem a oferecer.
+                </p>
+
             </div>
+
             <div class="search-area">
+
                 <input
                     type="text"
                     id="pesquisa"
-                    aria-label="Pesquisar evento pelo título"
-                    placeholder="Pesquisar pelo título"
+                    placeholder="Qual evento você procura?"
                 >
 
-                <button id="buscar" type="button" class="btn-primary">Buscar</button>
-=======
+                <select id="filtro_categoria">
+                    <option value="">
+                        Todas as categorias
+                    </option>
+                </select>
+
+                <input
+                    type="date"
+                    id="filtro_data"
+                >
+
                 <button id="buscar">
                     Buscar
                 </button>
-                <input type="date" id="filtro_data">
-                <button id="filtro_apagar" type="button">
+
+                <button
+                    id="filtro_apagar"
+                    type="button"
+                >
                     Limpar filtros
                 </button>
 
             </div>
+
             <div class="actions">
-                <button id="novo" type="button" class="btn-primary">
-                    + Novo evento
+
+                <button
+                    id="novo"
+                    class="btn-primary"
+                >
+                    + Criar novo evento
                 </button>
+
             </div>
+
         </section>
+
         <section class="events-section">
+
             <div class="section-header">
+
                 <div>
-                    <h2>Eventos cadastrados</h2>
+                    <h2>Explore os eventos</h2>
                 </div>
+
             </div>
+
             <div id="lista"></div>
+
         </section>
+
     </main>
-    <script src="../js/index.js?v=3"></script>
-    <script src="../js/valida_sessao.js?v=2"></script>
+
+    <script src="../js/index.js"></script>
+    <script src="../js/valida_sessao.js"></script>
+
 </body>
 </html>
