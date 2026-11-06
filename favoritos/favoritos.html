@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Domine:wght@400..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <title>Viewritiba - Menu favoritos</title>
     <style>
         :root {  /* cores */
     --preto: #1a1a1a;
     --laranja: #d9822b;
     --fundo-pagina: #fdfbf7;
+    --cinza: #2e2d2d;
+    
 }
 
 * { /* tudo */
@@ -30,7 +32,7 @@ body { /* página inteira*/
 }
 
 header { /* cima */
-    background-color: var(--preto);
+    background-color: var(--cinza);
     color: white;
     padding: 20px 40px;
     display: flex;
@@ -40,12 +42,12 @@ header { /* cima */
 }
 
 header h1 { /* texto Viewritiba*/
-    font-size: 1.5rem;
-    letter-spacing: 0.5px;
+    font-size: 1.3rem;
+    letter-spacing: -0.5px;
 }
 
 header p { /* texto meus favoritos*/
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     color: #e2e8f0;
 }
 
@@ -195,11 +197,15 @@ main {
 }
 
 .logo { /* Logo viewritiba, sóq pega pela classe*/
-    font-size: 25px;
-    font-family: "Caveat", cursive;
-    font-optical-sizing: auto;
-    font-weight: 400;
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-size: 1.3rem;
     font-style: normal;
+    letter-spacing: -0.5px;
+}
+
+.logo span {
+    color: var(--laranja);
 }
 
 .barra-filtros { /* linha onde fica o botão filtrar*/
@@ -249,12 +255,136 @@ main {
     padding: 20px;
     color: #665;
 }
+
+/* ==========================================
+   PADRONIZAÇÃO DO TOPO - VIEWRITIBA
+   Não altera os cards de favoritos
+   ========================================== */
+
+/* Cabeçalho */
+header {
+    background-color: #242424;
+    padding: 14px 32px;
+    min-height: 60px;
+    box-shadow: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+header .logo {
+    font-family: "Outfit", sans-serif;
+    font-size: 1.45rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: #ffffff;
+}
+
+header .logo span {
+    color: #ff7a59;
+}
+
+header p {
+    font-family: "Outfit", sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #d1d5db;
+}
+
+/* Área principal */
+main {
+    max-width: 935px;
+    margin: 0 auto;
+    padding: 40px 24px;
+}
+
+/* Título e informações */
+.titulo-secao {
+    border-bottom: 1px solid #dbdbdb;
+    padding-bottom: 18px;
+    margin-bottom: 22px;
+}
+
+.titulo-secao h2 {
+    font-family: "Outfit", sans-serif;
+    font-size: 1.65rem;
+    font-weight: 600;
+    color: #262626;
+    letter-spacing: -0.5px;
+}
+
+.titulo-secao p {
+    font-family: "Outfit", sans-serif;
+    color: #737373;
+    font-size: 0.95rem;
+    margin-top: 5px;
+}
+
+#contador-favoritos {
+    color: #e86a4c;
+    font-weight: 600;
+}
+
+/* Botão de filtro */
+.barra-filtros {
+    margin-bottom: 20px;
+}
+
+.btn-filtrar {
+    font-family: "Outfit", sans-serif;
+    background-color: #fff0ec;
+    color: #d95739;
+    border: 1px solid #ffb7a3;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.btn-filtrar:hover {
+    background-color: #ffe0d6;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 122, 89, 0.15);
+}
+
+.btn-filtrar:focus-visible {
+    outline: 2px solid #ff7a59;
+    outline-offset: 3px;
+}
+
+/* Texto exibido quando não há eventos */
+.lista-vazia {
+    font-family: "Outfit", sans-serif;
+    color: #737373;
+    font-size: 0.95rem;
+    padding: 20px;
+}
+
+/* Ajustes para celulares */
+@media (max-width: 600px) {
+    header {
+        padding: 14px 20px;
+    }
+
+    main {
+        padding: 28px 16px;
+    }
+
+    .titulo-secao h2 {
+        font-size: 1.4rem;
+    }
+}
+
     </style>
 </head>
 <body>
 
     <header>
-        <h1 class="logo">Viewritiba</h1>
+        <h1 class="logo">Viewriti<span>ba</span></h1>
         <p>Meus Favoritos</p>
     </header>
 

@@ -1,0 +1,192 @@
+
+/* Modal de compartilhamento - Viewritiba */
+
+.share-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.65);
+    box-sizing: border-box;
+}
+
+.share-box {
+    width: 100%;
+    max-width: 450px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 28px;
+    background: #fff;
+    color: #333;
+    border-radius: 16px;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.25);
+    box-sizing: border-box;
+}
+
+.share-box h3 {
+    margin: 0 0 20px;
+    color: #1a1a1a;
+    font-size: 22px;
+}
+
+.share-opcao {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fdfbf7;
+    color: #333;
+    font: inherit;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.share-opcao:hover {
+    background: #f5e6d3;
+}
+
+.share-subtitulo {
+    margin: 24px 0 14px;
+    font-size: 16px;
+}
+
+.share-campo {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font: inherit;
+    box-sizing: border-box;
+}
+
+.share-enviar {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #d9822b;
+    color: white;
+    font: inherit;
+    cursor: pointer;
+}
+
+.share-enviar:hover {
+    background: #b96b20;
+}
+
+.share-enviar:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+
+.share-status {
+    margin-top: 12px;
+    font-size: 14px;
+}
+
+.share-status.erro {
+    color: #b91c1c;
+}
+
+.share-status.ok {
+    color: #15803d;
+}
+
+.share-fechar {
+    display: block;
+    margin: 16px auto 0;
+    padding: 8px 16px;
+    border: none;
+    background: transparent;
+    color: #666;
+    font: inherit;
+    cursor: pointer;
+}
+
+.share-fechar:hover {
+    color: #1a1a1a;
+}
+
+@media (max-width: 480px) {
+    .share-box {
+        padding: 20px;
+    }
+}
+
+/* Transições das opções de compartilhamento */
+.share-opcao {
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.share-opcao:hover {
+    transform: translateY(-2px);
+}
+
+/* WhatsApp */
+.share-opcao:nth-of-type(1):hover {
+    background: #e2f7e8;
+    color: #16883c;
+    border-color: #25d366;
+}
+
+/* Telegram */
+.share-opcao:nth-of-type(2):hover {
+    background: #e4f4fc;
+    color: #168ac0;
+    border-color: #229ed9;
+}
+
+/* E-mail */
+.share-opcao:nth-of-type(3):hover {
+    background: #fceae7;
+    color: #d54e3b;
+    border-color: #f4513b;
+}
+
+/* Copiar link */
+.share-opcao:nth-of-type(4):hover {
+    background: #eceef8;
+    color: #5156a5;
+    border-color: #777cce;
+}
+
+/* Outros aplicativos */
+.share-opcao:nth-of-type(5):hover {
+    background: #f1f1f1;
+    color: #454545;
+    border-color: #a3a3a3;
+}
+
+/* Botão de envio: coral do Viewritiba */
+.share-enviar {
+    background: #f4513b;
+    color: #ffffff;
+    border: none;
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.share-enviar:hover {
+    background: #df402c;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 14px rgba(244, 81, 59, 0.25);
+}
+
+.share-enviar:active {
+    transform: translateY(0);
+}
