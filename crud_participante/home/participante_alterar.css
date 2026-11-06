@@ -1,0 +1,129 @@
+.page-header .nav-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0.55rem 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #e4e9e5;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+}
+
+.page-header .nav-link:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.16);
+    color: #fff;
+    text-decoration: none;
+}
+
+.page-header .nav-link:focus-visible {
+    outline: 3px solid #ff9a7c;
+    outline-offset: 3px;
+}
+
+.edit-main {
+    width: min(760px, calc(100% - 2rem));
+    margin: 2rem auto;
+}
+
+.edit-card {
+    padding: 2.5rem;
+    border-radius: 16px;
+    background: #FFFFFF;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .1);
+}
+
+.edit-card .form-header {
+    text-align: left;
+}
+
+.edit-card .input-readonly {
+    background: #F3F4F6;
+    color: #6B7280;
+}
+
+.edit-card small,
+.password-section > p,
+.danger-zone p {
+    color: #6B7280;
+    font-size: .875rem;
+}
+
+.password-section {
+    display: grid;
+    gap: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #E5E7EB;
+}
+
+.password-section h3,
+.password-section > p {
+    margin: 0;
+}
+
+.form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: .5rem;
+}
+
+.form-actions .btn-primary {
+    width: auto;
+}
+
+.btn-cancelar {
+    color: #6B7280;
+    text-decoration: none;
+}
+
+.danger-zone {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #FECACA;
+}
+
+.btn-danger {
+    flex: 0 0 auto;
+    padding: .75rem 1rem;
+    border: 0;
+    border-radius: 8px;
+    background: #B42318;
+    color: #FFFFFF;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-danger:hover {
+    background: #912018;
+}
+
+@media (max-width: 640px) {
+    .edit-card {
+        padding: 1.5rem;
+    }
+
+    .danger-zone {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .form-actions {
+        align-items: stretch;
+        flex-direction: column-reverse;
+    }
+
+    .form-actions .btn-primary {
+        width: 100%;
+    }
+}
