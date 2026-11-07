@@ -3,31 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comentários do evento | Viewritiba</title>
+    <title>Detalhes do evento | Viewritiba</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../css/style.css">
+    <!-- mesmo visual do modal "Detalhes" da tela Eventos do participante -->
+    <link rel="stylesheet" href="../../crud_participante/css/eventos.css?v=1">
+    <style>
+        /* O quadro de detalhes fica na página, em vez de abrir como janela por cima da lista */
+        .event-details-pagina {
+            position: static;
+            max-height: none;
+            margin: 48px auto;
+            box-shadow: 0 12px 40px rgba(34, 34, 34, 0.08);
+        }
+
+        /* Botão de favoritar: mesmas medidas dos outros botões do quadro, no tom do Favoritar das listas */
+        .event-details-favoritar {
+            display: inline-flex;
+            min-height: 42px;
+            align-items: center;
+            justify-content: center;
+            padding: 9px 16px;
+            border: 0;
+            border-radius: 10px;
+            font: inherit;
+            font-weight: 700;
+            color: #c64d32;
+            background: #fff0eb;
+            cursor: pointer;
+        }
+
+        .event-details-favoritar:hover {
+            background: #ffe1d7;
+        }
+
+        .event-details-favoritar[hidden] {
+            display: none;
+        }
+    </style>
+    <link rel="stylesheet" href="../../css/cabecalho.css?v=5">
 </head>
-<body style="margin: 0; min-height: 100vh; display: flex; flex-direction: column;">
-    <main style="flex: 1;">
-        <button type="button" id="btn_voltar">← Voltar</button>
-        <br>
-        <div id="elementos_tela" style="text-align: center;"></div>
-    </main>
-    <footer style="padding: 20px;">
-        <div style="text-align: center;">
-            <p id="comentario_acesso" role="status"></p>
-            <input type="file" accept="image/*" id="new_img">
-            <input
-                type="text"
-                id="new_comentario"
-                maxlength="1000"
-                placeholder="Insira um comentário..."
-                style="width: 70%;"
-            >
-            <button
-              type="button" id="btn_comentario" disabled> Enviar
-            </button>
+<body>
+    <header class="page-header">
+        <div class="header-content">
+            <a class="brand-link" id="logo" href="../../index.html">
+                <h1>Viewritiba</h1>
+            </a>
+            <nav class="header-nav" id="menu_participante" data-painel="../../crud_participante/home/painel.html" aria-label="Navegação principal" hidden>
+                <a href="../../crud_participante/home/painel.html" class="nav-link">Início</a>
+                <a href="../../crud_participante/home/explorar.html" class="nav-link">Recomendados</a>
+                <a href="../../crud_participante/home/eventos.html" class="nav-link">Eventos</a>
+                <a href="../../favoritos/favoritos.html" class="nav-link">Favoritos</a>
+                <a href="../../crud_participante/home/perfil_participante.html" class="nav-link">Meu perfil</a>
+                <a href="#" class="nav-link" onclick="sair(); return false;">Sair</a>
+            </nav>
+            <nav class="header-nav" id="menu_organizador" data-painel="../../crud_organizador/home/painel.html" aria-label="Navegação principal" hidden>
+                <a href="../../crud_evento/home/index.html" class="nav-link">Meus eventos</a>
+                <a href="../../crud_organizador/home/perfil_organizador.html" class="nav-link">Meu perfil</a>
+                <a href="#" class="nav-link" onclick="sair(); return false;">Sair</a>
+            </nav>
+            <nav class="header-nav" id="menu_visitante" aria-label="Acesso à conta" hidden>
+                <a href="../../crud_participante/login/login.html" class="nav-link">Entrar</a>
+            </nav>
         </div>
-    </footer>
-    <script src="../js/comentarios.js"></script>
+    </header>
+
+    <main>
+        <article class="event-details-modal event-details-pagina" aria-labelledby="detalhes-titulo">
+            <div class="event-details-header">
+                <p class="event-details-eyebrow">Detalhes do evento</p>
+            </div>
+            <h2 id="detalhes-titulo">Carregando...</h2>
+            <p id="detalhes-descricao" class="event-details-description"></p>
+            <dl class="event-details-info" id="detalhes-info">
+                <div>
+                    <dt>Data e hora</dt>
+                    <dd id="detalhes-data"></dd>
+                </div>
+                <div>
+                    <dt>Local</dt>
+                    <dd id="detalhes-local"></dd>
+                </div>
+                <div>
+                    <dt>Organizador</dt>
+                    <dd id="detalhes-organizador"></dd>
+                </div>
+                <div>
+                    <dt>Categoria(s)</dt>
+                    <dd id="detalhes-categorias"></dd>
+                </div>
+            </dl>
+            <div class="event-details-actions">
+                <button type="button" id="btn_favoritar" class="event-details-favoritar" hidden>Adicionar aos favoritos</button>
+                <a id="detalhes-comentarios" class="event-details-comments" href="#">Ver comentários</a>
+                <button type="button" id="btn_voltar" class="event-details-dismiss">Voltar</button>
+            </div>
+        </article>
+    </main>
+
+    <script src="../js/visualizar_evento.js?v=4"></script>
 </body>
 </html>
