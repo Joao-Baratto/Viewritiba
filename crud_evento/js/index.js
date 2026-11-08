@@ -142,8 +142,22 @@ async function excluir(id) {
         alert(resposta.mensagem);
     }
 }
+let eventosGerenciados = [];
+
+function abrirCompartilhamentoOrganizador(indice) {
+    const evento = eventosGerenciados[indice];
+
+    if (!evento || typeof compartilharEvento !== "function") return;
+
+    compartilharEvento({
+        id_evento: evento.id,
+        titulo: evento.titulo,
+        local: evento.local
+    });
+}
 
 function preencherTabela(tabela) {
+    eventosGerenciados = tabela;
     var html = `
         <table>
             <tr>
@@ -166,6 +180,12 @@ function preencherTabela(tabela) {
                 <td>${tabela[i].categorias}</td>
 
                 <td>
+
+                    <button type="button"
+                    class="btn-compartilhar"
+                    onclick="abrirCompartilhamentoOrganizador(${i})">
+                    Compartilhar
+                    </button>
                     <a href="../../crud_comentarios/home/comentarios.html?id=${tabela[i].id}">
                         Comentários
                     </a>
