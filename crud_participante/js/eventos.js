@@ -33,11 +33,23 @@ document.getElementById("modal-detalhes-evento").addEventListener("click", (even
 });
 
 async function logoff() {
-    const retorno = await fetch("../php/participante_logoff.php");
-    const resposta = await retorno.json();
+    try {
+        const retorno = await fetch("../php/participante_logoff.php", {
+            headers: {
+                "X-Requested-With": "XMLHttpRequest"
+            }
+        });
 
-    if (resposta.status == "ok") {
-        window.location.href = "../home/MainMenu.html?v=2";
+        const resposta = await retorno.json();
+
+        if (retorno.ok && resposta.status === "ok") {
+            window.location.href = "../home/MainMenu.html";
+        } else {
+            alert(resposta.mensagem || "Não foi possível sair da conta.");
+        }
+    } catch (erro) {
+        console.error("Erro ao sair:", erro);
+        alert("Não foi possível encerrar a sessão.");
     }
 }
 
