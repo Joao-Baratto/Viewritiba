@@ -30,64 +30,78 @@
             </nav>
         </div>
     </header>
+
     <main class="container">
         <section class="search-section">
             <div class="search-header">
                 <h2>Encontre eventos em Curitiba!</h2>
                 <p>Pesquise eventos de todos os organizadores, descubra novas experiências e encontre atividades de acordo com seus interesses.</p>
             </div>
+
             <div class="search-area">
-                <input type="text" id="pesquisa" placeholder="Digite o nome do evento">
+                <input
+                    type="text"
+                    id="pesquisa"
+                    placeholder="Buscar por título, descrição, local ou organizador"
+                >
+
                 <select id="filtro_categoria">
-                    <option value=""> - </option>
+                    <option value="">Todas as categorias</option>
                 </select>
+
                 <input type="date" id="filtro_data">
+
                 <button id="buscar">Buscar</button>
-                <button id="filtro_apagar" type="button">Limpar filtros</button>
+
+                <button id="filtro_apagar" type="button">
+                    Limpar filtros
+                </button>
             </div>
         </section>
+
         <section class="events-section">
             <div class="section-header">
-                <div><h2>Eventos disponíveis</h2></div>
+                <div>
+                    <h2>Eventos disponíveis</h2>
+                </div>
             </div>
             <div id="lista"></div>
         </section>
     </main>
-
-    <dialog id="modal-detalhes-evento" class="event-details-modal" aria-labelledby="detalhes-titulo">
-        <div class="event-details-header">
-            <p class="event-details-eyebrow">Detalhes do evento</p>
-            <button type="button" id="fechar-detalhes-evento" class="event-details-close" aria-label="Fechar detalhes">
-                &times;
-            </button>
+<dialog id="modal-detalhes-evento" class="event-details-modal" aria-labelledby="detalhes-titulo">
+    <div class="event-details-header">
+        <p class="event-details-eyebrow">Detalhes do evento</p>
+        <button type="button" id="fechar-detalhes-evento" class="event-details-close" aria-label="Fechar detalhes">
+            &times;
+        </button>
+    </div>
+    <h2 id="detalhes-titulo"></h2>
+    <p id="detalhes-descricao" class="event-details-description"></p>
+    <dl class="event-details-info">
+        <div>
+            <dt>Data e hora</dt>
+            <dd id="detalhes-data"></dd>
         </div>
-        <h2 id="detalhes-titulo"></h2>
-        <p id="detalhes-descricao" class="event-details-description"></p>
-        <dl class="event-details-info">
-            <div>
-                <dt>Data e hora</dt>
-                <dd id="detalhes-data"></dd>
-            </div>
-            <div>
-                <dt>Local</dt>
-                <dd id="detalhes-local"></dd>
-            </div>
-            <div>
-                <dt>Organizador</dt>
-                <dd id="detalhes-organizador"></dd>
-            </div>
-            <div>
-                <dt>Categoria(s)</dt>
-                <dd id="detalhes-categorias"></dd>
-            </div>
-        </dl>
-        <div class="event-details-actions">
-            <a id="detalhes-comentarios" class="event-details-comments" href="#">Ver comentários</a>
-            <button type="button" id="fechar-detalhes-secundario" class="event-details-dismiss">Fechar</button>
+        <div>
+            <dt>Local</dt>
+            <dd id="detalhes-local"></dd>
         </div>
-    </dialog>
+        <div>
+            <dt>Organizador</dt>
+            <dd id="detalhes-organizador"></dd>
+        </div>
+        <div>
+            <dt>Categoria(s)</dt>
+            <dd id="detalhes-categorias"></dd>
+        </div>
+    </dl>
+    <div class="event-details-actions">
+        <a id="detalhes-comentarios" class="event-details-comments" href="#">Ver comentários</a>
+        <button type="button" id="fechar-detalhes-secundario" class="event-details-dismiss">Fechar</button>
+    </div>
+</dialog>
 
-    <script src="../../compartilhamento_eventos/compartilhar.js?v=2"></script>
-    <script src="../js/eventos.js?v=6"></script>
+<script src="../../compartilhamento_eventos/compartilhar.js?v=2"></script>
+<script src="../js/eventos.js?v=6"></script>
 </body>
 </html>
