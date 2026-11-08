@@ -1,12 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Viewritiba | Explore Curitiba</title>
     <link rel="stylesheet" href="../../compartilhamento_eventos/compartilhar-modal.css?v=3">
     <link rel="stylesheet" href="../css/style.css">
@@ -14,44 +10,32 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../css/cabecalho.css?v=3">
 </head>
-
 <body>
-
     <header class="page-header">
         <div class="header-content">
-            <a class="brand-link" href="../../crud_organizador/home/painel.html">
-                <h1>Viewritiba</h1>
-            </a>
-            <nav class="header-nav" aria-label="Navegação principal">
-                <a href="../../crud_evento/home/index.html" class="nav-link active" aria-current="page">Meus eventos</a>
-                <a href="../../crud_organizador/home/perfil_organizador.html" class="nav-link">Meu perfil</a>
-                <a href="#" id="logoff" class="nav-link">Sair</a>
-            </nav>
+            <h1>Viewritiba</h1>
+            <button id="logoff" class="btn-outline">
+                Sair
+            </button>
         </div>
     </header>
 
     <main class="container">
-
         <section class="search-section">
-
             <div class="search-header">
-
                 <h2>Explore o melhor de Curitiba!</h2>
-
                 <p>
                     Descubra experiências únicas, explore novos
                     lugares e aproveite tudo o que Curitiba
                     tem a oferecer.
                 </p>
-
             </div>
 
             <div class="search-area">
-
                 <input
                     type="text"
                     id="pesquisa"
-                    placeholder="Qual evento você procura?"
+                    placeholder="Buscar por título, descrição, local ou organizador"
                 >
 
                 <select id="filtro_categoria">
@@ -75,41 +59,30 @@
                 >
                     Limpar filtros
                 </button>
-
             </div>
 
             <div class="actions">
-
                 <button
                     id="novo"
                     class="btn-primary"
                 >
-                    + Criar novo evento
+                    Criar novo evento
                 </button>
-
             </div>
-
         </section>
 
         <section class="events-section">
-
             <div class="section-header">
-
                 <div>
                     <h2>Explore os eventos</h2>
                 </div>
-
             </div>
-
             <div id="lista"></div>
-
         </section>
-
     </main>
 
-    <script src="../../compartilhamento_eventos/compartilhar.js?v=3"></script>
+<script src="../../compartilhamento_eventos/compartilhar.js?v=3"></script>
 <script src="../js/index.js?v=3"></script>
 <script src="../js/valida_sessao.js"></script>
-
 </body>
 </html>

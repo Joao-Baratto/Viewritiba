@@ -748,13 +748,6 @@ a {
 
 /* 17. BOTÃO ENVIAR - CORRIGIDO */
 
-/*
-   Estiliza o botão principal de envio,
-   incluindo botões sem type="submit".
-
-   Não altera os botões das categorias.
-*/
-
 .modern-form > button,
 .modern-form > input[type="submit"],
 .modern-form > input[type="button"],
@@ -926,7 +919,6 @@ a {
 /* 20. RESPONSIVIDADE */
 
 @media (max-width: 1100px) {
-
     .search-area {
         grid-template-columns:
             repeat(2, minmax(0, 1fr));
@@ -947,7 +939,6 @@ a {
 }
 
 @media (max-width: 640px) {
-
     .header-content,
     .container {
         width: calc(100% - 28px);
@@ -1034,10 +1025,7 @@ input:disabled {
     }
 }
 
-
-/* ========================================
-   BOTÃO ENVIAR — VIEWRITIBA PREMIUM
-   ======================================== */
+/* BOTÃO ENVIAR — VIEWRITIBA PREMIUM */
 
 #enviar {
     display: block;
@@ -1075,8 +1063,6 @@ input:disabled {
         filter 0.25s ease;
 }
 
-/* Efeito ao passar o mouse */
-
 #enviar:hover {
     transform: translateY(-3px);
 
@@ -1086,13 +1072,9 @@ input:disabled {
     filter: brightness(1.05);
 }
 
-/* Efeito ao clicar */
-
 #enviar:active {
     transform: scale(0.98);
 }
-
-/* Acessibilidade */
 
 #enviar:focus-visible {
     outline: 3px solid #ffb6a5;
@@ -1105,18 +1087,13 @@ input:disabled {
     }
 }
 
-
-/* ======================================
-   JARDIM BOTÂNICO — VIEWRITIBA
-   ====================================== */
+/* JARDIM BOTÂNICO — VIEWRITIBA */
 
 .search-section {
     position: relative;
     isolation: isolate;
     overflow: hidden;
 }
-
-/* Ilustração do Jardim Botânico */
 
 .search-section::after {
     content: "";
@@ -1143,8 +1120,6 @@ input:disabled {
     z-index: -1;
 }
 
-/* Ajuste para tablets */
-
 @media (max-width: 900px) {
     .search-section::after {
         width: 42%;
@@ -1152,8 +1127,6 @@ input:disabled {
         opacity: 0.25;
     }
 }
-
-/* Ajuste para celulares */
 
 @media (max-width: 600px) {
     .search-section::after {
@@ -1167,10 +1140,7 @@ input:disabled {
     }
 }
 
-
-/* ==========================================
-   VIEWRITIBA — ACABAMENTO FINAL
-   ========================================== */
+/* VIEWRITIBA — ACABAMENTO FINAL */
 
 /* Fundo coral mais equilibrado */
 
@@ -1290,4 +1260,10 @@ body {
 
 .btn-compartilhar:active {
     transform: translateY(0);
+}
+
+/* Fundo uniforme para as páginas de cadastro e alteração de eventos */
+
+body {
+    background: #F7F5F2;
 }
