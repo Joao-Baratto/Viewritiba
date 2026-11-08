@@ -19,16 +19,30 @@ require_once __DIR__ . '/../../crud_admin/php/banimentos.php';
 $id_participante = (int) $_SESSION['participante_id'];
 
 exigir_conta_nao_banida($conexao, 'participante', $id_participante);
-$sql = "SELECT evento.*, evento.id_evento AS id, organizador.nome AS organizador,
-               (SELECT GROUP_CONCAT(DISTINCT evento_categoria.categoria
-                                    ORDER BY evento_categoria.categoria SEPARATOR ', ')
-                  FROM evento_categoria
-                 WHERE evento_categoria.id_evento = evento.id_evento) AS categorias,
-               (SELECT COUNT(*) FROM favorito
-                 WHERE id_evento = evento.id_evento
-                   AND id_usuario = ?) AS favoritado
+
+$sql = "SELECT evento.*,
+               organizador.nome AS organizador,
+               (
+                   SELECT GROUP_CONCAT(
+                       DISTINCT categoria.nome_categoria
+                       ORDER BY categoria.nome_categoria
+                       SEPARATOR ', '
+                   )
+                   FROM evento_categoria
+                   INNER JOIN categoria
+                       ON categoria.id_categoria = evento_categoria.id_categoria
+                   WHERE evento_categoria.id_evento = evento.id
+               ) AS categorias,
+               (
+                   SELECT COUNT(*)
+                   FROM favorito
+                   WHERE favorito.id_evento = evento.id
+                     AND favorito.tipo_conta = 'participante'
+                     AND favorito.id_usuario = ?
+               ) AS favoritado
         FROM evento
-        LEFT JOIN organizador ON organizador.id = evento.id_organizador";
+        LEFT JOIN organizador
+            ON organizador.id = evento.id_organizador";
 
 $filtros = [];
 $parametros = [$id_participante];
@@ -53,12 +67,12 @@ if (isset($_GET['categoria']) && trim($_GET['categoria']) !== '') {
     $filtros[] = "EXISTS (
         SELECT 1
         FROM evento_categoria
-        WHERE evento_categoria.id_evento = evento.id_evento
-          AND evento_categoria.categoria = ?
+        WHERE evento_categoria.id_evento = evento.id
+          AND evento_categoria.id_categoria = ?
     )";
 
-    $parametros[] = trim($_GET['categoria']);
-    $tipos .= "s";
+    $parametros[] = (int) $_GET['categoria'];
+    $tipos .= "i";
 }
 
 if ($filtros) {
@@ -68,13 +82,18 @@ if ($filtros) {
 $stmt = $conexao->prepare($sql);
 
 if (!$stmt) {
-    error_log("Erro ao preparar consulta de eventos do participante: " . $conexao->error);
+    error_log(
+        "Erro ao preparar consulta de eventos do participante: " .
+        $conexao->error
+    );
+
     http_response_code(500);
     echo json_encode([
         'status' => 'erro',
         'mensagem' => 'Não foi possível carregar os eventos.',
         'data' => []
     ]);
+
     $conexao->close();
     exit;
 }
@@ -86,16 +105,25 @@ foreach ($parametros as $indice => &$parametro) {
 }
 
 array_unshift($parametrosReferenciados, $tipos);
-call_user_func_array([$stmt, 'bind_param'], $parametrosReferenciados);
+
+call_user_func_array(
+    [$stmt, 'bind_param'],
+    $parametrosReferenciados
+);
 
 if (!$stmt->execute()) {
-    error_log("Erro ao consultar eventos do participante: " . $stmt->error);
+    error_log(
+        "Erro ao consultar eventos do participante: " .
+        $stmt->error
+    );
+
     http_response_code(500);
     echo json_encode([
         'status' => 'erro',
         'mensagem' => 'Não foi possível consultar os eventos.',
         'data' => []
     ]);
+
     $stmt->close();
     $conexao->close();
     exit;
@@ -105,23 +133,23 @@ $resultado = $stmt->get_result();
 $tabela = [];
 
 while ($linha = $resultado->fetch_assoc()) {
-    $linha['favoritado'] = $linha['favoritado'] > 0;
+    $linha['favoritado'] = (int) $linha['favoritado'] > 0;
     $tabela[] = $linha;
 }
 
 $stmt->close();
 $conexao->close();
 
-echo json_encode(
-    $tabela
-        ? [
-            'status' => 'ok',
-            'mensagem' => 'Sucesso, consulta efetuada.',
-            'data' => $tabela
-        ]
-        : [
-            'status' => 'nok',
-            'mensagem' => 'Não há registros',
-            'data' => []
-        ]
-);
+if (count($tabela) > 0) {
+    echo json_encode([
+        'status' => 'ok',
+        'mensagem' => 'Sucesso, consulta efetuada.',
+        'data' => $tabela
+    ]);
+} else {
+    echo json_encode([
+        'status' => 'nok',
+        'mensagem' => 'Não há registros',
+        'data' => []
+    ]);
+}
