@@ -59,7 +59,6 @@ async function buscar() {
 
     if (categorias.status == "ok") {
         var html = `<option value="">Todas as categorias</option>`;
-
         for (var i = 0; i < categorias.data.length; i++) {
             html += `<option value="${categorias.data[i].id_categoria}">${categorias.data[i].nome_categoria}</option>`;
         }

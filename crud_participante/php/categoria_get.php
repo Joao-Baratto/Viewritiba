@@ -1,16 +1,15 @@
 <?php
-
 header("Content-Type: application/json; charset=utf-8");
-require_once "conexao.php";
+
+require_once __DIR__ . "/conexao.php";
 
 $resultado = $conexao->query(
-    "SELECT DISTINCT categoria AS nome_categoria, categoria AS id_categoria
-       FROM evento_categoria
-      ORDER BY categoria"
+    "SELECT id_categoria, nome_categoria
+     FROM categoria
+     ORDER BY nome_categoria"
 );
 
 if (!$resultado) {
-    error_log("Erro ao carregar categorias dos eventos: " . $conexao->error);
     http_response_code(500);
     echo json_encode([
         'status' => 'erro',
@@ -22,13 +21,17 @@ if (!$resultado) {
 }
 
 $categorias = [];
+
 while ($categoria = $resultado->fetch_assoc()) {
     $categorias[] = $categoria;
 }
 
-$conexao->close();
 echo json_encode([
     'status' => $categorias ? 'ok' : 'nok',
-    'mensagem' => $categorias ? 'Sucesso, consulta efetuada.' : 'Nenhuma categoria encontrada.',
+    'mensagem' => $categorias
+        ? 'Categorias carregadas com sucesso.'
+        : 'Nenhuma categoria encontrada.',
     'data' => $categorias
 ]);
+
+$conexao->close();

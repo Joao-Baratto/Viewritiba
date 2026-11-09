@@ -60,16 +60,16 @@
  <script src="../js/categorias.js"></script>
  <script src="../js/evento_alterar.js"></script>
  <script src="../js/valida_sessao.js"></script>
-    <script>
-        // Sair (mesmo comportamento da lista de eventos do organizador)
-        document.getElementById("logoff").addEventListener("click", async (evento) => {
-            evento.preventDefault();
-            try {
-                await fetch("../php/evento_logoff.php");
-            } finally {
-                window.location.href = "../../crud_organizador/home/MainMenu.html?v=2";
-            }
-        });
-    </script>
+ <script>
+    document.getElementById("logoff").addEventListener("click", async (evento) => {
+        evento.preventDefault();
+
+        try {
+            await fetch("../php/evento_logoff.php");
+        } finally {
+            window.location.href = "../../crud_organizador/home/MainMenu.html?v=2";
+        }
+    });
+</script>
 </body>
 </html>

@@ -21,7 +21,6 @@ document.getElementById("pesquisa").addEventListener("keydown", (evento) => {
     }
 });
 
-
 document.getElementById("filtro_apagar").addEventListener("click", () => {
     document.getElementById("pesquisa").value = "";
     document.getElementById("filtro_data").value = "";
@@ -71,6 +70,7 @@ async function buscar() {
     }
 }
 
+
 async function pesquisar() {
     const titulo = document.getElementById("pesquisa").value.trim();
     const data = document.getElementById("filtro_data").value;
@@ -100,14 +100,13 @@ async function pesquisar() {
     }
 
     if (resposta.status == "ok") {
-        var eventos = resposta.data;
+        let eventos = resposta.data;
 
         if (data != "") {
             eventos = eventos.filter((evento) => {
                 return evento.data_hora.substring(0, 10) == data;
             });
         }
-
         if (eventos.length > 0) {
             preencherTabela(eventos);
         } else {
@@ -142,6 +141,7 @@ async function excluir(id) {
         alert(resposta.mensagem);
     }
 }
+
 let eventosGerenciados = [];
 
 function abrirCompartilhamentoOrganizador(indice) {
@@ -206,4 +206,4 @@ function preencherTabela(tabela) {
     html += "</table>";
 
     document.getElementById("lista").innerHTML = html;
-}
+ }

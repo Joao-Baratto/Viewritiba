@@ -3,8 +3,8 @@
     session_unset();
     session_destroy();
     $retorno = [
-        'status'    => 'ok', // ok - nok
-        'mensagem'  => '', // mensagem que envio para o front
+        'status'    => 'ok', 
+        'mensagem'  => '', 
         'data'      => []
     ];
     header("Content-type:application/json;charset:utf-8");
