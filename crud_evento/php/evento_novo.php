@@ -43,6 +43,20 @@ if (strlen($data_hora) === 16) {
     $data_hora .= ':00';
 }
 
+date_default_timezone_set('America/Sao_Paulo');
+
+$data_evento = strtotime($data_hora);
+
+if ($data_evento === false || $data_evento <= time()) {
+    http_response_code(400);
+    echo json_encode([
+        'status' => 'nok',
+        'mensagem' => 'A data do evento deve ser futura.',
+        'data' => []
+    ]);
+    exit;
+}
+
 include_once('conexao.php');
 
 $id_organizador = (int) $_SESSION['organizador_id'];
