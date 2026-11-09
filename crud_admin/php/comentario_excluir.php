@@ -16,7 +16,7 @@ if (!$id || $id < 1) {
 }
 
 require_once __DIR__ . '/conexao.php';
-$stmt = $conexao->prepare('DELETE FROM comentario WHERE id = ?');
+$stmt = $conexao->prepare('DELETE FROM avaliacao_comentario WHERE id_comentario = ?');
 $stmt->bind_param('i', $id);
 $stmt->execute();
 

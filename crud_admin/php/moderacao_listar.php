@@ -17,10 +17,10 @@ while ($evento = $eventos_resultado->fetch_assoc()) {
 }
 
 $comentarios_resultado = $conexao->query(
-    'SELECT c.id, c.id_evento, c.usuario, c.comentario, c.data, e.titulo AS evento
-     FROM comentario c
+    'SELECT c.id_comentario AS id, c.id_evento, c.id_usuario AS usuario, c.texto AS comentario, c.data_criacao AS data, e.titulo AS evento
+     FROM avaliacao_comentario c
      INNER JOIN evento e ON e.id = c.id_evento
-     ORDER BY c.data DESC'
+     ORDER BY c.data_criacao DESC'
 );
 
 $comentarios = [];
