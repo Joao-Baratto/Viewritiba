@@ -5,21 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Domine:wght@400..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <title>Viewritiba - Compartilhados comigo</title>
-    <style>
-    </style>
+    <link rel="stylesheet" href="../css/style.css?v=2">
+<link rel="stylesheet" href="../css/cabecalho.css?v=3">
+<link rel="stylesheet" href="compartilhamento.css?v=3">
 </head>
 <body>
 
-    <header>
-        <h1 class="logo">Viewritiba</h1>
-        <nav>
-            <a href="../favoritos/favoritos.html">Meus Favoritos</a>
-            <a href="compartilhamento.html" aria-current="page">Compartilhados comigo</a>
-        </nav>
-    </header>
+    <header class="page-header">
+    <div class="header-content">
+        <a href="../crud_participante/home/painel.html" class="brand-link">
+            <h1>Viewritiba</h1>
+        </a>
 
+        <nav class="header-nav" aria-label="Navegação principal">
+            <a href="../crud_participante/home/painel.html" class="nav-link">
+                Início
+            </a>
+
+            <a href="../favoritos/favoritos.html" class="nav-link">
+                Meus favoritos
+            </a>
+
+            <a href="compartilhamento.html"
+               class="nav-link active"
+               aria-current="page">
+                Compartilhados comigo
+            </a>
+
+            <a href="../crud_participante/home/perfil_participante.html"
+               class="nav-link">
+                Meu perfil
+            </a>
+
+            <a href="../crud_participante/php/participante_logoff.php"
+               class="nav-link">
+                Sair
+            </a>
+        </nav>
+    </div>
+</header>
     <main>
         <div class="titulo-secao">
             <h2>Compartilhados comigo</h2>
@@ -31,7 +57,7 @@
 
     <!-- compartilhar.js tem a configuração (URL_DETALHE) e a função montarLink -->
     <script src="compartilhar.js"></script>
-    <script src="compartilhados.js"></script>
+    <script src="compartilhados.js?v=3"></script>
 
 </body>
 </html>

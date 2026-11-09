@@ -34,7 +34,7 @@ function usuario_logado() {
     }
 
     if (
-        ($_SESSION['papel'] ?? '') === 'participante'
+        ($_SESSION['usuario_tipo'] ?? '') === 'participante'
         && isset($_SESSION['participante_id'])
     ) {
         return [
@@ -44,7 +44,7 @@ function usuario_logado() {
     }
 
     if (
-        ($_SESSION['papel'] ?? '') === 'organizador'
+        ($_SESSION['usuario_tipo'] ?? '') === 'organizador'
         && isset($_SESSION['organizador_id'])
     ) {
         return [

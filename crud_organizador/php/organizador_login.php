@@ -58,6 +58,8 @@ try {
     $_SESSION['organizador_id'] = (int) $organizador['id'];
     $_SESSION['organizador_nome'] = $organizador['nome'];
     $_SESSION['organizador_email'] = $organizador['email'];
+    $_SESSION['usuario_id'] = (int) $organizador['id'];
+    $_SESSION['usuario_tipo'] = 'organizador';
 
     $stmt->close();
     $conexao->close();
