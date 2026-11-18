@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     const status = getStatusEvento(evento.data_hora);
 
                     const cardHTML = `
-                        <div class="card-favorito" data-id="${evento.id_evento}">
+                        <div class="card-favorito" data-id="${evento.id}">
                             <div class="bloco-data">
                                 <span class="dia">${dia}</span>
                                 <span class="mes">${mes}<br>${ano}</span>
@@ -66,12 +66,12 @@ document.addEventListener("DOMContentLoaded", function() {
                                 </span>
 
                                 <div class="linha-obs">
-                                    <input type="text" class="input-obs" data-id="${evento.id_evento}" value="${evento.observacao || ''}" placeholder="Adicionar observação...">
-                                    <button class="btn-salvar-obs" data-id="${evento.id_evento}">Salvar</button>
+                                    <input type="text" class="input-obs" data-id="${evento.id}" value="${evento.observacao || ''}" placeholder="Adicionar observação...">
+                                    <button class="btn-salvar-obs" data-id="${evento.id}" title="Salvar observação" aria-label="Salvar observação">${icone("salvar")}</button>
                                 </div>
 
                                 <div class="linha-remover">
-                                    <button class="btn-remover" data-id="${evento.id_evento}">Remover</button>
+                                    <button class="btn-remover" data-id="${evento.id}" title="Remover dos favoritos" aria-label="Remover dos favoritos">${icone("excluir")}</button>
                                 </div>
                             </div>
                         </div>

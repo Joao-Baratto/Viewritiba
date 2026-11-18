@@ -451,3 +451,21 @@ body {
     background-color: #ffe0d5;
 }
         
+/* Botões de ação só com ícone (Ver evento e Favoritar) */
+.btn-ver-evento,
+.btn-favoritar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    margin: 0;
+    border-radius: 50%;
+}
+
+.btn-ver-evento svg,
+.btn-favoritar svg {
+    display: block;
+    flex: none;
+}

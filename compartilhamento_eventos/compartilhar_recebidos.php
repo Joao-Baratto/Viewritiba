@@ -32,7 +32,7 @@ try {
          FROM compartilhamento c
 
          INNER JOIN evento e
-             ON e.id_evento = c.id_evento
+             ON e.id = c.id_evento
 
          LEFT JOIN participante p
              ON c.tipo_remetente = 'participante'

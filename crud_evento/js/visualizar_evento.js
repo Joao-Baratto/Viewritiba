@@ -11,6 +11,9 @@ document.getElementById("btn_voltar").addEventListener("click", () => {
     voltar();
 });
 
+document.getElementById("btn_desfavoritar").addEventListener("click", () => {
+    desfavoritar_evento();
+});
 document.getElementById("btn_favoritar").addEventListener("click", () => {
     favoritar_evento();
 });
@@ -73,15 +76,43 @@ function preencherDetalhes(evento) {
     document.getElementById("detalhes-comentarios").href =
         "../../crud_comentarios/home/comentarios.html?id=" + evento.id;
 
-    if (evento.pode_favoritar && !evento.favoritado) {
-        document.getElementById("btn_favoritar").hidden = false;
+    const visitar = document.getElementById("detalhes-visitar");
+    if (/^https?:\/\//i.test(evento.link || "")) {
+        visitar.href = evento.link;
+        visitar.hidden = false;
+    } else {
+        visitar.removeAttribute("href");
+        visitar.hidden = true;
     }
+
+    document.getElementById("detalhes-compartilhar").onclick = () => {
+        if (typeof compartilharEvento !== "function") {
+            alert("O sistema de compartilhamento não foi carregado.");
+            return;
+        }
+        compartilharEvento({
+            id_evento: evento.id,
+            titulo: evento.titulo,
+            descricao: evento.descricao,
+            data_hora: evento.data_hora,
+            local: evento.local
+        });
+    };
+
+    atualizarBotoesFavorito(evento.pode_favoritar, evento.favoritado);
+}
+
+// Mostra "favoritar" ou "desfavoritar" conforme o estado do evento (nenhum dos dois se não puder favoritar)
+function atualizarBotoesFavorito(podeFavoritar, favoritado) {
+    document.getElementById("btn_favoritar").hidden = !(podeFavoritar && !favoritado);
+    document.getElementById("btn_desfavoritar").hidden = !(podeFavoritar && favoritado);
 }
 
 function mostrarErro(mensagem) {
     document.getElementById("detalhes-titulo").textContent = mensagem;
     document.getElementById("detalhes-info").style.display = "none";
     document.getElementById("detalhes-comentarios").style.display = "none";
+    document.getElementById("detalhes-compartilhar").style.display = "none";
 }
 
 async function favoritar_evento() {
@@ -102,7 +133,29 @@ async function favoritar_evento() {
     alert(resposta.mensagem);
 
     if (resposta.status == "ok") {
-        document.getElementById("btn_favoritar").hidden = true;
+        atualizarBotoesFavorito(true, true);
+    }
+}
+
+async function desfavoritar_evento() {
+    const dados = new FormData();
+
+    dados.append("evento_id", id_evento);
+
+    const retorno = await fetch(
+        "../../favoritos/favoritos_remover.php",
+        {
+            method: "POST",
+            body: dados
+        }
+    );
+
+    const resposta = await retorno.json();
+
+    alert(resposta.mensagem);
+
+    if (resposta.status == "ok") {
+        atualizarBotoesFavorito(true, false);
     }
 }
 

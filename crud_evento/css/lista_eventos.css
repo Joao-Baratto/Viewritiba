@@ -17,8 +17,12 @@ body {
 }
 
 /* Fundos dos botões com transparência: acompanham a cor do card */
-#lista a[href*="comentarios"] { background: rgba(55, 65, 81, 0.07); }
+#lista a[href*="comentarios"] { background: rgba(55, 65, 81, 0.07); color: #2563eb; }
 #lista a[href*="comentarios"]:hover { background: rgba(55, 65, 81, 0.13); }
+
+/* Detalhes (organizador e participante): coral suave */
+#lista a[href*="visualizar_evento"] { background: rgba(233, 95, 71, 0.10); color: #9e321c; }
+#lista a[href*="visualizar_evento"]:hover { background: rgba(233, 95, 71, 0.18); }
 
 #lista a[href*="evento_alterar"] { background: rgba(37, 99, 235, 0.08); }
 #lista a[href*="evento_alterar"]:hover { background: rgba(37, 99, 235, 0.15); }
@@ -46,6 +50,26 @@ body {
     line-height: inherit;
 }
 #lista .btn-compartilhar:hover { background-color: rgba(16, 163, 127, 0.18); }
+
+/* Botões de ação só com ícone: quadrados, do mesmo tamanho (o nome fica no title / aria-label) */
+#lista button.btn-icone,
+#lista a.btn-icone {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    min-height: 36px;
+    padding: 0;
+    margin: 3px 2px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+#lista .btn-icone svg {
+    display: block;
+    flex: none;
+}
 
 /* Eventos já favoritados (participante): card pêssego, no tom do card de filtro */
 #lista tr.favoritado td {

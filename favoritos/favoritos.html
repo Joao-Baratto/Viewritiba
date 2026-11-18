@@ -196,6 +196,21 @@ main {
     color: #fff;
 }
 
+/* Botões só com ícone */
+.btn-salvar-obs,
+.btn-remover {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+}
+
+.btn-remover {
+    border-radius: 50%;
+}
+
 .logo { /* Logo viewritiba, sóq pega pela classe*/
     font-family: "Poppins", sans-serif;
     font-weight: 700;
@@ -407,9 +422,7 @@ main {
             <p id="contador-favoritos">Carregando...</p>
         </div>
 
-        <div class="barra-filtros">
-            <button class="btn-filtrar">Filtrar</button>
-        </div>
+        
 
         <div id="lista-favoritos-container"></div>
     </main>
@@ -428,7 +441,8 @@ main {
             }
         });
     </script>
-    <script src="favoritos.js"></script>
+    <script src="../crud_evento/js/icones.js?v=4"></script>
+    <script src="favoritos.js?v=2"></script>
 
 </body>
 </html>

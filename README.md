@@ -1,242 +1,122 @@
 # Viewritiba
 
-Plataforma web para divulgação, descoberta e gerenciamento de eventos presenciais em Curitiba e Região Metropolitana. O sistema centraliza a relação entre organizadores de eventos e participantes, viabilizando controle de sessões, perfis sociais, publicação e moderação de eventos com armazenamento persistente em banco de dados relacional.
-
----
-
-## Sumário
-
-- [Visão Geral](#visão-geral)
-- [Funcionalidades](#funcionalidades)
-  - [Módulo do Organizador](#módulo-do-organizador)
-  - [Módulo de Eventos](#módulo-de-eventos)
-  - [Módulo do Participante](#módulo-do-participante)
-  - [Módulo do Moderador](#módulo-do-moderador)
-- [Arquitetura de Diretórios](#arquitetura-de-diretórios)
-- [Tecnologias Utilizadas](#tecnologias-utilizadas)
-- [Banco de Dados](#banco-de-dados)
-  - [Estrutura das Tabelas](#estrutura-das-tabelas)
-  - [Ordem de Importação](#ordem-de-importação)
-- [Instalação e Configuração Local](#instalação-e-configuração-local)
-- [Fluxo de Execução e Rotas](#fluxo-de-execução-e-rotas)
-- [Segurança e Boas Práticas](#segurança-e-boas-práticas)
-
----
-
-## Visão Geral
-
-O **Viewritiba** foi concebido para suprir a carência de um canal centralizado voltado a eventos locais e comunitários na capital paranaense. A plataforma adota uma abordagem desacoplada entre a camada de apresentação (HTML5, CSS3 e JavaScript assíncrono via Fetch API) e os serviços de back-end (endpoints PHP que processam requisições e retornam respostas estruturadas em JSON).
-
----
+Plataforma web para divulgar, descobrir e gerenciar eventos presenciais em Curitiba e Região Metropolitana. O projeto conecta organizadores e participantes e oferece recursos de descoberta, interação e moderação de eventos.
 
 ## Funcionalidades
 
-### Módulo do Organizador
-- **Cadastro e Autenticação:** Registro com validação de unicidade de documento (CPF/CNPJ) e e-mail. Armazenamento seguro de senhas utilizando hash criptográfico nativo.
-- **Controle de Sessão:** Gerenciamento de login e encerramento de sessão via `$_SESSION` do PHP com controle de acesso a páginas restritas (`valida_sessao.php`).
-- **Gestão de Perfil:** Atualização de dados cadastrais (nome, telefone, biografia/redes sociais).
-- **Segurança de Conta:** Fluxo de troca de senha com exigência e validação da senha atual antes de autorizar a redefinição.
-- **Painel de Controle:** Dashboard integrado que direciona o organizador aos seus eventos e configurações de perfil.
+### Organizadores
+- Cadastro e login de organizadores.
+- Painel para gerenciar os próprios eventos.
+- Criação e edição de eventos com título, descrição, data, local e categorias.
+- Perfil do organizador, edição de dados e alteração de senha com validação da senha atual.
 
-### Módulo de Eventos
-- **Criação de Eventos:** Cadastro com título, descrição detalhada, data/hora e localização física. Associação automática ao organizador logado na sessão ativa, dispensando inputs manuais de chave estrangeira.
-- **Explorar:** O participante logado vê todos os eventos publicados, independentemente do organizador.
-- **Gestão privada:** O organizador autenticado consulta e gerencia somente os próprios eventos.
-- **Edição e Exclusão:** Atualização e remoção de registros respeitando a integridade relacional.
+### Participantes
+- Cadastro, login e gerenciamento de perfil.
+- Exploração de eventos, com filtros por categoria e visualização de detalhes.
+- Comentários em eventos.
+- Favoritos com observações e lista de eventos compartilhados com o participante.
 
-### Módulo do Participante
-- **Cadastro de Participantes:** Registro com validações de dados pessoais, e-mail e regras de complexidade de senha.
-- **Autenticação:** Login dedicado para participantes com validação em endpoints assíncronos.
+### Moderação
+- Login separado para moderadores.
+- Gerenciamento de categorias.
+- Remoção de eventos e comentários.
+- Suspensão e reativação de contas de organizadores e participantes, com motivo da suspensão.
 
-### Módulo do Moderador
-- **Login dedicado:** As credenciais privadas configuradas no ambiente do servidor são usadas exclusivamente na página de login do moderador, fora dos fluxos públicos de organizador e participante.
-- **Moderação de conteúdo e contas:** O painel privado permite excluir eventos e comentários, suspender organizadores e participantes com motivo escrito pelo moderador e remover suspensões.
-- **Aviso de suspensão:** Após autenticar, uma conta suspensa é encaminhada para uma página com o aviso padrão e o motivo informado pela moderação. Sessões existentes perdem acesso às rotas protegidas após a próxima requisição.
-- **Comentários persistentes:** Os comentários são armazenados no MySQL e ficam visíveis publicamente; publicar exige uma sessão de participante para que a suspensão de contas impeça novas publicações.
+## Tecnologias
 
----
+- HTML, CSS e JavaScript (Vanilla), com requisições assíncronas usando Fetch API.
+- PHP e sessões para os endpoints e controle de acesso.
+- MySQL/MariaDB com `mysqli`.
+- Apache (por exemplo, XAMPP).
 
-## Arquitetura de Diretórios
+## Estrutura do projeto
 
-```
+```text
 ViewRitiba/
-├── crud_organizador/          # Módulo de organizadores
-│   ├── home/                  # Telas de dashboard, perfil e edição
-│   ├── js/                    # Scripts de consumo assíncrono (Fetch API)
-│   ├── login/                 # Telas de login e recuperação
-│   ├── php/                   # Endpoints de API e controle de sessão
-│   └── sql/                   # DDL da tabela organizador
-├── crud_evento/               # Módulo de eventos
-│   ├── home/                  # Formulários, visualização e gestão de eventos
-│   ├── js/                    # Lógica de integração assíncrona
-│   ├── php/                   # Endpoints de persistência e consulta
-│   └── sql/                   # DDL da tabela evento
-├── crud_participante/         # Módulo de participantes
-│   ├── home/                  # Interface do participante
-│   ├── js/                    # Scripts de formulários e login
-│   ├── php/                   # Endpoints da entidade participante
-│   └── css/                   # Estilização do módulo
-├── crud_admin/                # Autenticação interna e painel privado de moderação
-├── css/                       # Folhas de estilo compartilhadas
-├── documentos/                # Especificação de requisitos (BES) e documentação
-├── index.html                 # Ponto de entrada (redirecionamento da aplicação)
-├── README.md                  # Documentação técnica do repositório
-└── .gitignore                 # Arquivos e pastas ignorados pelo Git
+├── compartilhamento_eventos/  # Compartilhamento e lista de eventos recebidos
+├── crud_admin/                # Login, painel e endpoints de moderação
+├── crud_comentarios/          # Telas e endpoints de comentários
+├── crud_evento/               # Cadastro, consulta e gestão de eventos
+├── crud_organizador/          # Cadastro, perfil e painel do organizador
+├── crud_participante/         # Cadastro, perfil e recursos do participante
+├── favoritos/                 # Favoritos de eventos
+├── css/                       # Estilos compartilhados
+├── php/                       # Endpoints compartilhados
+├── index.html                 # Entrada da aplicação
+└── README.md
 ```
 
----
+## Executar localmente
 
-## Tecnologias Utilizadas
+### Requisitos
 
-- **Front-end:** HTML5 semântico, Vanilla CSS (design responsivo, estilização customizada sem frameworks externos) e JavaScript ES6+ (requisições assíncronas com `fetch`).
-- **Back-end:** PHP 8.x nativo estruturado em endpoints que respondem via protocolo HTTP com payload `application/json`.
-- **Banco de Dados:** MySQL / MariaDB utilizando a extensão `mysqli` com prepared statements.
-- **Servidor Web:** Apache (ambiente XAMPP / WampServer / LAMP).
+- PHP 8 ou superior com a extensão `mysqli`.
+- MySQL ou MariaDB.
+- Apache com suporte a PHP (XAMPP recomendado).
 
----
+### Configuração
 
-## Banco de Dados
+1. Coloque o projeto na pasta pública do servidor. No XAMPP, por exemplo:
 
-O banco de dados se chama `viewritiba` e opera sob o motor relacional InnoDB com charset `utf8mb4`.
-
-### Estrutura das Tabelas
-
-#### Tabela `organizador`
-```sql
-CREATE TABLE organizador (
-  id INT(11) NOT NULL AUTO_INCREMENT,
-  nome VARCHAR(100) NOT NULL,
-  documento VARCHAR(20) NOT NULL,
-  email VARCHAR(100) NOT NULL,
-  telefone VARCHAR(20) NOT NULL,
-  bio TEXT DEFAULT NULL,
-  senha VARCHAR(255) NOT NULL,
-  PRIMARY KEY (id),
-  UNIQUE KEY (documento),
-  UNIQUE KEY (email)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-```
-
-#### Tabela `evento`
-```sql
-CREATE TABLE IF NOT EXISTS evento (
-  id INT NOT NULL AUTO_INCREMENT,
-  titulo VARCHAR(255) NOT NULL,
-  descricao TEXT NOT NULL,
-  data_hora DATETIME NOT NULL,
-  local VARCHAR(255) NOT NULL,
-  id_organizador INT NOT NULL,
-  PRIMARY KEY (id),
-  KEY idx_evento_organizador_data (id_organizador, data_hora),
-  CONSTRAINT fk_evento_organizador
-    FOREIGN KEY (id_organizador) REFERENCES organizador(id)
-    ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-```
-
-#### Tabela `participante`
-```sql
-CREATE TABLE IF NOT EXISTS participante (
-  id INT NOT NULL AUTO_INCREMENT,
-  nome VARCHAR(100) NOT NULL,
-  documento VARCHAR(20) NOT NULL,
-  email VARCHAR(100) NOT NULL,
-  telefone VARCHAR(20) NOT NULL,
-  senha VARCHAR(255) NOT NULL,
-  PRIMARY KEY (id),
-  UNIQUE KEY (documento),
-  UNIQUE KEY (email)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-```
-
-#### Tabelas `comentario` e `conta_banimento`
-
-O script principal cria os comentários vinculados aos eventos. A tabela `comentario` possui exclusão em cascata quando o evento é removido. A tabela `conta_banimento` armazena tipo de conta, ID e motivo da suspensão; a chave composta impede duplicar o estado de banimento de uma conta. As credenciais do moderador não ficam no banco nem no repositório: o servidor usa `VIEWRITIBA_MODERATOR_USER` e `VIEWRITIBA_MODERATOR_PASSWORD_HASH`.
-Comentários que existiam somente no `localStorage` do navegador não são transferidos automaticamente para o banco.
-
-### Ordem de Importação
-
-1. Execute `crud_organizador/sql/organizador.sql` no phpMyAdmin. Esse script cria a base e as tabelas de organizadores, participantes, eventos, comentários e banimentos. Pode executá-lo novamente em uma base existente para criar a nova tabela sem apagar os registros.
-   - Execute novamente esse script na base atual antes de usar o painel de suspensão, para criar `conta_banimento`.
-
----
-
-## Instalação e Configuração Local
-
-### Pré-requisitos
-- **PHP** >= 8.0
-- **MySQL** ou **MariaDB** >= 5.7 / 10.4
-- **Servidor Web** Apache ativo (ex.: [XAMPP](https://www.apachefriends.org/))
-- **Git** instalado no sistema operacional
-
-### Passo a Passo
-
-1. **Clonar o Repositório:**
-   Clone o projeto diretamente no diretório raiz do servidor web local (`htdocs` no XAMPP):
-   ```bash
-   cd C:\xampp\htdocs
-   git clone https://github.com/NycksonMelo/Viewritiba.git ViewRitiba
+   ```text
+   C:\xampp\htdocs\ViewRitiba
    ```
 
-2. **Inicializar o Ambiente:**
-   - Inicie os módulos **Apache** e **MySQL** pelo painel de controle do XAMPP.
+2. Inicie Apache e MySQL pelo painel do XAMPP.
 
-3. **Importar o Banco de Dados:**
-   - Acesse o phpMyAdmin em `http://localhost/phpmyadmin/`.
-   - Crie o banco `viewritiba` ou execute os arquivos `.sql` disponíveis nas pastas `crud_organizador/sql/` e `crud_evento/sql/`.
+3. Crie o banco `viewritiba` e configure as credenciais nos arquivos `conexao.php` dos módulos:
 
-4. **Verificar Parâmetros de Conexão:**
-   - Certifique-se de que os arquivos `conexao.php` em cada módulo (`crud_organizador/php/conexao.php`, `crud_evento/php/conexao.php` e `crud_participante/php/conexao.php`) correspondem às credenciais do seu MySQL local:
-     ```php
-     $servidor = 'localhost';
-     $usuario = 'root';
-     $senha = '';
-     $banco = 'viewritiba';
-     ```
+   ```php
+   $servidor = 'localhost';
+   $usuario = 'root';
+   $senha = '';
+   $banco = 'viewritiba';
+   ```
 
-5. **Acessar a Aplicação:**
-   - Abra o navegador e acerte a URL:
-     ```
-     http://localhost/ViewRitiba/
-     ```
-   - Configure as variáveis do moderador no Apache, fora do repositório. No XAMPP, adicione ao arquivo `C:\xampp\apache\conf\extra\httpd-xampp.conf`:
-     ```apache
-     SetEnv VIEWRITIBA_MODERATOR_USER "seu-usuario-de-moderacao"
-     SetEnv VIEWRITIBA_MODERATOR_PASSWORD_HASH "COLE_AQUI_O_HASH_GERADO"
-     ```
-   - Gere o hash da senha no terminal com o PHP do XAMPP. O comando solicita a senha sem incluí-la no comando salvo:
-     ```powershell
-     & C:\xampp\php\php.exe -r "fwrite(STDERR, 'Senha: '); echo password_hash(trim(fgets(STDIN)), PASSWORD_DEFAULT), PHP_EOL;"
-     ```
-     Copie o hash produzido para `VIEWRITIBA_MODERATOR_PASSWORD_HASH` e reinicie o Apache.
-   - Para entrar como moderador, acesse diretamente `http://localhost/ViewRitiba/crud_admin/login.html` e informe o usuário e a senha configurados. Esse endereço não é divulgado nos menus ou páginas públicas. Os formulários de organizador e participante autenticam somente suas respectivas contas.
+4. Acesse `http://localhost/ViewRitiba/`. A página inicial redireciona para o menu principal.
 
----
+### Banco de dados: atenção
 
-## Fluxo de Execução e Rotas
+Os scripts SQL disponíveis em `crud_organizador/sql/`, `crud_participante/sql/` e `crud_evento/sql/` criam apenas parte das tabelas do sistema. Eles não constituem uma instalação completa do banco para todos os recursos da versão atual: tabelas utilizadas por categorias, comentários, favoritos e compartilhamentos também são necessárias. Não há, neste repositório, um script único de migração que crie todo o esquema atual. Portanto, importar somente esses arquivos não garante que todas as telas e funcionalidades estejam prontas para uso.
 
-| Rota / Recurso | Descrição |
-| :--- | :--- |
-| `/index.html` | Redirecionamento principal para a landing page da aplicação. |
-| `/crud_organizador/home/MainMenu.html` | Página de boas-vindas com opções de login e cadastro. |
-| `/crud_organizador/login/Login.html` | Formulário de autenticação do organizador. |
-| `/crud_organizador/home/organizador_novo.html` | Formulário de criação de conta do organizador. |
-| `/crud_organizador/home/painel.html` | Dashboard principal (requer sessão ativa). |
-| `/crud_organizador/home/perfil_organizador.html` | Visualização pública e dados do organizador. |
-| `/crud_organizador/home/organizador_alterar.html` | Edição cadastral e alteração de senha. |
-| `/crud_evento/home/evento_novo.html` | Cadastro de novos eventos. |
-| `/crud_evento/home/visualizar_evento.html` | Detalhes de um evento específico. |
-| `/crud_participante/login/login.html` | Login de participante. |
-| `/crud_admin/login.html` | Login privado do moderador; não é divulgado nos menus ou páginas públicas. |
-| `/crud_admin/painel.php` | Painel privado para excluir eventos/comentários e suspender ou reativar contas. |
-| `/crud_admin/conta_banida.php` | Explicação privada da suspensão, exibida após uma tentativa de login válida em uma conta banida. |
+## Acesso do moderador
 
----
+O moderador usa credenciais configuradas no ambiente do Apache, não contas de organizador ou participante. No XAMPP, defina as variáveis no arquivo `C:\xampp\apache\conf\extra\httpd-xampp.conf`:
 
-## Segurança e Boas Práticas
+```apache
+SetEnv VIEWRITIBA_MODERATOR_USER "seu-usuario-de-moderacao"
+SetEnv VIEWRITIBA_MODERATOR_PASSWORD_HASH "hash-gerado-com-password_hash"
+```
 
-- **Prevenção a SQL Injection:** Utilização de `mysqli::prepare()` e vinculação de parâmetros (`bind_param`) em todas as operações de escrita e leitura dinâmica.
-- **Armazenamento Seguro de Senhas:** Hashing obrigatório através de `password_hash($senha, PASSWORD_DEFAULT)` e conferência via `password_verify()`.
-- **Isolamento de Credenciais na Sessão:** A identificação do usuário em operações restritas (ex.: publicação de eventos) é resgatada da sessão segura no servidor (`$_SESSION['organizador_id']`), impedindo que o cliente forje o identificador de autor.
-- **Ações do moderador:** Exclusões exigem sessão de moderador válida, token CSRF e requisição `POST`; a interface não concede permissões por `localStorage`.
-- **Comunicação Padronizada:** Todas as rotas de backend enviam cabeçalho `Content-Type: application/json; charset=utf-8` com envelope estruturado (`status`, `mensagem`, `data`).
+Gere o hash localmente com o PHP do XAMPP (o comando solicita a senha sem colocá-la no histórico como argumento):
+
+```powershell
+& C:\xampp\php\php.exe -r "fwrite(STDERR, 'Senha: '); echo password_hash(trim(fgets(STDIN)), PASSWORD_DEFAULT), PHP_EOL;"
+```
+
+Configure o hash resultante, reinicie o Apache e acesse `http://localhost/ViewRitiba/crud_admin/login.html`. Mantenha as credenciais fora do repositório.
+
+## Páginas principais
+
+| Caminho | Descrição |
+| --- | --- |
+| `/` | Entrada que redireciona para o menu principal |
+| `/crud_organizador/home/MainMenu.html` | Menu inicial |
+| `/crud_organizador/login/Login.html` | Login do organizador |
+| `/crud_organizador/home/painel.html` | Painel do organizador |
+| `/crud_evento/home/eventos.html` | Eventos do organizador |
+| `/crud_evento/home/catalogo.html` | Catálogo de eventos |
+| `/crud_participante/home/painel.html` | Painel do participante |
+| `/crud_participante/home/explorar.html` | Exploração de eventos |
+| `/favoritos/favoritos.html` | Eventos favoritos |
+| `/compartilhamento_eventos/compartilhamento.html` | Eventos compartilhados com o participante |
+| `/crud_admin/login.html` | Login privado do moderador |
+| `/crud_admin/painel.php` | Painel privado de moderação |
+
+## Notas de segurança
+
+- As operações de acesso restrito dependem de sessões PHP no servidor.
+- O ID do organizador que publica eventos é obtido da sessão, não de um valor enviado pelo navegador.
+- As senhas de contas devem ser armazenadas com hash (`password_hash`) e verificadas com `password_verify`.
+- Credenciais do moderador devem ser configuradas fora do código versionado.
+- Ao publicar a aplicação, configure o banco e o servidor para o ambiente de produção; as credenciais padrão mostradas acima são apenas um exemplo de desenvolvimento local.

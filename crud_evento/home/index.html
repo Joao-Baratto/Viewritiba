@@ -4,19 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Viewritiba | Explore Curitiba</title>
-    <link rel="stylesheet" href="../../compartilhamento_eventos/compartilhar-modal.css?v=3">
     <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/lista_eventos.css?v=1">
+    <link rel="stylesheet" href="../css/lista_eventos.css?v=6">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../css/cabecalho.css?v=3">
 </head>
 <body>
     <header class="page-header">
         <div class="header-content">
-            <h1>Viewritiba</h1>
-            <button id="logoff" class="btn-outline">
-                Sair
-            </button>
+            <a class="brand-link" href="../../crud_organizador/home/painel.html">
+                <h1>Viewritiba</h1>
+            </a>
+            <nav class="header-nav" aria-label="Navegação principal">
+                <a href="../../crud_organizador/home/painel.html" class="nav-link">Início</a>
+                <a href="../../crud_evento/home/index.html" class="nav-link active" aria-current="page">Meus eventos</a>
+                <a href="../../crud_organizador/home/perfil_organizador.html" class="nav-link">Meu perfil</a>
+                <a href="#" id="logoff" class="nav-link">Sair</a>
+            </nav>
         </div>
     </header>
 
@@ -38,11 +42,7 @@
                     placeholder="Buscar por título, descrição, local ou organizador"
                 >
 
-                <select id="filtro_categoria">
-                    <option value="">
-                        Todas as categorias
-                    </option>
-                </select>
+                <div id="filtro_categorias"></div>
 
                 <input
                     type="date"
@@ -81,8 +81,9 @@
         </section>
     </main>
 
-<script src="../../compartilhamento_eventos/compartilhar.js?v=3"></script>
-<script src="../js/index.js?v=3"></script>
+<script src="../js/icones.js?v=4"></script>
+<script src="../js/combo_categorias.js?v=2"></script>
+<script src="../js/index.js?v=10"></script>
 <script src="../js/valida_sessao.js"></script>
 </body>
 </html>

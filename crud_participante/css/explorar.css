@@ -74,7 +74,7 @@
 /* Fundos dos botões com transparência: acompanham a cor do card (normal ou favoritado) */
 #lista-explorar a[href*="comentarios"] {
     background: rgba(55, 65, 81, 0.07);
-    color: #374151;
+    color: #2563eb;
 }
 
 #lista-explorar a[href*="comentarios"]:hover {
@@ -90,13 +90,14 @@
     background: rgba(233, 95, 71, 0.18);
 }
 
+/* Detalhes: mesmo coral do botão Detalhes da lista de eventos */
 #lista-explorar a[href*="visualizar_evento"] {
-    background: rgba(37, 99, 235, 0.08);
-    color: #2563eb;
+    background: rgba(233, 95, 71, 0.10);
+    color: #9e321c;
 }
 
 #lista-explorar a[href*="visualizar_evento"]:hover {
-    background: rgba(37, 99, 235, 0.15);
+    background: rgba(233, 95, 71, 0.18);
 }
 
 /* Eventos já favoritados: card pêssego, no tom do card de filtro da tela Eventos */
@@ -116,4 +117,84 @@
 
 #lista-explorar tr.favoritado:hover td {
     background: #ffded1;
+}
+
+/* Cabeçalho de Recomendados com o card "Explorar eventos" ao lado */
+
+.explorar-topo {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 340px);
+    gap: 2rem;
+    align-items: start;
+    margin-bottom: 2.5rem;
+}
+
+.explorar-topo .panel-welcome {
+    max-width: none;
+    margin-bottom: 0;
+}
+
+/* Sem recomendações: o card desce para baixo do texto, alinhado à esquerda com ele... */
+
+.explorar-topo.sem-recomendacao {
+    grid-template-columns: auto;
+    gap: 1.75rem;
+    width: fit-content; /* largura = trecho onde há texto no cabeçalho */
+    max-width: 100%;
+}
+
+/* ...com altura padrão e 2/3 da largura do texto do cabeçalho */
+
+.explorar-topo.sem-recomendacao .panel-card {
+    justify-self: start;
+    width: 66.667%; /* 2/3 da largura do texto do cabeçalho */
+    min-width: 260px;
+}
+
+/* Card "Explorar eventos" ao lado do cabeçalho: largura original, altura em 2/3 (~290px -> ~194px) */
+
+.explorar-topo:not(.sem-recomendacao) .panel-card {
+    min-height: 0;
+    padding: 0.55rem 1.65rem;
+}
+
+.explorar-topo:not(.sem-recomendacao) .panel-card-icon {
+    width: 1.9rem;
+    height: 1.9rem;
+    font-size: 1.05rem;
+}
+
+.explorar-topo:not(.sem-recomendacao) .panel-card-label {
+    margin-top: 0.55rem;
+}
+
+.explorar-topo:not(.sem-recomendacao) .panel-card h3 {
+    margin-top: 0.1rem;
+}
+
+.explorar-topo:not(.sem-recomendacao) .panel-card p {
+    margin: 0.2rem 0 0.35rem;
+    line-height: 1.4;
+}
+
+@media (max-width: 820px) {
+    .explorar-topo {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
+
+/* Botões de ação só com ícone (Comentários, Favoritar, Visualizar) */
+#lista-explorar a.btn-icone {
+    width: 36px;
+    height: 36px;
+    min-height: 36px;
+    padding: 0;
+    margin: 3px 2px;
+    vertical-align: middle;
+}
+
+#lista-explorar .btn-icone svg {
+    display: block;
+    flex: none;
 }

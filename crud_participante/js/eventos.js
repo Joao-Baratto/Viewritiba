@@ -1,3 +1,5 @@
+let comboFiltro = null;
+
 document.addEventListener("DOMContentLoaded", () => {
     buscar();
 });
@@ -20,16 +22,8 @@ document.getElementById("pesquisa").addEventListener("keydown", (evento) => {
 document.getElementById("filtro_apagar").addEventListener("click", () => {
     document.getElementById("pesquisa").value = "";
     document.getElementById("filtro_data").value = "";
-    document.getElementById("filtro_categoria").value = "";
+    if (comboFiltro) comboFiltro.limpar();
     buscar();
-});
-
-document.getElementById("fechar-detalhes-evento").addEventListener("click", fecharDetalhesEvento);
-document.getElementById("fechar-detalhes-secundario").addEventListener("click", fecharDetalhesEvento);
-document.getElementById("modal-detalhes-evento").addEventListener("click", (evento) => {
-    if (evento.target === evento.currentTarget) {
-        fecharDetalhesEvento();
-    }
 });
 
 async function logoff() {
@@ -54,16 +48,20 @@ async function logoff() {
 }
 
 async function buscar() {
-    const retornoCategorias = await fetch("../php/categoria_get.php");
-    const categorias = await retornoCategorias.json();
+    let categorias = { status: "erro", data: [] };
+    try {
+        const retornoCategorias = await fetch("../php/categoria_get.php");
+        categorias = await retornoCategorias.json();
+    } catch (erro) {
+        console.error("Erro ao carregar categorias:", erro);
+    }
 
-    if (categorias.status == "ok") {
-        var html = `<option value="">Todas as categorias</option>`;
-        for (var i = 0; i < categorias.data.length; i++) {
-            html += `<option value="${categorias.data[i].id_categoria}">${categorias.data[i].nome_categoria}</option>`;
-        }
-
-        document.getElementById("filtro_categoria").innerHTML = html;
+    if (comboFiltro == null) {
+        comboFiltro = new ComboCategorias(
+            document.getElementById("filtro_categorias"),
+            categorias.status == "ok" ? categorias.data : [],
+            { placeholder: "Todas as categorias", unica: true }
+        );
     }
 
     const retorno = await fetch("../php/eventos_get.php");
@@ -88,7 +86,7 @@ async function buscar() {
 async function pesquisar() {
     const titulo = document.getElementById("pesquisa").value.trim();
     const data = document.getElementById("filtro_data").value;
-    const categoria = document.getElementById("filtro_categoria").value;
+    const categoria = comboFiltro ? comboFiltro.valores().join(",") : "";
 
     const parametros = new URLSearchParams();
 
@@ -157,6 +155,29 @@ async function favoritar_evento(id_evento) {
     }
 }
 
+async function desfavoritar_evento(id_evento) {
+    const dados = new FormData();
+    dados.set("evento_id", id_evento);
+
+    try {
+        const retorno = await fetch("../../favoritos/favoritos_remover.php", {
+            method: "POST",
+            body: dados
+        });
+        const resposta = await retorno.json();
+
+        if (!retorno.ok || resposta.status !== "ok") {
+            throw new Error(resposta.mensagem || "Não foi possível desfavoritar este evento.");
+        }
+
+        alert(resposta.mensagem);
+        pesquisar();
+    } catch (erro) {
+        console.error("Erro ao desfavoritar evento:", erro);
+        alert(erro.message || "Não foi possível desfavoritar este evento. Tente novamente.");
+    }
+}
+
 let eventosExibidos = [];
 
 function preencherTabela(tabela) {
@@ -188,21 +209,26 @@ function preencherTabela(tabela) {
                 <td>${escaparHtml(evento.categorias)}</td>
 
                 <td>
-                    <a href="../../crud_comentarios/home/comentarios.html?id=${encodeURIComponent(idEvento)}">
-                        Comentários
+                    <a class="btn-icone" title="Comentários" aria-label="Comentários"
+                        href="../../crud_comentarios/home/comentarios.html?id=${encodeURIComponent(idEvento)}">
+                        ${icone("comentarios")}
                     </a>
 
-                    <button type="button" class="btn-detalhes" onclick="abrirDetalhesEvento(${i})">
-                        Detalhes
-                    </button>
+                    <a class="btn-detalhes btn-icone" title="Detalhes" aria-label="Detalhes"
+                        href="../../crud_evento/home/visualizar_evento.html?id=${encodeURIComponent(idEvento)}">
+                        ${icone("info")}
+                    </a>
 
-                    ${evento.favoritado ? "" : `
-                    <a href="#"
+                    ${evento.favoritado ? `
+                    <a class="btn-icone" title="Desfavoritar" aria-label="Desfavoritar" href="#"
+                        onclick="desfavoritar_evento(${idEvento}); return false;">
+                        ${icone("desfavoritar")}
+                    </a>` : `
+                    <a class="btn-icone" title="Favoritar" aria-label="Favoritar" href="#"
                         onclick="favoritar_evento(${idEvento}); return false;">
-                        Favoritar
+                        ${icone("favoritar")}
                     </a>`}
 
-                    <button type="button" class="btn-compartilhar" onclick="abrirCompartilhamento(${i})">Compartilhar</button>
                 </td>
             </tr>
         `;
@@ -213,62 +239,9 @@ function preencherTabela(tabela) {
     document.getElementById("lista").innerHTML = html;
 }
 
-function abrirDetalhesEvento(indice) {
-    const evento = eventosExibidos[indice];
-    if (!evento) {
-        return;
-    }
-
-    const modal = document.getElementById("modal-detalhes-evento");
-    const dataEvento = new Date(String(evento.data_hora || "").replace(" ", "T"));
-    const dataFormatada = Number.isNaN(dataEvento.getTime())
-        ? evento.data_hora
-        : new Intl.DateTimeFormat("pt-BR", {
-            dateStyle: "long",
-            timeStyle: "short"
-        }).format(dataEvento);
-
-    document.getElementById("detalhes-titulo").textContent = evento.titulo || "Evento sem título";
-    document.getElementById("detalhes-descricao").textContent = evento.descricao || "Descrição não informada.";
-    document.getElementById("detalhes-data").textContent = dataFormatada || "Data não informada.";
-    document.getElementById("detalhes-local").textContent = evento.local || "Local não informado.";
-    document.getElementById("detalhes-organizador").textContent = evento.organizador || "Organizador indisponível.";
-    document.getElementById("detalhes-categorias").textContent = evento.categorias || "Não informadas.";
-    document.getElementById("detalhes-comentarios").href =
-        `../../crud_comentarios/home/comentarios.html?id=${encodeURIComponent(evento.id)}`;
-
-    modal.showModal();
-}
-
-function fecharDetalhesEvento() {
-    document.getElementById("modal-detalhes-evento").close();
-}
 
 function escaparHtml(valor) {
     const elemento = document.createElement("span");
     elemento.textContent = valor ?? "";
     return elemento.innerHTML;
-}
-
-function abrirCompartilhamento(indice) {
-    const evento = eventosExibidos[indice];
-
-    if (!evento) {
-        alert("Evento não encontrado.");
-        return;
-    }
-
-    if (typeof compartilharEvento !== "function") {
-        console.error("A função compartilharEvento não foi carregada.");
-        alert("O sistema de compartilhamento não foi carregado.");
-        return;
-    }
-
-    compartilharEvento({
-        id_evento: evento.id,
-        titulo: evento.titulo,
-        descricao: evento.descricao,
-        data_hora: evento.data_hora,
-        local: evento.local
-    });
 }

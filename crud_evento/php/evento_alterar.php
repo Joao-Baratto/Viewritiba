@@ -27,6 +27,22 @@ $descricao = trim($_POST['descricao'] ?? '');
 $data_hora = trim($_POST['data_hora'] ?? '');
 $local = trim($_POST['local'] ?? '');
 $categorias = $_POST['categorias'] ?? [];
+$link = trim($_POST['link'] ?? '');
+if ($link === '') {
+    $link = null;
+} elseif (
+    strlen($link) > 500 ||
+    !preg_match('#^https?://#i', $link) ||
+    filter_var($link, FILTER_VALIDATE_URL) === false
+) {
+    http_response_code(400);
+    echo json_encode([
+        'status' => 'nok',
+        'mensagem' => 'Informe um link válido, começando com http:// ou https://.',
+        'data' => []
+    ]);
+    exit;
+}
 
 if (
     $id < 1 ||
@@ -107,16 +123,17 @@ $stmt->close();
 if ($encontrado) {
     $stmt = $conexao->prepare("
         UPDATE evento
-        SET titulo = ?, descricao = ?, data_hora = ?, local = ?
+        SET titulo = ?, descricao = ?, data_hora = ?, local = ?, link = ?
         WHERE id = ? AND id_organizador = ?
     ");
 
     $stmt->bind_param(
-        "ssssii",
+        "sssssii",
         $titulo,
         $descricao,
         $data_hora,
         $local,
+        $link,
         $id,
         $id_organizador
     );

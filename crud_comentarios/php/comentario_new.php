@@ -35,7 +35,7 @@ if(!$id_evento){
     responder('nok', 'Evento não encontrado.');
 }
 
-$stmt_evento = $conexao->prepare("SELECT id_evento FROM evento WHERE id_evento = ?");
+$stmt_evento = $conexao->prepare("SELECT id FROM evento WHERE id = ?");
 if(!$stmt_evento){
     responder('nok', 'Erro ao consultar evento: ' . $conexao->error);
 }

@@ -1,4 +1,4 @@
-// ===== CONFIGURAÇÃO (ajuste aqui se mudar o nome ou a pasta do projeto) =====
+
 const BASES = ['/viewritiba/Viewritiba', '/viewritiba'];
 
 let BASE_PROJETO = location.origin + BASES[BASES.length - 1];
@@ -15,7 +15,7 @@ const URL_DETALHE = BASE_PROJETO + '/crud_evento/home/visualizar_evento.html';
 
 const URL_API_ENVIAR = BASE_PROJETO + '/compartilhamento_eventos/compartilhar_enviar.php';
  
-// Link que leva à tela do evento
+
 function montarLink(evento) {
     return `${URL_DETALHE}?id=${evento.id_evento}`;
 }
@@ -55,7 +55,7 @@ function compartilharEvento(evento) {
     const box = criar('div', 'share-box');
     box.appendChild(criar('h3', '', 'Compartilhar: ' + evento.titulo));
  
-    // ---------- Parte 1: compartilhar fora da plataforma ----------
+    
     const redes = [
         { nome: 'WhatsApp', url: `https://wa.me/?text=${encodeURIComponent(texto + ' ' + link)}` },
         { nome: 'Telegram', url: `https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(texto)}` },
@@ -82,7 +82,7 @@ function compartilharEvento(evento) {
     });
     box.appendChild(btnCopiar);
  
-    // Menu nativo do celular (só aparece em navegadores que suportam)
+    
     if (navigator.share) {
         const btnApps = criar('button', 'share-opcao', 'Outros aplicativos');
         btnApps.type = 'button';
@@ -94,7 +94,7 @@ function compartilharEvento(evento) {
         box.appendChild(btnApps);
     }
  
-    // ---------- Parte 2: enviar para um usuário do Viewritiba ----------
+    
     box.appendChild(criar('h4', 'share-subtitulo', 'Enviar para alguém do Viewritiba'));
  
     const campoEmail = criar('input', 'share-campo');
@@ -126,10 +126,10 @@ function compartilharEvento(evento) {
     box.appendChild(btnFechar);
  
     overlay.appendChild(box);
-    document.body.appendChild(overlay);
+    (document.querySelector('dialog[open]') || document.body).appendChild(overlay);
 }
  
-// Manda o evento para outro usuário (POST + fetch, igual ao padrão dos favoritos)
+
 async function enviarParaUsuario(evento, email, mensagem, status, botao) {
     status.className = 'share-status';
  

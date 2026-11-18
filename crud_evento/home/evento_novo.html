@@ -16,6 +16,7 @@
                 <h1>Viewritiba</h1>
             </a>
             <nav class="header-nav" aria-label="Navegação principal">
+                <a href="../../crud_organizador/home/painel.html" class="nav-link">Início</a>
                 <a href="../../crud_evento/home/index.html" class="nav-link active" aria-current="page">Meus eventos</a>
                 <a href="../../crud_organizador/home/perfil_organizador.html" class="nav-link">Meu perfil</a>
                 <a href="#" id="logoff" class="nav-link">Sair</a>
@@ -46,7 +47,11 @@
             <input type="text" id="local" required>
         </div>
         <div class="input-group">
-            <label>Categorias:</label>
+            <label for="link">Link do evento:</label>
+            <input type="url" id="link" placeholder="https://exemplo.com/meu-evento">
+        </div>
+        <div class="input-group">
+            <label for="categoria_busca">Categorias:</label>
             <div id="categorias" class="categorias-campo"></div>
         </div>
         <div>
@@ -55,7 +60,8 @@
       </div>
     </div>
    </main>
-   <script src="../js/categorias.js"></script>
+   <script src="../js/combo_categorias.js?v=2"></script>
+    <script src="../js/categorias.js?v=2"></script>
    <script src="../js/evento_novo.js"></script>
    <script src="../js/valida_sessao.js"></script>
     <script>

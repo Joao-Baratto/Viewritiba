@@ -43,9 +43,9 @@ if (mb_strlen($mensagem, 'UTF-8') > 200) {
 }
 
 try {
-    // Confere se o evento existe.
+    
     $stmt = $conexao->prepare(
-        'SELECT id_evento FROM evento WHERE id_evento = ?'
+        'SELECT id FROM evento WHERE id = ?'
     );
     $stmt->bind_param('i', $id_evento);
     $stmt->execute();
@@ -59,7 +59,7 @@ try {
         ]);
     }
 
-    // Procura o e-mail entre participantes e organizadores.
+    
     $destinatarios = [];
 
     foreach (['participante', 'organizador'] as $tipo) {
@@ -106,7 +106,7 @@ try {
         ]);
     }
 
-    // Verifica se o mesmo compartilhamento já existe.
+    
     $stmt = $conexao->prepare(
         'SELECT id_compartilhamento
          FROM compartilhamento

@@ -26,6 +26,7 @@ async function buscar(id){
         document.getElementById("data_hora").value =
                 registro.data_hora.replace(" ", "T").substring(0, 16);
         document.getElementById("local").value = registro.local;
+        document.getElementById("link").value = registro.link || "";
          document.getElementById("id").value = id;
         carregar_categorias(registro.categorias_ids);
     }else{
@@ -61,6 +62,7 @@ async function alterar(){
     fd.append("descricao", descricao);
     fd.append("data_hora", data_hora);
     fd.append("local", local);
+    fd.append("link", document.getElementById("link").value.trim());
     categorias.forEach((id_categoria) => fd.append("categorias[]", id_categoria));
     const retorno = await fetch("../php/evento_alterar.php?id="+id, {
           method: 'POST',

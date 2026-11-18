@@ -26,13 +26,13 @@ $stmt = $conexao->prepare(
             (SELECT GROUP_CONCAT(nome_categoria ORDER BY nome_categoria SEPARATOR ', ')
                FROM evento_categoria
               INNER JOIN categoria ON categoria.id_categoria = evento_categoria.id_categoria
-              WHERE id_evento = evento.id_evento) AS categorias,
+              WHERE id_evento = evento.id) AS categorias,
             (SELECT COUNT(*) FROM favorito
-              WHERE id_evento = evento.id_evento AND tipo_conta = 'participante'
+              WHERE id_evento = evento.id AND tipo_conta = 'participante'
                 AND id_usuario = ?) AS favoritado
      FROM evento
      LEFT JOIN organizador ON organizador.id = evento.id_organizador
-     WHERE evento.id_evento = ?"
+     WHERE evento.id = ?"
 );
 $stmt->bind_param("ii", $id_participante, $id);
 $stmt->execute();

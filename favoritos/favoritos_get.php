@@ -17,7 +17,7 @@ $tipo_conta = $usuario['tipo'];
 $id_usuario = $usuario['id'];
 
 $stmt = $conexao->prepare(
-    "SELECT evento.*, favorito.observacao FROM evento INNER JOIN favorito ON favorito.id_evento = evento.id_evento
+    "SELECT evento.*, favorito.observacao FROM evento INNER JOIN favorito ON favorito.id_evento = evento.id
      WHERE favorito.tipo_conta = ? AND favorito.id_usuario = ?"
 );
 

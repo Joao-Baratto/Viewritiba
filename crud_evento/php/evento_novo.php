@@ -17,6 +17,22 @@ $descricao = trim($_POST['descricao'] ?? '');
 $data_hora = trim($_POST['data_hora'] ?? '');
 $local = trim($_POST['local'] ?? '');
 $categorias = $_POST['categorias'] ?? [];
+$link = trim($_POST['link'] ?? '');
+if ($link === '') {
+    $link = null;
+} elseif (
+    strlen($link) > 500 ||
+    !preg_match('#^https?://#i', $link) ||
+    filter_var($link, FILTER_VALIDATE_URL) === false
+) {
+    http_response_code(400);
+    echo json_encode([
+        'status' => 'nok',
+        'mensagem' => 'Informe um link válido, começando com http:// ou https://.',
+        'data' => []
+    ]);
+    exit;
+}
 
 if ($titulo === '' || $descricao === '' || $data_hora === '' || $local === '') {
     http_response_code(400);
@@ -63,10 +79,10 @@ $id_organizador = (int) $_SESSION['organizador_id'];
 require_once __DIR__ . '/../../crud_admin/php/banimentos.php';
 exigir_conta_nao_banida($conexao, 'organizador', $id_organizador);
 $stmt = $conexao->prepare("
-    INSERT INTO evento (titulo, descricao, data_hora, local, id_organizador)
-    VALUES (?, ?, ?, ?, ?)
+    INSERT INTO evento (titulo, descricao, data_hora, local, link, id_organizador)
+    VALUES (?, ?, ?, ?, ?, ?)
 ");
-$stmt->bind_param("ssssi", $titulo, $descricao, $data_hora, $local, $id_organizador);
+$stmt->bind_param("sssssi", $titulo, $descricao, $data_hora, $local, $link, $id_organizador);
 $stmt->execute();
 $id_evento = $stmt->insert_id;
 $stmt->close();

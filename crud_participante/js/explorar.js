@@ -11,9 +11,11 @@ function dados(i) {
 async function carregarEventos() {
     const mensagem = document.getElementById("mensagem_explorar");
     const titulo = document.getElementById("titulo_explorar");
+    const topo = document.querySelector(".explorar-topo");
     titulo.textContent = "Eventos Recomendados";
     mensagem.textContent = "Carregando eventos...";
     mensagem.style.whiteSpace = 'pre-wrap';
+    topo.classList.remove("sem-recomendacao");
 
     try {
         const retorno = await fetch("../php/explorar_get.php");
@@ -25,6 +27,7 @@ async function carregarEventos() {
             preencherTabela(resposta.data);
         } else {
             titulo.textContent = "Nenhum Evento Recomendado";
+            topo.classList.add("sem-recomendacao");
             mensagem.textContent = "Voce não possui recomendaçoes de Evento.\nPara receber recomendações favorite um Evento.";
         }
     } catch (erro) {
@@ -57,17 +60,23 @@ function preencherTabela(tabela) {
                 <td>${dados(tabela[i].organizador)}</td>
                 <td>${tabela[i].nota_media == null ? "-" : dados(tabela[i].nota_media) + "★"}</td>
                 <td>
-                    <a href="../../crud_comentarios/home/comentarios.html?id=${tabela[i].id}">
-                        Comentários
+                    <a class="btn-icone" title="Comentários" aria-label="Comentários"
+                        href="../../crud_comentarios/home/comentarios.html?id=${tabela[i].id}">
+                        ${icone("comentarios")}
                     </a>
 
-                    ${tabela[i].favoritado ? "" : `
-                    <a href="#"
+                    ${tabela[i].favoritado ? `
+                    <a class="btn-icone" title="Desfavoritar" aria-label="Desfavoritar" href="#"
+                        onclick="desfavoritar_evento(${tabela[i].id}); return false;">
+                        ${icone("desfavoritar")}
+                    </a>` : `
+                    <a class="btn-icone" title="Favoritar" aria-label="Favoritar" href="#"
                         onclick="favoritar_evento(${tabela[i].id}); return false;">
-                        Favoritar
+                        ${icone("favoritar")}
                     </a>`}
-                    <a href="../../crud_evento/home/visualizar_evento.html?id=${tabela[i].id}">
-                        Visualizar Evento
+                    <a class="btn-icone" title="Detalhes" aria-label="Detalhes"
+                        href="../../crud_evento/home/visualizar_evento.html?id=${tabela[i].id}">
+                        ${icone("info")}
                     </a>
                 </td>
             </tr>
@@ -79,6 +88,28 @@ function preencherTabela(tabela) {
     document.getElementById("lista-explorar").innerHTML = html;
 }
 
+
+async function desfavoritar_evento(id_evento) {
+    const dados = new FormData();
+
+    dados.append("evento_id", id_evento);
+
+    const retorno = await fetch(
+        "../../favoritos/favoritos_remover.php",
+        {
+            method: "POST",
+            body: dados
+        }
+    );
+
+    const resposta = await retorno.json();
+
+    alert(resposta.mensagem);
+
+    if (resposta.status == "ok") {
+        carregarEventos();
+    }
+}
 
 async function favoritar_evento(id_evento) {
     const dados = new FormData();

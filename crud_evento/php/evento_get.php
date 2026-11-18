@@ -19,6 +19,15 @@ $retorno = [
     'mensagem' => '',
     'data' => []
 ];
+// "categoria" aceita um id ou uma lista separada por vírgula (ex.: 1,3).
+function ids_categorias($valor)
+{
+    $ids = array_values(array_unique(array_filter(
+        array_map('intval', explode(',', (string) $valor))
+    )));
+    return $ids ? $ids : [0];
+}
+
 $consulta = "
     SELECT evento.*, organizador.nome AS organizador
     FROM evento
@@ -35,7 +44,8 @@ if (isset($_GET['id'])) {
     $stmt->bind_param("ii", $id, $id_organizador);
 } elseif (isset($_GET['titulo']) && isset($_GET['categoria'])) {
     $busca = "%" . trim($_GET['titulo']) . "%";
-    $categoria = (int) $_GET['categoria'];
+    $categorias = ids_categorias($_GET['categoria']);
+    $marcas = implode(',', array_fill(0, count($categorias), '?'));
     $stmt = $conexao->prepare(
         "$consulta
          WHERE evento.id_organizador = ?
@@ -48,17 +58,17 @@ if (isset($_GET['id'])) {
            AND evento.id IN (
                SELECT id_evento
                FROM evento_categoria
-               WHERE id_categoria = ?
+               WHERE id_categoria IN ($marcas)
            )"
     );
     $stmt->bind_param(
-        "issssi",
+        "issss" . str_repeat('i', count($categorias)),
         $id_organizador,
         $busca,
         $busca,
         $busca,
         $busca,
-        $categoria
+        ...$categorias
     );
 } elseif (isset($_GET['titulo'])) {
     $busca = "%" . trim($_GET['titulo']) . "%";
@@ -81,17 +91,22 @@ if (isset($_GET['id'])) {
         $busca
     );
 } elseif (isset($_GET['categoria'])) {
-    $categoria = (int) $_GET['categoria'];
+    $categorias = ids_categorias($_GET['categoria']);
+    $marcas = implode(',', array_fill(0, count($categorias), '?'));
     $stmt = $conexao->prepare(
         "$consulta
          WHERE evento.id_organizador = ?
            AND evento.id IN (
                SELECT id_evento
                FROM evento_categoria
-               WHERE id_categoria = ?
+               WHERE id_categoria IN ($marcas)
            )"
     );
-    $stmt->bind_param("ii", $id_organizador, $categoria);
+    $stmt->bind_param(
+        "i" . str_repeat('i', count($categorias)),
+        $id_organizador,
+        ...$categorias
+    );
 } else {
     $stmt = $conexao->prepare(
         "$consulta

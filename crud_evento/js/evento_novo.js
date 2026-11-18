@@ -33,6 +33,7 @@ async function novo(){
     fd.append("descricao", descricao);
     fd.append("data_hora", data_hora);
     fd.append("local", local);
+    fd.append("link", document.getElementById("link").value.trim());
     categorias.forEach((id) => fd.append("categorias[]", id));
     const retorno = await fetch("../php/evento_novo.php",
         {

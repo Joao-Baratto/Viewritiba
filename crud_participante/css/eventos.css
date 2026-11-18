@@ -98,14 +98,28 @@
     white-space: pre-wrap;
 }
 
+/* Ações: "Visitar evento" à esquerda (sai do Viewritiba); Comentários e Compartilhar à direita (interagir com o evento) */
 .event-details-actions {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-end;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid #f1e4de;
+}
+
+.event-details-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
     gap: 10px;
 }
 
+.event-details-visit,
 .event-details-comments,
+.event-details-share,
 .event-details-dismiss {
     display: inline-flex;
     min-height: 42px;
@@ -120,16 +134,61 @@
     cursor: pointer;
 }
 
-.event-details-comments {
+/* Botões cheios dos detalhes: cada ação com a sua cor, todos no mesmo estilo (fundo sólido, ícone branco) */
+.event-details-visit,
+.event-details-comments,
+.event-details-share {
     color: #fff;
+}
+
+.event-details-visit {
     background: #c64d32;
 }
 
-.event-details-comments:hover {
+.event-details-visit:hover {
     color: #fff;
     background: #a83e28;
 }
 
+.event-details-comments {
+    background: #2563eb;
+}
+
+.event-details-comments:hover {
+    color: #fff;
+    background: #1d4ed8;
+}
+
+.event-details-visit[hidden] {
+    display: none;
+}
+
+/* Compartilhar: verde, como o compartilhar das listas */
+.event-details-share {
+    background: #0f8a6c;
+}
+
+.event-details-share:hover {
+    background: #0b6f57;
+}
+
+/* Ações dos detalhes só com ícone: quadrados de 42px (o nome fica no title / aria-label) */
+.event-details-actions .event-details-icone {
+    width: 42px;
+    height: 42px;
+    min-height: 42px;
+    padding: 0;
+}
+
+.event-details-icone span {
+    display: inline-flex;
+}
+
+.event-details-icone svg {
+    display: block;
+}
+
+/* Voltar (página de detalhes) */
 .event-details-dismiss {
     color: #45413f;
     background: #f1eeec;
@@ -149,7 +208,12 @@
         margin: 18px 0;
     }
 
-    .event-details-actions > * {
+    .event-details-actions,
+    .event-details-group {
+        flex: 1 1 100%;
+    }
+
+    .event-details-group > * {
         flex: 1;
     }
 }

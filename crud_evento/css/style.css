@@ -178,7 +178,7 @@ a {
 .search-section {
     position: relative;
     isolation: isolate;
-    overflow: hidden;
+    overflow: visible;
 
     padding: 48px;
     margin-bottom: 48px;
@@ -381,33 +381,45 @@ a {
         0 13px 27px rgba(255, 112, 87, 0.34);
 }
 
-/* 10. LIMPAR FILTROS */
+/* 10. LIMPAR FILTROS (mesmo estilo do botão Buscar) */
 
 #filtro_apagar {
+    min-width: 120px;
     height: 54px;
-    padding: 0 19px;
+    padding: 0 23px;
 
-    color: #464149;
-    background: rgba(255, 255, 255, 0.92);
+    color: white;
 
-    border: 1px solid #e1d7d3;
+    background:
+        linear-gradient(
+            135deg,
+            #ff856e,
+            #ff6048
+        );
+
+    border: none;
     border-radius: 13px;
 
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 800;
 
     white-space: nowrap;
 
+    box-shadow:
+        0 9px 20px rgba(255, 112, 87, 0.25);
+
     transition:
         background 0.25s ease,
-        color 0.25s ease,
-        border-color 0.25s ease;
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
 }
 
 #filtro_apagar:hover {
-    color: var(--coral-hover);
-    background: var(--coral-soft);
-    border-color: var(--coral);
+    background: var(--coral-hover);
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 13px 27px rgba(255, 112, 87, 0.34);
 }
 
 /* 11. CADASTRAR EVENTO */
@@ -736,6 +748,12 @@ a {
     resize: vertical;
 }
 
+.input-group input:hover,
+.input-group select:hover,
+.input-group textarea:hover {
+    border-color: #ffaf9c;
+}
+
 .input-group input:focus,
 .input-group select:focus,
 .input-group textarea:focus {
@@ -809,106 +827,328 @@ a {
     transform: scale(0.98);
 }
 
-/* 18. CATEGORIAS */
+/* 18. CATEGORIAS (combobox multi-select, estilo Material UI) */
 
 .categorias-campo {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    display: block;
 }
-
-.categorias-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.categorias-tags:empty {
-    display: none;
-}
-
-.categoria-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-
-    padding: 6px 9px 6px 14px;
-
-    background: var(--coral-soft);
-    color: var(--coral-hover);
-
-    border: 1px solid #ffd0c4;
-    border-radius: 30px;
-
-    font-size: 13px;
-    font-weight: 750;
-}
-
-/* Botão de remover categoria */
-
-.modern-form .categoria-tag button {
-    width: 23px;
-    height: 23px;
-    min-height: 23px;
-
-    margin: 0;
-    padding: 0;
-
-    background: transparent;
-    color: var(--coral-hover);
-
-    border: none;
-    border-radius: 50%;
-
-    font-size: 17px;
-    line-height: 1;
-
-    box-shadow: none;
-}
-
-.modern-form .categoria-tag button:hover {
-    background: var(--coral);
-    color: white;
-    transform: none;
-}
-
-/* 19. AUTOCOMPLETE */
 
 .categorias-autocomplete {
     position: relative;
 }
 
+.categorias-input {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+
+    min-height: 51px;
+    padding: 9px 76px 9px 15px;
+    position: relative;
+
+    background: #fffaf8;
+    border: 1px solid #e7ddd8;
+    border-radius: 12px;
+
+    cursor: text;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.categorias-input:hover {
+    border-color: #ffaf9c;
+}
+
+.categorias-input.aberto,
+.categorias-input:focus-within {
+    background: white;
+    border-color: var(--coral);
+    box-shadow: 0 0 0 4px rgba(255, 112, 87, 0.13);
+}
+
+.categorias-tags {
+    display: contents;
+}
+
+.categoria-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+
+    height: 32px;
+    padding: 0 4px 0 12px;
+
+    background: var(--coral-soft);
+    color: var(--coral-hover);
+
+    border: none;
+    border-radius: 16px;
+
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.categorias-autocomplete .categoria-tag button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 22px;
+    height: 22px;
+    min-height: 22px;
+
+    margin: 0;
+    padding: 0;
+
+    background: transparent;
+    color: var(--coral);
+    opacity: 0.7;
+
+    border: none;
+    border-radius: 50%;
+
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.categorias-autocomplete .categoria-tag button:hover {
+    background: transparent;
+    color: var(--coral-hover);
+    opacity: 1;
+    transform: none;
+}
+
+.categorias-autocomplete .categorias-input input {
+    flex: 1 1 60px;
+    min-width: 60px;
+    width: auto;
+    height: 32px;
+    min-height: 0;
+    margin: 0;
+    padding: 0 4px;
+
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    outline: none;
+
+    font-size: 16px;
+}
+
+.categorias-input input::placeholder {
+    color: #8b8b8b;
+    opacity: 1;
+}
+
+.categorias-acoes {
+    position: absolute;
+    top: 50%;
+    right: 6px;
+    transform: translateY(-50%);
+
+    display: flex;
+    align-items: center;
+}
+
+.categorias-autocomplete .categorias-acoes button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 32px;
+    height: 32px;
+    min-height: 32px;
+    margin: 0;
+    padding: 0;
+
+    background: transparent;
+    color: var(--text-muted);
+
+    border: none;
+    border-radius: 50%;
+
+    box-shadow: none;
+    cursor: pointer;
+    transition: background 0.15s ease, opacity 0.15s ease;
+}
+
+.categorias-autocomplete .categorias-acoes button:hover {
+    background: rgba(255, 112, 87, 0.1);
+    color: var(--text-main);
+    transform: none;
+}
+
+/* Botão de limpar só aparece ao passar o mouse ou focar */
+
+.categorias-autocomplete .categorias-acoes .categorias-limpar[hidden] {
+    display: none;
+}
+
+.categorias-autocomplete .categorias-acoes .categorias-limpar {
+    opacity: 0;
+}
+
+.categorias-input:hover .categorias-limpar,
+.categorias-input:focus-within .categorias-limpar {
+    opacity: 1;
+}
+
+.categorias-seta svg {
+    transition: transform 0.2s ease;
+}
+
+.categorias-input.aberto .categorias-seta svg {
+    transform: rotate(180deg);
+}
+
+/* Variante nos filtros de pesquisa (mesmo padrão dos campos #pesquisa / #filtro_data) */
+
+.search-area .categorias-input {
+    min-height: 54px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+
+    background: rgba(255, 255, 255, 0.96);
+    border-color: #eadbd5;
+    border-radius: 13px;
+    box-shadow: 0 3px 12px rgba(80, 40, 30, 0.04);
+}
+
+.search-area .categorias-input:hover {
+    border-color: #ffaf9c;
+}
+
+.search-area .categorias-input.aberto,
+.search-area .categorias-input:focus-within {
+    background: white;
+    border-color: var(--coral);
+    box-shadow: 0 0 0 4px rgba(255, 112, 87, 0.13);
+}
+
+.search-area .categorias-autocomplete {
+    min-width: 0;
+}
+
+/* Fora de foco: uma linha só, com o resumo "+N" (limitar). Em foco: expande. */
+
+.search-area .categorias-input {
+    flex-wrap: nowrap;
+}
+
+.search-area .categorias-input {
+    padding-right: 68px;
+}
+
+.search-area .categorias-input.aberto {
+    flex-wrap: wrap;
+}
+
+.search-area .categorias-input.aberto .categorias-tags {
+    flex: 1 1 100%;
+    flex-wrap: wrap;
+}
+
+.search-area .categorias-input.aberto .categoria-tag {
+    min-width: auto;
+}
+
+/* Com seleção e fora de foco, os chips ficam com todo o espaço */
+
+.search-area .categorias-input.com-valor:not(.aberto):not(.unica) input {
+    flex: 0 0 0;
+    min-width: 0;
+    width: 0;
+    padding: 0;
+}
+
+.search-area .categorias-tags {
+    display: flex;
+    flex: 0 1 auto;
+    gap: 6px;
+    min-width: 0;
+}
+
+.search-area .categoria-tag {
+    min-width: 0;
+}
+
+.categoria-nome {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.categoria-mais {
+    flex: 0 0 auto;
+    padding-right: 12px;
+}
+
+.search-area .categorias-autocomplete .categorias-input input {
+    flex: 1 1 20px;
+    min-width: 20px;
+    font-size: 14px;
+}
+
+/* 19. LISTA DE OPÇÕES */
+
 .categorias-sugestoes {
     position: absolute;
 
-    top: calc(100% + 6px);
+    top: calc(100% + 4px);
     left: 0;
     right: 0;
 
     z-index: 20;
 
-    max-height: 220px;
+    max-height: 240px;
     overflow-y: auto;
 
-    padding: 6px;
+    margin: 0;
+    padding: 8px 0;
     background: white;
 
-    border: 1px solid var(--gray-border);
-    border-radius: 12px;
+    border: none;
+    border-radius: 8px;
 
-    box-shadow: var(--shadow-md);
+    box-shadow:
+        0 5px 5px -3px rgba(0, 0, 0, 0.12),
+        0 8px 10px 1px rgba(0, 0, 0, 0.10),
+        0 3px 14px 2px rgba(0, 0, 0, 0.08);
     list-style: none;
 }
 
+.categorias-sugestoes[hidden] {
+    display: none;
+}
+
 .categorias-sugestoes li {
-    padding: 10px 12px;
-    border-radius: 8px;
+    padding: 8px 16px;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+
+    font-size: 16px;
     cursor: pointer;
 }
 
-.categorias-sugestoes li[data-id]:hover {
-    background: var(--coral-soft);
+.categorias-sugestoes li[data-id]:hover,
+.categorias-sugestoes li.destaque {
+    background: rgba(255, 112, 87, 0.08);
+}
+
+.categorias-sugestoes li.marcada {
+    background: rgba(255, 112, 87, 0.16);
     color: var(--coral-hover);
+    font-weight: 600;
+}
+
+.categorias-sugestoes li.marcada:hover,
+.categorias-sugestoes li.marcada.destaque {
+    background: rgba(255, 112, 87, 0.24);
 }
 
 .categorias-sugestoes li.sem-resultado {
@@ -1092,7 +1332,7 @@ input:disabled {
 .search-section {
     position: relative;
     isolation: isolate;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .search-section::after {

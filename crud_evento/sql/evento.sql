@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS evento (
     descricao TEXT NOT NULL,
     data_hora DATETIME NOT NULL,
     local VARCHAR(255) NOT NULL,
+    link VARCHAR(500) NULL,
     id_organizador INT NOT NULL,
     PRIMARY KEY (id),
     KEY idx_evento_organizador_data (id_organizador, data_hora)
