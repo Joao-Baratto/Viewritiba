@@ -1,5 +1,16 @@
 document.addEventListener("DOMContentLoaded", function() {
     const urlAPI = 'favoritos_get.php';
+    const MESES = ["JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ"];
+    const QTD_FUROS = 9;
+
+    // Mesmo valor de --tempo-destacar no ingresso.css
+    const TEMPO_DESTACAR = 900;
+
+    function esc(texto) {
+        const div = document.createElement('div');
+        div.textContent = texto ?? '';
+        return div.innerHTML;
+    }
 
     function getStatusEvento(dataEvento) {
         const hoje = new Date();
@@ -9,11 +20,11 @@ document.addEventListener("DOMContentLoaded", function() {
         dataDoEvento.setHours(0, 0, 0, 0);
 
         if (dataDoEvento < hoje) {
-            return { texto: "Encerrado", cor: "#9ca3af" };
+            return { texto: "Encerrado", classe: "encerrado" };
         } else if (dataDoEvento.getTime() === hoje.getTime()) {
-            return { texto: "Hoje", cor: "#d97706" };
+            return { texto: "Hoje", classe: "hoje" };
         } else {
-            return { texto: "Confirmado", cor: "#16a34a" };
+            return { texto: "Em breve", classe: "proximo" };
         }
     }
 
@@ -29,107 +40,210 @@ document.addEventListener("DOMContentLoaded", function() {
         }, 2000);
     }
 
+    function atualizarContador() {
+        const contador = document.getElementById('contador-favoritos');
+        const qtd = document.querySelectorAll('.ingresso:not(.saindo)').length;
+        if (contador) {
+            contador.textContent = qtd === 1 ? '1 evento encontrado' : `${qtd} eventos encontrados`;
+        }
+        if (qtd === 0) {
+            document.getElementById('lista-favoritos-container').innerHTML =
+                '<p class="lista-vazia">Nenhum evento encontrado.</p>';
+        }
+    }
+
+    function montarIngresso(evento) {
+        const dataObj = new Date(evento.data_hora);
+        const dia = dataObj.getDate().toString().padStart(2, '0');
+        const mes = MESES[dataObj.getMonth()];
+        const ano = dataObj.getFullYear();
+        const hora = dataObj.getHours().toString().padStart(2, '0') + ':' +
+                     dataObj.getMinutes().toString().padStart(2, '0');
+        const status = getStatusEvento(evento.data_hora);
+        const id = Number(evento.id);
+
+        let furos = '';
+        for (let i = 0; i < QTD_FUROS; i++) {
+            furos += `<span class="ingresso-furo" style="--i:${i};--n:${QTD_FUROS}"></span>`;
+        }
+
+        const encerrado = status.classe === 'encerrado';
+
+        // Encerrado: canhoto já destacado (sem ações); a data aparece no corpo
+        const canhoto = encerrado ? '' : `
+                <div class="ingresso-canhoto">
+                    <span class="ingresso-dia">${dia}</span>
+                    <span class="ingresso-mes">${mes} ${ano}</span>
+                    <span class="ingresso-hora">${hora}</span>
+
+                    <div class="ingresso-acoes">
+                        <a class="ingresso-botao" href="../crud_evento/home/visualizar_evento.html?id=${id}"
+                            title="Detalhes" aria-label="Detalhes">${icone("info")}</a>
+                        <button class="ingresso-botao ingresso-destacar" data-id="${id}"
+                            title="Segure para remover dos favoritos"
+                            aria-label="Segure para remover dos favoritos">${icone("excluir")}</button>
+                    </div>
+                    <span class="ingresso-dica">Segure para destacar</span>
+                </div>`;
+
+        // Encerrado: único botão (Detalhes), à direita.
+        // Sem observação: na linha da data. Com observação: embaixo, na linha da observação.
+        const botaoDetalhes = `
+                        <a class="ingresso-botao" href="../crud_evento/home/visualizar_evento.html?id=${id}"
+                            title="Detalhes" aria-label="Detalhes">${icone("info")}</a>`;
+        const temObs = Boolean(evento.observacao && String(evento.observacao).trim());
+
+        const dataNoCorpo = !encerrado ? '' : `
+                    <div class="ingresso-data-encerrado">
+                        ${icone("calendario", 16)}<span>${dia} ${mes} ${ano} · ${hora}</span>${temObs ? '' : botaoDetalhes}
+                    </div>`;
+
+        // Encerrado: só leitura. Mostra a observação já salva (se houver), sem campo para editar
+        const observacao = encerrado
+            ? (temObs
+                ? `
+                    <div class="ingresso-obs-linha">
+                        <p class="ingresso-obs-texto">${esc(evento.observacao)}</p>${botaoDetalhes}
+                    </div>`
+                : '')
+            : `
+                    <div class="ingresso-obs">
+                        <input type="text" class="input-obs" data-id="${id}" value="${esc(evento.observacao)}"
+                            placeholder="Adicionar observação..." aria-label="Observação do evento">
+                        <button class="ingresso-botao btn-salvar-obs" data-id="${id}"
+                            title="Salvar observação" aria-label="Salvar observação">${icone("salvar")}</button>
+                    </div>`;
+
+        return `
+            <article class="ingresso ${encerrado ? 'encerrado' : ''}" data-id="${id}">
+                <div class="ingresso-corpo">
+                    <div class="ingresso-topo">
+                        <span class="ingresso-rotulo">Viewritiba · Ingresso salvo</span>
+                        <span class="ingresso-status ${status.classe}">${status.texto}</span>
+                    </div>
+                    <h3>${marcadorLink(evento)}${esc(evento.titulo)}</h3>
+                    <p class="ingresso-local">${icone("local", 16)}<span>${esc(evento.local)}</span></p>${dataNoCorpo}
+${observacao}
+                </div>
+
+                <div class="ingresso-picote" aria-hidden="true">${furos}</div>
+${canhoto}
+            </article>
+        `;
+    }
+
     fetch(urlAPI)
         .then(response => response.json())
         .then(resultado => {
             const container = document.getElementById('lista-favoritos-container');
-            const contador = document.getElementById('contador-favoritos');
             container.innerHTML = '';
 
             if (resultado.status === 'ok' && resultado.data.length > 0) {
-                const qtd = resultado.data.length;
-                if (contador) {
-                    contador.textContent = qtd === 1 ? '1 evento encontrado' : `${qtd} eventos encontrados`;
-                }
-
-                resultado.data.forEach(evento => {
-
-                    const dataObj = new Date(evento.data_hora);
-                    const dia = dataObj.getDate().toString().padStart(2, '0');
-                    const meses = ["JAN","FEV","MAR","ABR","MAI","JUN","JUL","AGO","SET","OUT","NOV","DEZ"];
-                    const mes = meses[dataObj.getMonth()];
-                    const ano = dataObj.getFullYear();
-                    const status = getStatusEvento(evento.data_hora);
-
-                    const cardHTML = `
-                        <div class="card-favorito" data-id="${evento.id}">
-                            <div class="bloco-data">
-                                <span class="dia">${dia}</span>
-                                <span class="mes">${mes}<br>${ano}</span>
-                            </div>
-                            <div class="info-evento">
-                                <h3>${marcadorLink(evento)}${evento.titulo}</h3>
-                                <p class="local-evento">${evento.local}</p>
-
-                                <span class="status-badge" style="background:${status.cor};">
-                                    ${status.texto}
-                                </span>
-
-                                <div class="linha-obs">
-                                    <input type="text" class="input-obs" data-id="${evento.id}" value="${evento.observacao || ''}" placeholder="Adicionar observação...">
-                                    <button class="btn-salvar-obs" data-id="${evento.id}" title="Salvar observação" aria-label="Salvar observação">${icone("salvar")}</button>
-                                </div>
-
-                                <div class="linha-remover">
-                                    <button class="btn-remover" data-id="${evento.id}" title="Remover dos favoritos" aria-label="Remover dos favoritos">${icone("excluir")}</button>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-
-                    container.innerHTML += cardHTML;
+                // Ordem: primeiro os próximos (inclui hoje), do mais perto ao mais longe;
+                // depois os encerrados, do mais recente ao mais antigo
+                const eventos = resultado.data.slice().sort((a, b) => {
+                    const aEncerrado = getStatusEvento(a.data_hora).classe === 'encerrado';
+                    const bEncerrado = getStatusEvento(b.data_hora).classe === 'encerrado';
+                    if (aEncerrado !== bEncerrado) {
+                        return aEncerrado ? 1 : -1;
+                    }
+                    const diferenca = new Date(a.data_hora) - new Date(b.data_hora);
+                    return aEncerrado ? -diferenca : diferenca;
                 });
-
-                ativarBotoesRemover();
+                container.innerHTML = eventos.map(montarIngresso).join('');
+                atualizarContador();
+                ativarBotoesDestacar();
                 ativarBotoesSalvarObs();
             } else {
-                if (contador) contador.textContent = '0 eventos encontrados';
-                container.innerHTML = '<p class="lista-vazia">Nenhum evento encontrado.</p>';
+                atualizarContador();
             }
         })
         .catch(error => {
             console.error('Erro ao buscar os eventos', error);
         });
 
-    function ativarBotoesRemover() {
-        const botoes = document.querySelectorAll('.btn-remover');
-        botoes.forEach(botao => {
-            botao.addEventListener('click', function () {
-                const confirmou = confirm("Tem certeza que quer remover este evento dos favoritos?");
-                 if (!confirmou) {
-                return;
-            }
-                const id_evento = this.getAttribute('data-id');
-                const card = this.closest('.card-favorito');
+    // Remover = destacar o canhoto: segurar o botão por TEMPO_DESTACAR ms.
+    // Os furos do picote enchem um a um; soltar antes cancela.
+    function ativarBotoesDestacar() {
+        document.querySelectorAll('.ingresso-destacar').forEach(botao => {
+            const ingresso = botao.closest('.ingresso');
+            let timer = null;
 
-                fetch('favoritos_remover.php', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: `evento_id=${id_evento}`
-                })
-                .then(res => res.json())
-                .then(resultado => {
-                    if (resultado.status === 'ok') {
-                        card.remove();
-                        mostrarConfirmacao("Evento removido dos favoritos");
+            const comecar = () => {
+                if (timer || ingresso.classList.contains('destacado')) return;
+                ingresso.classList.add('destacando');
+                timer = setTimeout(() => {
+                    timer = null;
+                    remover(ingresso, botao.dataset.id);
+                }, TEMPO_DESTACAR);
+            };
 
-                        const contador = document.getElementById('contador-favoritos');
-                        const restantes = document.querySelectorAll('.card-favorito').length;
-                        if (contador) {
-                            contador.textContent = restantes === 1 ? '1 evento encontrado' : `${restantes} eventos encontrados`;
-                        }
-                    } else {
-                        mostrarConfirmacao("Erro ao remover evento", true);
-                    }
-                })
-                .catch(err => console.error('Erro ao remover:', err));
+            const cancelar = () => {
+                if (!timer) return;
+                clearTimeout(timer);
+                timer = null;
+                ingresso.classList.remove('destacando');
+            };
+
+            botao.addEventListener('pointerdown', (e) => {
+                e.preventDefault();
+                botao.setPointerCapture?.(e.pointerId);
+                comecar();
             });
+            botao.addEventListener('pointerup', cancelar);
+            botao.addEventListener('pointercancel', cancelar);
+            botao.addEventListener('lostpointercapture', cancelar);
+            botao.addEventListener('contextmenu', (e) => e.preventDefault());
+
+            // Teclado: segurar Espaço ou Enter
+            botao.addEventListener('keydown', (e) => {
+                if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) {
+                    e.preventDefault();
+                    comecar();
+                }
+            });
+            botao.addEventListener('keyup', (e) => {
+                if (e.key === ' ' || e.key === 'Enter') cancelar();
+            });
+            botao.addEventListener('blur', cancelar);
+        });
+    }
+
+    function remover(ingresso, id_evento) {
+        ingresso.classList.remove('destacando');
+        ingresso.classList.add('destacado');
+
+        fetch('favoritos_remover.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `evento_id=${encodeURIComponent(id_evento)}`
+        })
+        .then(res => res.json())
+        .then(resultado => {
+            if (resultado.status === 'ok') {
+                // Depois do canhoto cair, o ingresso some da lista
+                setTimeout(() => {
+                    ingresso.classList.add('saindo');
+                    setTimeout(() => {
+                        ingresso.remove();
+                        atualizarContador();
+                    }, 400);
+                }, 350);
+                mostrarConfirmacao("Evento removido dos favoritos");
+            } else {
+                ingresso.classList.remove('destacado');
+                mostrarConfirmacao("Erro ao remover evento", true);
+            }
+        })
+        .catch(err => {
+            console.error('Erro ao remover:', err);
+            ingresso.classList.remove('destacado');
+            mostrarConfirmacao("Erro ao remover evento", true);
         });
     }
 
     function ativarBotoesSalvarObs() {
-        const botoes = document.querySelectorAll('.btn-salvar-obs');
-        botoes.forEach(botao => {
+        document.querySelectorAll('.btn-salvar-obs').forEach(botao => {
             botao.addEventListener('click', function () {
                 const id_evento = this.getAttribute('data-id');
                 const input = document.querySelector(`.input-obs[data-id="${id_evento}"]`);
@@ -146,6 +260,15 @@ document.addEventListener("DOMContentLoaded", function() {
                     mostrarConfirmacao(sucesso ? "Observação salva" : "Erro ao salvar observação", !sucesso);
                 })
                 .catch(err => console.error('Erro ao salvar observação:', err));
+            });
+        });
+
+        // Enter no campo também salva
+        document.querySelectorAll('.input-obs').forEach(input => {
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    document.querySelector(`.btn-salvar-obs[data-id="${input.dataset.id}"]`).click();
+                }
             });
         });
     }

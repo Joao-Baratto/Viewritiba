@@ -29,7 +29,8 @@ $stmt = $conexao->prepare(
               WHERE id_evento = evento.id) AS categorias,
             (SELECT COUNT(*) FROM favorito
               WHERE id_evento = evento.id AND tipo_conta = 'participante'
-                AND id_usuario = ?) AS favoritado
+                AND id_usuario = ?) AS favoritado,
+            (evento.data_hora < NOW()) AS encerrado
      FROM evento
      LEFT JOIN organizador ON organizador.id = evento.id_organizador
      WHERE evento.id = ?"
@@ -42,7 +43,9 @@ $conexao->close();
 
 if ($linha) {
     $linha['favoritado'] = $linha['favoritado'] > 0;
-    $linha['pode_favoritar'] = $id_participante > 0;
+    $linha['encerrado'] = (int) $linha['encerrado'] === 1;
+    // Evento que já aconteceu não pode ser favoritado nem desfavoritado
+    $linha['pode_favoritar'] = $id_participante > 0 && !$linha['encerrado'];
     $retorno = [
         'status' => 'ok',
         'mensagem' => 'Sucesso, consulta efetuada.',

@@ -44,7 +44,8 @@ $sql = "SELECT evento.*,
         LEFT JOIN organizador
             ON organizador.id = evento.id_organizador";
 
-$filtros = [];
+// Só eventos que ainda não aconteceram (mesma regra dos Recomendados)
+$filtros = ['evento.data_hora >= NOW()'];
 $parametros = [$id_participante];
 $tipos = "i";
 
@@ -89,6 +90,9 @@ if (isset($_GET['categoria']) && trim($_GET['categoria']) !== '') {
 if ($filtros) {
     $sql .= " WHERE " . implode(" AND ", $filtros);
 }
+
+// Do mais próximo ao mais distante
+$sql .= " ORDER BY evento.data_hora ASC";
 
 $stmt = $conexao->prepare($sql);
 

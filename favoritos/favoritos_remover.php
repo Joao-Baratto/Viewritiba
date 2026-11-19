@@ -17,6 +17,22 @@ $tipo_conta = $usuario['tipo'];
 $id_usuario = $usuario['id'];
 $id_evento = (int) ($_POST['evento_id'] ?? 0);
 
+// Evento que já aconteceu não pode ser desfavoritado
+$stmt = $conexao->prepare("SELECT data_hora < NOW() AS encerrado FROM evento WHERE id_evento = ?");
+$stmt->bind_param("i", $id_evento);
+$stmt->execute();
+$evento = $stmt->get_result()->fetch_assoc();
+$stmt->close();
+if (!$evento || (int) $evento['encerrado'] === 1) {
+    $conexao->close();
+    echo json_encode([
+        'status' => 'nok',
+        'mensagem' => $evento ? 'Este evento já aconteceu e não pode ser desfavoritado.' : 'Evento não encontrado.',
+        'data' => []
+    ]);
+    exit;
+}
+
 $stmt = $conexao->prepare("DELETE FROM favorito WHERE tipo_conta = ? AND id_usuario = ? AND id_evento = ?");
 $stmt->bind_param("sii", $tipo_conta, $id_usuario, $id_evento);
 

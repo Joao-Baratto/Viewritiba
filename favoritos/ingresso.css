@@ -1,0 +1,420 @@
+/*
+ * Favoritos em formato de ingresso.
+ * Corpo (dados do evento) | picote com furos | canhoto (data, hora e ações).
+ * Remover = "destacar o canhoto": segurar o botão enche os furos um a um e o canhoto se solta.
+ * Cores e fonte no padrão das outras telas (Outfit, pêssego e coral).
+ */
+
+:root {
+    --ingresso-fundo: #ffffff;
+    --ingresso-borda: #ece4de;
+    --ingresso-canhoto: #1a1a1a; /* canhoto preto, como o bloco de data antigo */
+    --ingresso-coral: #e95f47;
+    --ingresso-coral-escuro: #c64d32;
+    --ingresso-texto: #262626;
+    --ingresso-mutado: #737373;
+    --ingresso-furo: #e8dcd5;
+    --ingresso-mordida: 22px; /* diâmetro dos recortes em cima e embaixo do picote */
+    --largura-canhoto: 132px;
+    --tempo-destacar: 900ms;  /* quanto tempo segurar para remover */
+}
+
+#lista-favoritos-container {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    margin-top: 30px;
+}
+
+/* ---------- Ingresso ---------- */
+
+.ingresso {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 0 var(--largura-canhoto);
+    background: var(--ingresso-fundo);
+    border: 1px solid var(--ingresso-borda);
+    border-radius: 16px;
+    box-shadow: 0 4px 14px rgba(34, 34, 34, 0.05);
+    overflow: hidden;
+    font-family: "Outfit", sans-serif;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        opacity 0.35s ease,
+        max-height 0.4s ease,
+        margin 0.4s ease;
+    max-height: 600px;
+}
+
+.ingresso:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(34, 34, 34, 0.08);
+}
+
+.ingresso * {
+    font-family: "Outfit", sans-serif;
+}
+
+/* ---------- Corpo ---------- */
+
+.ingresso-corpo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 22px 26px;
+    min-width: 0;
+}
+
+.ingresso-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.ingresso-rotulo {
+    color: var(--ingresso-coral);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.ingresso-status {
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.ingresso-status.proximo {
+    color: #166534;
+    background: #e7f6ec;
+}
+
+.ingresso-status.hoje {
+    color: #9a5b05;
+    background: #fdf1dc;
+}
+
+.ingresso-status.encerrado {
+    color: #6b7280;
+    background: #f1f1f3;
+}
+
+.ingresso-corpo h3 {
+    margin: 2px 0 0;
+    color: var(--ingresso-texto);
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    overflow-wrap: anywhere;
+}
+
+.ingresso-local {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--ingresso-mutado);
+    font-size: 0.92rem;
+}
+
+.ingresso-local svg {
+    flex: none;
+    color: var(--ingresso-coral);
+}
+
+/* Observação: anotação escrita no ingresso */
+.ingresso-obs {
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.ingresso-obs input {
+    flex: 1;
+    min-width: 0;
+    padding: 8px 12px;
+    border: 1px dashed #e2d3ca;
+    border-radius: 10px;
+    background: #fdfaf8;
+    color: var(--ingresso-texto);
+    font-size: 0.88rem;
+}
+
+.ingresso-obs input:focus {
+    outline: none;
+    border-style: solid;
+    border-color: var(--ingresso-coral);
+    background: #fff;
+}
+
+.ingresso-botao {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    flex: none;
+    border: 0;
+    border-radius: 10px;
+    background: rgba(233, 95, 71, 0.10);
+    color: var(--ingresso-coral);
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.ingresso-botao:hover {
+    background: rgba(233, 95, 71, 0.18);
+    transform: translateY(-1px);
+}
+
+.ingresso-botao:focus-visible {
+    outline: 2px solid var(--ingresso-coral);
+    outline-offset: 2px;
+}
+
+/* ---------- Picote ---------- */
+
+.ingresso-picote {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: calc(var(--ingresso-mordida) / 2 + 6px) 0;
+}
+
+/* Recortes (mordidas) em cima e embaixo, da cor da página */
+.ingresso-picote::before,
+.ingresso-picote::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    width: var(--ingresso-mordida);
+    height: var(--ingresso-mordida);
+    border: 1px solid var(--ingresso-borda);
+    border-radius: 50%;
+    background: var(--fundo-pagina, #F7F5F2);
+    transform: translateX(-50%);
+    z-index: 2;
+}
+
+.ingresso-picote::before {
+    top: calc(var(--ingresso-mordida) / -2 - 1px);
+}
+
+.ingresso-picote::after {
+    bottom: calc(var(--ingresso-mordida) / -2 - 1px);
+}
+
+/* Furos: enchem um a um enquanto o botão de remover é segurado */
+.ingresso-furo {
+    width: 6px;
+    height: 6px;
+    flex: none;
+    border-radius: 50%;
+    background: var(--ingresso-furo);
+    transition: background 0.12s ease, transform 0.12s ease;
+    transition-delay: 0ms;
+}
+
+.ingresso.destacando .ingresso-furo {
+    background: var(--ingresso-coral);
+    transform: scale(1.35);
+    /* --i = posição do furo (0..n-1), --n = total; cada furo enche numa fatia do tempo */
+    transition-delay: calc(var(--tempo-destacar) * var(--i) / var(--n));
+}
+
+/* ---------- Canhoto ---------- */
+
+.ingresso-canhoto {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    padding: 18px 12px;
+    background: var(--ingresso-canhoto);
+    text-align: center;
+    transform-origin: 0 100%;
+    transition: transform 0.45s cubic-bezier(.5, -0.3, .7, 1), opacity 0.45s ease;
+}
+
+.ingresso-dia {
+    color: #ff7a59;
+    font-size: 2.1rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.ingresso-mes {
+    color: #ff7a59;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+}
+
+.ingresso-hora {
+    margin-top: 4px;
+    color: #d1d5db;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.ingresso-acoes {
+    display: flex;
+    gap: 6px;
+    margin-top: 12px;
+}
+
+.ingresso-canhoto .ingresso-botao {
+    background: rgba(255, 255, 255, 0.08);
+    color: #ff7a59;
+}
+
+.ingresso-canhoto .ingresso-botao:hover {
+    background: rgba(255, 122, 89, 0.20);
+}
+
+/* Botão de destacar: um anel mostra o progresso enquanto é segurado */
+.ingresso-destacar {
+    position: relative;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.ingresso-destacar::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 10px;
+    background: var(--ingresso-coral);
+    opacity: 0.22;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.15s ease;
+    pointer-events: none;
+}
+
+.ingresso.destacando .ingresso-destacar::after {
+    transform: scaleX(1);
+    transition: transform var(--tempo-destacar) linear;
+}
+
+.ingresso-dica {
+    margin-top: 6px;
+    color: #ffffff;
+    font-size: 0.68rem;
+    line-height: 1.2;
+}
+
+/* Canhoto se soltando e ingresso saindo da lista */
+.ingresso.destacado .ingresso-canhoto {
+    transform: translate(26px, 40px) rotate(14deg);
+    opacity: 0;
+}
+
+.ingresso.destacado .ingresso-furo {
+    background: transparent;
+}
+
+.ingresso.saindo {
+    opacity: 0;
+    max-height: 0;
+    margin-bottom: -22px; /* compensa o gap da lista */
+    transform: none;
+}
+
+/* Evento encerrado: ingresso já destacado. Sem canhoto e sem ações;
+   termina no picote (furos + mordidas na borda direita) e a data vai para o corpo. */
+.ingresso.encerrado {
+    grid-template-columns: minmax(0, 1fr) 0;
+    /* Termina onde fica o picote nos ingressos normais (largura total menos o canhoto) */
+    width: calc(100% - var(--largura-canhoto));
+    border-right: 0;
+    border-radius: 16px 0 0 16px;
+}
+
+/* Observação já salva, só leitura */
+.ingresso-obs-texto {
+    margin-top: 4px;
+    padding: 8px 12px;
+    border-left: 3px solid #e2d3ca;
+    color: #57534e;
+    font-size: 0.88rem;
+    font-style: italic;
+    overflow-wrap: anywhere;
+}
+
+.ingresso-data-encerrado {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--ingresso-mutado);
+    font-size: 0.92rem;
+}
+
+/* Botão Detalhes encostado à direita: na linha da data (sem observação)
+   ou embaixo, na linha da observação (com observação) */
+.ingresso-data-encerrado .ingresso-botao,
+.ingresso-obs-linha .ingresso-botao {
+    margin-left: auto;
+}
+
+.ingresso-obs-linha {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+}
+
+.ingresso-obs-linha .ingresso-obs-texto {
+    min-width: 0;
+}
+
+.ingresso-data-encerrado svg {
+    flex: none;
+    color: var(--ingresso-coral);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ingresso,
+    .ingresso-canhoto,
+    .ingresso-furo,
+    .ingresso-destacar::after {
+        transition-duration: 0.01ms !important;
+        transition-delay: 0ms !important;
+    }
+}
+
+/* ---------- Celular ---------- */
+
+@media (max-width: 600px) {
+    :root {
+        --largura-canhoto: 100px;
+    }
+
+    .ingresso.encerrado {
+        grid-template-columns: minmax(0, 1fr) 0;
+    }
+
+    .ingresso-corpo {
+        padding: 18px 18px;
+    }
+
+    .ingresso-corpo h3 {
+        font-size: 1.12rem;
+    }
+
+    .ingresso-acoes {
+        flex-direction: column;
+    }
+
+    .ingresso-dica {
+        display: none;
+    }
+}
