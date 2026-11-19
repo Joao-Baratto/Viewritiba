@@ -141,36 +141,27 @@
     color: #fff;
 }
 
-.event-details-visit {
+/* Teste: todos os botões dos detalhes no mesmo coral do Visitar evento */
+.event-details-visit,
+.event-details-comments,
+.event-details-share {
     background: #c64d32;
 }
 
-.event-details-visit:hover {
+.event-details-visit:hover,
+.event-details-comments:hover,
+.event-details-share:hover {
     color: #fff;
     background: #a83e28;
-}
-
-.event-details-comments {
-    background: #2563eb;
-}
-
-.event-details-comments:hover {
-    color: #fff;
-    background: #1d4ed8;
 }
 
 .event-details-visit[hidden] {
     display: none;
 }
 
-/* Compartilhar: verde, como o compartilhar das listas */
-.event-details-share {
-    background: #0f8a6c;
-}
-
-.event-details-share:hover {
-    background: #0b6f57;
-}
+/* Cores anteriores (antes do teste do coral):
+   Comentários: color #eef2f7; background #52677f; hover #43566b
+   Compartilhar: color #eaf1ff; background #3478db; hover #2a64b8 */
 
 /* Ações dos detalhes só com ícone: quadrados de 42px (o nome fica no title / aria-label) */
 .event-details-actions .event-details-icone {

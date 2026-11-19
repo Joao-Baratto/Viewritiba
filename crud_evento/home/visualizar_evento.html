@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../css/style.css">
     <!-- mesmo visual do modal "Detalhes" da tela Eventos do participante -->
-    <link rel="stylesheet" href="../../crud_participante/css/eventos.css?v=7">
+    <link rel="stylesheet" href="../../crud_participante/css/eventos.css?v=13">
     <link rel="stylesheet" href="../../compartilhamento_eventos/compartilhar-modal.css">
     <style>
         /* O quadro de detalhes fica na página, em vez de abrir como janela por cima da lista */
@@ -31,8 +31,9 @@
             border-radius: 10px;
             font: inherit;
             font-weight: 700;
-            color: #c64d32;
-            background: #fff0eb;
+            /* Teste: coral sólido como o Visitar evento (antes: color #c64d32; background #fff0eb; hover #ffe1d7) */
+            color: #fff;
+            background: #c64d32;
             cursor: pointer;
         }
 
@@ -42,7 +43,7 @@
         }
 
         .event-details-favoritar:hover {
-            background: #ffe1d7;
+            background: #a83e28;
         }
 
         .event-details-favoritar[hidden] {
@@ -117,7 +118,7 @@
         </article>
     </main>
 
-    <script src="../js/icones.js?v=4"></script>
+    <script src="../js/icones.js?v=8"></script>
     <script src="../../compartilhamento_eventos/compartilhar.js?v=4"></script>
     <script src="../js/visualizar_evento.js?v=7"></script>
 </body>

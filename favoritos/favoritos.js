@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                 <span class="mes">${mes}<br>${ano}</span>
                             </div>
                             <div class="info-evento">
-                                <h3>${evento.titulo}</h3>
+                                <h3>${marcadorLink(evento)}${evento.titulo}</h3>
                                 <p class="local-evento">${evento.local}</p>
 
                                 <span class="status-badge" style="background:${status.cor};">

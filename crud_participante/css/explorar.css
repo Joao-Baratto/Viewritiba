@@ -14,44 +14,57 @@
     overflow-x: auto;
 }
 
+/* Mesma largura de página da tela Eventos (.container do crud_evento/css/style.css) */
+.explorar-main {
+    width: min(1240px, calc(100% - 40px));
+}
+
+/* Lista com as mesmas medidas da lista de Eventos (#lista do crud_evento/css/style.css) */
 #lista-explorar table {
     width: 100%;
     border-collapse: separate;
-    border-spacing: 0 14px;
+    border-spacing: 0 13px;
 }
 
 #lista-explorar th {
-    padding: 0 18px 6px;
+    padding: 0 16px 9px;
     text-align: left;
-    color: #6b7280;
-    font-size: 0.78rem;
-    font-weight: 800;
+    white-space: nowrap;
+    color: #6d6565;
+    font-size: 11px;
+    font-weight: 900;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 1px;
 }
 
 #lista-explorar td {
-    background: #fff;
-    padding: 20px 18px;
+    background: rgba(255, 255, 255, 0.94);
+    color: #393939;
+    padding: 22px 16px;
+    font-size: 13px;
     vertical-align: middle;
-    border-top: 1px solid #e4e4e4;
-    border-bottom: 1px solid #e4e4e4;
-    transition: all 0.2s ease;
+    border-top: 1px solid rgba(255, 255, 255, 0.90);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.90);
+    transition: background 0.25s ease;
 }
 
 #lista-explorar td:first-child {
-    border-left: 1px solid #e4e4e4;
-    border-radius: 14px 0 0 14px;
-    font-weight: 800;
+    color: #242424;
+    font-size: 14px;
+    font-weight: 850;
+    padding-left: 22px;
+    border-left: 1px solid rgba(255, 255, 255, 0.90);
+    border-radius: 16px 0 0 16px;
 }
 
 #lista-explorar td:last-child {
-    border-right: 1px solid #e4e4e4;
-    border-radius: 0 14px 14px 0;
+    min-width: 190px;
+    border-right: 1px solid rgba(255, 255, 255, 0.90);
+    border-radius: 0 16px 16px 0;
 }
 
 #lista-explorar tr:hover td {
-    background: #fff9f6;
+    background: #fff8f5;
 }
 
 #mensagem_explorar {
@@ -119,14 +132,33 @@
     background: #ffded1;
 }
 
-/* Cabeçalho de Recomendados com o card "Explorar eventos" ao lado */
+/* Cabeçalho de Recomendados: com recomendações, só o texto e o link "Ver todos os eventos";
+   sem recomendações, o card "Explorar eventos" aparece embaixo do texto */
 
 .explorar-topo {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(260px, 340px);
+    grid-template-columns: minmax(0, 1fr);
     gap: 2rem;
     align-items: start;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.explorar-topo [hidden] {
+    display: none !important;
+}
+
+.explorar-link-todos {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.75rem;
+    color: #c64d32;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.explorar-link-todos:hover {
+    text-decoration: underline;
 }
 
 .explorar-topo .panel-welcome {
@@ -151,38 +183,6 @@
     min-width: 260px;
 }
 
-/* Card "Explorar eventos" ao lado do cabeçalho: largura original, altura em 2/3 (~290px -> ~194px) */
-
-.explorar-topo:not(.sem-recomendacao) .panel-card {
-    min-height: 0;
-    padding: 0.55rem 1.65rem;
-}
-
-.explorar-topo:not(.sem-recomendacao) .panel-card-icon {
-    width: 1.9rem;
-    height: 1.9rem;
-    font-size: 1.05rem;
-}
-
-.explorar-topo:not(.sem-recomendacao) .panel-card-label {
-    margin-top: 0.55rem;
-}
-
-.explorar-topo:not(.sem-recomendacao) .panel-card h3 {
-    margin-top: 0.1rem;
-}
-
-.explorar-topo:not(.sem-recomendacao) .panel-card p {
-    margin: 0.2rem 0 0.35rem;
-    line-height: 1.4;
-}
-
-@media (max-width: 820px) {
-    .explorar-topo {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-}
 
 /* Botões de ação só com ícone (Comentários, Favoritar, Visualizar) */
 #lista-explorar a.btn-icone {

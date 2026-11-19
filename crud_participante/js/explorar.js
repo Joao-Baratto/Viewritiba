@@ -15,7 +15,11 @@ async function carregarEventos() {
     titulo.textContent = "Eventos Recomendados";
     mensagem.textContent = "Carregando eventos...";
     mensagem.style.whiteSpace = 'pre-wrap';
+    const card = document.getElementById("card_explorar");
+    const linkTodos = document.getElementById("link_todos_eventos");
     topo.classList.remove("sem-recomendacao");
+    card.hidden = true;
+    linkTodos.hidden = true;
 
     try {
         const retorno = await fetch("../php/explorar_get.php");
@@ -23,11 +27,14 @@ async function carregarEventos() {
 
         if (resposta.status == "ok" && resposta.data.length > 0) {
             titulo.textContent = "Eventos Recomendados";
-            mensagem.textContent = "";
+            mensagem.textContent = "Selecionados a partir das categorias dos seus favoritos.";
+            linkTodos.hidden = false;
             preencherTabela(resposta.data);
         } else {
             titulo.textContent = "Nenhum Evento Recomendado";
             topo.classList.add("sem-recomendacao");
+            card.hidden = false;
+            document.getElementById("lista-explorar").innerHTML = "";
             mensagem.textContent = "Voce não possui recomendaçoes de Evento.\nPara receber recomendações favorite um Evento.";
         }
     } catch (erro) {
@@ -53,7 +60,7 @@ function preencherTabela(tabela) {
     for (var i = 0; i < tabela.length; i++) {
         html += `
             <tr class="${tabela[i].favoritado ? "favoritado" : ""}">
-                <td>${dados(tabela[i].titulo)}</td>
+                <td>${marcadorLink(tabela[i])}${dados(tabela[i].titulo)}</td>
                 <td>${dados(tabela[i].descricao)}</td>
                 <td>${dados(tabela[i].data_hora)}</td>
                 <td>${dados(tabela[i].local)}</td>

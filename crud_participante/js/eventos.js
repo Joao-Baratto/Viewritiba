@@ -201,7 +201,7 @@ function preencherTabela(tabela) {
         const idEvento = Number(evento.id);
         html += `
             <tr class="${evento.favoritado ? "favoritado" : ""}">
-                <td>${escaparHtml(evento.titulo)}</td>
+                <td>${marcadorLink(evento)}${escaparHtml(evento.titulo)}</td>
                 <td>${escaparHtml(evento.descricao)}</td>
                 <td>${escaparHtml(evento.data_hora)}</td>
                 <td>${escaparHtml(evento.local)}</td>

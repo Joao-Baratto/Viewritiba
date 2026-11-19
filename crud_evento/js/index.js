@@ -164,7 +164,7 @@ function preencherTabela(tabela) {
     for (var i = 0; i < tabela.length; i++) {
         html += `
             <tr>
-                <td>${tabela[i].titulo}</td>
+                <td>${marcadorLink(tabela[i])}${tabela[i].titulo}</td>
                 <td>${tabela[i].descricao}</td>
                 <td>${tabela[i].data_hora}</td>
                 <td>${tabela[i].local}</td>

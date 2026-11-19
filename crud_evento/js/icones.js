@@ -13,6 +13,7 @@ const ICONES_FEATHER = {
     editar: '<path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>',
     excluir: '<polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>',
     visitar: '<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>',
+    link: '<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>',
     voltar: '<line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>',
     ver: '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>',
     salvar: '<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/>'
@@ -21,6 +22,33 @@ const ICONES_FEATHER = {
 function icone(nome, tamanho = 18, preenchido = false) {
     return `<svg viewBox="0 0 24 24" width="${tamanho}" height="${tamanho}" fill="${preenchido ? "currentColor" : "none"}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONES_FEATHER[nome] || ""}</svg>`;
 }
+
+// Marcador ao lado do título nas listas: avisa que o evento tem link, antes de abrir os detalhes
+function marcadorLink(evento) {
+    if (!evento || !evento.link) {
+        return "";
+    }
+    return `<span class="marcador-link" title="Este evento tem link" aria-label="Este evento tem link" role="img"
+        style="display:inline-flex;vertical-align:-3px;margin-right:6px;color:#c64d32;">${icone("link", 16)}</span>`;
+}
+
+// Botões de ação das listas todos no mesmo tom: ícone coral sobre fundo pêssego suave.
+// O <style> entra no fim do <head>, então vence as cores por botão definidas nos CSS (mesma especificidade).
+(function () {
+    const estilo = document.createElement("style");
+    estilo.textContent = `
+        #lista a.btn-icone, #lista-explorar a.btn-icone {
+            background: rgba(233, 95, 71, 0.10);
+            color: #e95f47;
+        }
+        #lista a.btn-icone:hover, #lista-explorar a.btn-icone:hover {
+            background: rgba(233, 95, 71, 0.18);
+            color: #e95f47;
+        }
+        .btn-icone svg { color: #e95f47; }
+    `;
+    document.head.appendChild(estilo);
+})();
 
 // Preenche os <span data-icone="nome"> do HTML estático (ex.: botões dos detalhes do evento)
 document.addEventListener("DOMContentLoaded", () => {
