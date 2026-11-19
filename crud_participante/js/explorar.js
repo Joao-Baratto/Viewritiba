@@ -72,6 +72,11 @@ function preencherTabela(tabela) {
                         ${icone("comentarios")}
                     </a>
 
+                    <a class="btn-detalhes btn-icone" title="Detalhes" aria-label="Detalhes"
+                        href="../../crud_evento/home/visualizar_evento.html?id=${tabela[i].id}">
+                        ${icone("info")}
+                    </a>
+
                     ${tabela[i].favoritado ? `
                     <a class="btn-icone" title="Desfavoritar" aria-label="Desfavoritar" href="#"
                         onclick="desfavoritar_evento(${tabela[i].id}); return false;">
@@ -81,10 +86,7 @@ function preencherTabela(tabela) {
                         onclick="favoritar_evento(${tabela[i].id}); return false;">
                         ${icone("favoritar")}
                     </a>`}
-                    <a class="btn-icone" title="Detalhes" aria-label="Detalhes"
-                        href="../../crud_evento/home/visualizar_evento.html?id=${tabela[i].id}">
-                        ${icone("info")}
-                    </a>
+
                 </td>
             </tr>
         `;

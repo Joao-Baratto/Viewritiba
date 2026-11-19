@@ -176,11 +176,6 @@ function preencherTabela(tabela) {
                         ${icone("info")}
                     </a>
 
-                    <a class="btn-icone" title="Comentários" aria-label="Comentários"
-                        href="../../crud_comentarios/home/comentarios.html?id=${tabela[i].id}">
-                        ${icone("comentarios")}
-                    </a>
-
                     <a class="btn-icone" title="Alterar" aria-label="Alterar"
                         href="evento_alterar.html?id=${tabela[i].id}">
                         ${icone("editar")}
