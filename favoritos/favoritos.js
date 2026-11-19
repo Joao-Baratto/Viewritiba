@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const QTD_FUROS = 9;
 
     // Mesmo valor de --tempo-destacar no ingresso.css
-    const TEMPO_DESTACAR = 900;
+    const TEMPO_DESTACAR = 450;
 
     function esc(texto) {
         const div = document.createElement('div');
@@ -80,10 +80,9 @@ document.addEventListener("DOMContentLoaded", function() {
                         <a class="ingresso-botao" href="../crud_evento/home/visualizar_evento.html?id=${id}"
                             title="Detalhes" aria-label="Detalhes">${icone("info")}</a>
                         <button class="ingresso-botao ingresso-destacar" data-id="${id}"
-                            title="Segure para remover dos favoritos"
-                            aria-label="Segure para remover dos favoritos">${icone("excluir")}</button>
+                            title="Remover dos favoritos"
+                            aria-label="Remover dos favoritos">${icone("excluir")}</button>
                     </div>
-                    <span class="ingresso-dica">Segure para destacar</span>
                 </div>`;
 
         // Encerrado: único botão (Detalhes), à direita.
@@ -162,50 +161,17 @@ ${canhoto}
             console.error('Erro ao buscar os eventos', error);
         });
 
-    // Remover = destacar o canhoto: segurar o botão por TEMPO_DESTACAR ms.
-    // Os furos do picote enchem um a um; soltar antes cancela.
+    // Remover = destacar o canhoto com um clique.
+    // Os furos do picote enchem rapidamente (TEMPO_DESTACAR ms) e o canhoto se solta.
     function ativarBotoesDestacar() {
         document.querySelectorAll('.ingresso-destacar').forEach(botao => {
             const ingresso = botao.closest('.ingresso');
-            let timer = null;
 
-            const comecar = () => {
-                if (timer || ingresso.classList.contains('destacado')) return;
+            botao.addEventListener('click', () => {
+                if (ingresso.classList.contains('destacando') || ingresso.classList.contains('destacado')) return;
                 ingresso.classList.add('destacando');
-                timer = setTimeout(() => {
-                    timer = null;
-                    remover(ingresso, botao.dataset.id);
-                }, TEMPO_DESTACAR);
-            };
-
-            const cancelar = () => {
-                if (!timer) return;
-                clearTimeout(timer);
-                timer = null;
-                ingresso.classList.remove('destacando');
-            };
-
-            botao.addEventListener('pointerdown', (e) => {
-                e.preventDefault();
-                botao.setPointerCapture?.(e.pointerId);
-                comecar();
+                setTimeout(() => remover(ingresso, botao.dataset.id), TEMPO_DESTACAR);
             });
-            botao.addEventListener('pointerup', cancelar);
-            botao.addEventListener('pointercancel', cancelar);
-            botao.addEventListener('lostpointercapture', cancelar);
-            botao.addEventListener('contextmenu', (e) => e.preventDefault());
-
-            // Teclado: segurar Espaço ou Enter
-            botao.addEventListener('keydown', (e) => {
-                if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) {
-                    e.preventDefault();
-                    comecar();
-                }
-            });
-            botao.addEventListener('keyup', (e) => {
-                if (e.key === ' ' || e.key === 'Enter') cancelar();
-            });
-            botao.addEventListener('blur', cancelar);
         });
     }
 

@@ -1,7 +1,7 @@
 /*
  * Favoritos em formato de ingresso.
  * Corpo (dados do evento) | picote com furos | canhoto (data, hora e ações).
- * Remover = "destacar o canhoto": segurar o botão enche os furos um a um e o canhoto se solta.
+ * Remover = "destacar o canhoto": um clique enche os furos rapidamente e o canhoto se solta.
  * Cores e fonte no padrão das outras telas (Outfit, pêssego e coral).
  */
 
@@ -16,7 +16,8 @@
     --ingresso-furo: #e8dcd5;
     --ingresso-mordida: 22px; /* diâmetro dos recortes em cima e embaixo do picote */
     --largura-canhoto: 132px;
-    --tempo-destacar: 900ms;  /* quanto tempo segurar para remover */
+    --ingresso-respiro: 22px; /* espaçamento interno; igual no corpo e no canhoto para alinhar os botões */
+    --tempo-destacar: 450ms;  /* duração dos furos enchendo ao clicar em remover */
 }
 
 #lista-favoritos-container {
@@ -62,7 +63,7 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
-    padding: 22px 26px;
+    padding: var(--ingresso-respiro) 26px;
     min-width: 0;
 }
 
@@ -130,7 +131,8 @@
 .ingresso-obs {
     display: flex;
     gap: 8px;
-    margin-top: 6px;
+    margin-top: auto; /* fica sempre embaixo, na mesma linha dos botões do canhoto */
+    padding-top: 6px;
 }
 
 .ingresso-obs input {
@@ -235,9 +237,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 2px;
-    padding: 18px 12px;
+    padding: var(--ingresso-respiro) 12px;
     background: var(--ingresso-canhoto);
     text-align: center;
     transform-origin: 0 100%;
@@ -268,7 +270,8 @@
 .ingresso-acoes {
     display: flex;
     gap: 6px;
-    margin-top: 12px;
+    margin-top: auto; /* embaixo, alinhado com o botão Salvar do corpo */
+    padding-top: 12px;
 }
 
 .ingresso-canhoto .ingresso-botao {
@@ -280,12 +283,9 @@
     background: rgba(255, 122, 89, 0.20);
 }
 
-/* Botão de destacar: um anel mostra o progresso enquanto é segurado */
+/* Botão de destacar: uma faixa enche enquanto o canhoto é destacado */
 .ingresso-destacar {
     position: relative;
-    touch-action: none;
-    user-select: none;
-    -webkit-user-select: none;
 }
 
 .ingresso-destacar::after {
@@ -304,13 +304,6 @@
 .ingresso.destacando .ingresso-destacar::after {
     transform: scaleX(1);
     transition: transform var(--tempo-destacar) linear;
-}
-
-.ingresso-dica {
-    margin-top: 6px;
-    color: #ffffff;
-    font-size: 0.68rem;
-    line-height: 1.2;
 }
 
 /* Canhoto se soltando e ingresso saindo da lista */
@@ -396,6 +389,7 @@
 @media (max-width: 600px) {
     :root {
         --largura-canhoto: 100px;
+        --ingresso-respiro: 18px;
     }
 
     .ingresso.encerrado {
@@ -403,18 +397,10 @@
     }
 
     .ingresso-corpo {
-        padding: 18px 18px;
+        padding: var(--ingresso-respiro) 18px;
     }
 
     .ingresso-corpo h3 {
         font-size: 1.12rem;
-    }
-
-    .ingresso-acoes {
-        flex-direction: column;
-    }
-
-    .ingresso-dica {
-        display: none;
     }
 }
